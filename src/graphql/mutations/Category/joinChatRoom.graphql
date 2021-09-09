@@ -1,0 +1,12 @@
+mutation JoinChatRoom($data: CategoryInput!) {
+  joinChatRoom(data: $data) {
+    category {
+      id
+      name
+      chatUsers {
+        id
+        username
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+mutation SendPrivateMessage($data: PrivateMessageInput!) {
+  sendPrivateMessage(data: $data)
+}

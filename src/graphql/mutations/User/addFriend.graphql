@@ -1,0 +1,17 @@
+mutation AddFriend($data: AddUserInput!) {
+  addFriend(data: $data) {
+    me {
+      id
+      username
+    }
+    friend {
+      id
+      username
+      online
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

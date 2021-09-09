@@ -1,0 +1,11 @@
+query Category($categoryId: Int!) {
+  category(categoryId: $categoryId) {
+    id
+    name
+    chatUsers {
+      id
+      username
+      online
+    }
+  }
+}

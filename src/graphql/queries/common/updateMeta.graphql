@@ -1,0 +1,9 @@
+query UpdateMeta($category: String) {
+  _allPostsMeta {
+    count
+  }
+
+  _categoryPostsMeta(name: $category) {
+    count
+  }
+}

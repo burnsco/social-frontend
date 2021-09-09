@@ -1,0 +1,11 @@
+query CommentsForPost($postId: Int!, $orderBy: String) {
+  post(postId: $postId, orderBy: $orderBy) {
+    id
+    comments {
+      ...CommentDetails
+      createdBy {
+        ...UserDetails
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+mutation createVote($data: VoteInput!) {
+  vote(data: $data) {
+    vote {
+      value
+      id
+    }
+    post {
+      id
+      totalVotes {
+        count
+        score
+      }
+    }
+  }
+}

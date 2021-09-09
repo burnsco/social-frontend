@@ -1,0 +1,15 @@
+query MyPrivateMessages {
+  myPrivateMessages {
+    id
+    createdAt
+    body
+    sentBy {
+      id
+      username
+    }
+    sentTo {
+      id
+      username
+    }
+  }
+}

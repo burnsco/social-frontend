@@ -1,0 +1,7 @@
+subscription NewUser {
+  newUser {
+    id
+    username
+    email
+  }
+}

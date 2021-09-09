@@ -1,0 +1,10 @@
+query MyChatRooms {
+  myChatRooms {
+    id
+    name
+    chatUsers {
+      id
+      username
+    }
+  }
+}

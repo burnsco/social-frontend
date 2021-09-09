@@ -1,0 +1,6 @@
+fragment CommentDetails on Comment {
+  id
+  createdAt
+  updatedAt
+  body
+}

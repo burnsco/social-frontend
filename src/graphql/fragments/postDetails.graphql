@@ -1,0 +1,11 @@
+fragment PostDetails on Post {
+  id
+  createdAt
+  updatedAt
+  title
+  imageH
+  imageW
+  text
+  image
+  link
+}

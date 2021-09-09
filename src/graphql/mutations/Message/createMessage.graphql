@@ -1,0 +1,3 @@
+mutation CreateMessage($data: MessageInput!) {
+  createMessage(data: $data)
+}

@@ -1,0 +1,7 @@
+fragment UserMeDetails on User {
+  id
+  username
+  email
+  about
+  avatar
+}

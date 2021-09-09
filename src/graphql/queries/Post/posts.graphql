@@ -1,0 +1,34 @@
+query Posts($first: Int, $orderBy: String, $skip: Int, $category: String) {
+  posts(first: $first, orderBy: $orderBy, skip: $skip, category: $category) {
+    ...PostDetails
+
+    category {
+      ...CategoryDetails
+    }
+
+    author {
+      ...UserDetails
+    }
+
+    comments {
+      ...CommentDetails
+    }
+
+    totalComments {
+      count
+    }
+
+    totalVotes {
+      score
+      count
+    }
+  }
+
+  _allPostsMeta {
+    count
+  }
+
+  _categoryPostsMeta(name: $category) {
+    count
+  }
+}

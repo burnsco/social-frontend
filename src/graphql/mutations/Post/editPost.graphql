@@ -1,0 +1,14 @@
+mutation EditPost($data: EditPostInput!) {
+  editPost(data: $data) {
+    post {
+      ...PostDetails
+      category {
+        ...CategoryDetails
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

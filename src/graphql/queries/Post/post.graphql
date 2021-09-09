@@ -1,0 +1,26 @@
+query Post($postId: Int!) {
+  post(postId: $postId) {
+    ...PostDetails
+
+    category {
+      ...CategoryDetails
+    }
+
+    author {
+      ...UserDetails
+    }
+
+    comments {
+      ...CommentDetails
+    }
+
+    totalComments {
+      count
+    }
+
+    totalVotes {
+      score
+      count
+    }
+  }
+}

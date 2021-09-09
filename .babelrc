@@ -1,0 +1,28 @@
+{
+  "presets": ["next/babel"],
+  "env": {
+    "test": {
+      "plugins": ["babel-plugin-dynamic-import-node"]
+    }
+  },
+  "plugins": [
+    "babel-plugin-chakra-ui",
+    "babel-plugin-import-graphql",
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "@/generated/*": ["generated/*"],
+          "@/pages/*": ["pages/*"],
+          "@/components/*": ["components/*"],
+          "@/lib/*": ["lib/*"],
+          "@/utils*": ["utils*"],
+          "@/types/*": ["types/*"],
+          "@/styles/*": ["styles/*"],
+          "@/assets/*": ["assets/*"]
+        }
+      }
+    ]
+  ]
+}
