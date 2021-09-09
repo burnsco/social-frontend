@@ -17,7 +17,8 @@ import {
   PopoverHeader,
   PopoverTrigger,
   useColorModeValue,
-  useToast
+  useToast,
+  VisuallyHidden
 } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import React from "react"
@@ -33,6 +34,9 @@ export default function AddFriendPopOver() {
   const [addFriend, { loading }] = useAddFriendMutation()
 
   const initialFocusRef = React.useRef<HTMLButtonElement | null>(null)
+
+  if (loading) return <VisuallyHidden>loading/adding friend</VisuallyHidden>
+
   return (
     <>
       <Popover
@@ -89,8 +93,8 @@ export default function AddFriendPopOver() {
                         return null
                       }
                     })
-                  } catch (ex) {
-                    throw new Error(ex)
+                  } catch (ex: any) {
+                    console.log(ex)
                   }
                   if (response?.data?.addFriend.errors) {
                     actions.setErrors(
