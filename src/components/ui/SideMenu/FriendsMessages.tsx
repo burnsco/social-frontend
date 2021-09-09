@@ -1,5 +1,5 @@
 import MessageUser from "@/components/common/MessageUser"
-import { useMyFriendsAndMessagesLazyQuery } from "@/generated/graphql"
+import { useMyFriendsLazyQuery, User } from "@/generated/graphql"
 import {
   Accordion,
   AccordionButton,
@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react"
 import React, { useEffect } from "react"
 import { ImSpinner } from "react-icons/im"
+import { useMyPrivateMessagesLazyQuery } from "../../../generated/graphql"
 
 const OnlineCircle = () => (
   <chakra.span
@@ -41,17 +42,28 @@ const OfflineCircle = () => (
 
 export default function FriendsAndMessagesAccordion() {
   const [
-    fetchFriendsAndMessages,
-    { data, loading, refetch: refetchFriendsAndMessages }
-  ] = useMyFriendsAndMessagesLazyQuery()
+    fetchFriends,
+    { data, loading, refetch: refetchFriends }
+  ] = useMyFriendsLazyQuery()
+
+  const [
+    fetchMessages,
+    { data: messagesData, loading: messagesLoading, refetch: refetchMessages }
+  ] = useMyPrivateMessagesLazyQuery()
 
   useEffect(() => {
-    fetchFriendsAndMessages()
-  }, [fetchFriendsAndMessages])
+    fetchFriends()
+  }, [fetchFriends])
+
+  useEffect(() => {
+    fetchMessages()
+  }, [fetchMessages])
 
   const FriendsCount = () => {
-    if (data && data.me && data.me.friends.length > 0) {
-      const onlineFriends = data.me.friends.map(friend => friend.online).length
+    if (data && data.myFriends && data.myFriends.length > 0) {
+      const onlineFriends = data.myFriends.map(
+        (friend: Partial<User>) => friend.online
+      ).length
 
       return (
         <Badge ml={1} colorScheme="green">
@@ -75,9 +87,9 @@ export default function FriendsAndMessagesAccordion() {
       <AccordionPanel pb={4}>
         <Accordion allowToggle>
           <List mt={2} spacing={3}>
-            {data && data.me ? (
+            {data && data.myFriends ? (
               <>
-                {data.me.friends.map(user => (
+                {data.myFriends.map((user: Partial<User>) => (
                   <AccordionItem color="" key={`friends-list-${user.username}`}>
                     <AccordionButton
                       _expanded={{ bg: "lightgrey", borderRadius: 5 }}
@@ -92,14 +104,10 @@ export default function FriendsAndMessagesAccordion() {
                     </AccordionButton>
                     <AccordionPanel pb={2}>
                       <List mt={2} spacing={3}>
-                        {data && data.me && data.me.privateMessages ? (
+                        {messagesData && messagesData.myPrivateMessages ? (
                           <>
-                            {data.me.privateMessages.map(message => {
-                              if (
-                                (message.sentBy.username ||
-                                  message.sentTo.username) ===
-                                data?.me?.username
-                              )
+                            {messagesData.myPrivateMessages.map(
+                              (message: any) => {
                                 return (
                                   <ListItem key={`messages-list-${message.id}`}>
                                     <Avatar
@@ -111,19 +119,8 @@ export default function FriendsAndMessagesAccordion() {
                                     {message.body}
                                   </ListItem>
                                 )
-
-                              return (
-                                <ListItem key={`messages-list-${message.id}`}>
-                                  {message.body}
-                                  <Avatar
-                                    size="xs"
-                                    name="Ryan Florence"
-                                    src="https://bit.ly/ryan-florence"
-                                    ml={1}
-                                  />
-                                </ListItem>
-                              )
-                            })}
+                              }
+                            )}
                           </>
                         ) : (
                           <ListItem>No Friends Yet</ListItem>
