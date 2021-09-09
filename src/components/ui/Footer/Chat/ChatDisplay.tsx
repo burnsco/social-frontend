@@ -23,7 +23,7 @@ export default function ChatDisplay() {
           subscribeToMore({
             document: CategoryChatSubDocument,
             variables: { categoryId: selectedCategoryId },
-            updateQuery: (prev, { subscriptionData }) => {
+            updateQuery: (prev, { subscriptionData }: any) => {
               if (!subscriptionData.data) return prev
               const newFeedItem = subscriptionData.data.newMessage
               return {
