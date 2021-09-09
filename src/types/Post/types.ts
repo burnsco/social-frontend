@@ -6,6 +6,6 @@ export const CreatePostInputType: CreatePostInput = {
   text: "",
   link: "",
   image: "",
-  imageW: "",
-  imageH: ""
+  imageW: undefined,
+  imageH: undefined
 }

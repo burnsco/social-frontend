@@ -54,6 +54,7 @@
   },
   "rules": {
     "testing-library/no-debug": "off",
+    "testing-library/prefer-screen-queries": "off",
     "react/display-name": "off",
     "react-hooks/rules-of-hooks": "error",
     "@typescript-eslint/explicit-module-boundary-types": "off",
