@@ -22,7 +22,7 @@ export default function MePage() {
         <Text>Username: {data?.me?.username} </Text>
         <Text>Email: {data?.me?.email}</Text>
         <Text>About Me: {data?.me?.about}</Text>
-        {data && data.me.avatar ? (
+        {data && data?.me?.avatar ? (
           <Avatar src={data?.me.avatar} />
         ) : (
           <Text>No Avatar Yet</Text>
