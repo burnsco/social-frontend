@@ -4,10 +4,12 @@ export type Maybe<T> = T | null
 export type Exact<T extends { [key: string]: unknown }> = {
   [K in keyof T]: T[K]
 }
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> }
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> }
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>
+}
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>
+}
 const defaultOptions = {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -1034,7 +1036,8 @@ export function useCreateSubredditMutation(
 export type CreateSubredditMutationHookResult = ReturnType<
   typeof useCreateSubredditMutation
 >
-export type CreateSubredditMutationResult = Apollo.MutationResult<CreateSubredditMutation>
+export type CreateSubredditMutationResult =
+  Apollo.MutationResult<CreateSubredditMutation>
 export type CreateSubredditMutationOptions = Apollo.BaseMutationOptions<
   CreateSubredditMutation,
   CreateSubredditMutationVariables
@@ -1090,7 +1093,8 @@ export function useJoinChatRoomMutation(
 export type JoinChatRoomMutationHookResult = ReturnType<
   typeof useJoinChatRoomMutation
 >
-export type JoinChatRoomMutationResult = Apollo.MutationResult<JoinChatRoomMutation>
+export type JoinChatRoomMutationResult =
+  Apollo.MutationResult<JoinChatRoomMutation>
 export type JoinChatRoomMutationOptions = Apollo.BaseMutationOptions<
   JoinChatRoomMutation,
   JoinChatRoomMutationVariables
@@ -1165,7 +1169,8 @@ export function useCreateCommentMutation(
 export type CreateCommentMutationHookResult = ReturnType<
   typeof useCreateCommentMutation
 >
-export type CreateCommentMutationResult = Apollo.MutationResult<CreateCommentMutation>
+export type CreateCommentMutationResult =
+  Apollo.MutationResult<CreateCommentMutation>
 export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<
   CreateCommentMutation,
   CreateCommentMutationVariables
@@ -1212,7 +1217,8 @@ export function useCreateMessageMutation(
 export type CreateMessageMutationHookResult = ReturnType<
   typeof useCreateMessageMutation
 >
-export type CreateMessageMutationResult = Apollo.MutationResult<CreateMessageMutation>
+export type CreateMessageMutationResult =
+  Apollo.MutationResult<CreateMessageMutation>
 export type CreateMessageMutationOptions = Apollo.BaseMutationOptions<
   CreateMessageMutation,
   CreateMessageMutationVariables
@@ -1717,7 +1723,8 @@ export function useSendPrivateMessageMutation(
 export type SendPrivateMessageMutationHookResult = ReturnType<
   typeof useSendPrivateMessageMutation
 >
-export type SendPrivateMessageMutationResult = Apollo.MutationResult<SendPrivateMessageMutation>
+export type SendPrivateMessageMutationResult =
+  Apollo.MutationResult<SendPrivateMessageMutation>
 export type SendPrivateMessageMutationOptions = Apollo.BaseMutationOptions<
   SendPrivateMessageMutation,
   SendPrivateMessageMutationVariables
@@ -2763,7 +2770,8 @@ export function useCategoryChatSubSubscription(
 export type CategoryChatSubSubscriptionHookResult = ReturnType<
   typeof useCategoryChatSubSubscription
 >
-export type CategoryChatSubSubscriptionResult = Apollo.SubscriptionResult<CategoryChatSubSubscription>
+export type CategoryChatSubSubscriptionResult =
+  Apollo.SubscriptionResult<CategoryChatSubSubscription>
 export const NewUserDocument = gql`
   subscription NewUser {
     newUser {
@@ -2804,4 +2812,5 @@ export function useNewUserSubscription(
 export type NewUserSubscriptionHookResult = ReturnType<
   typeof useNewUserSubscription
 >
-export type NewUserSubscriptionResult = Apollo.SubscriptionResult<NewUserSubscription>
+export type NewUserSubscriptionResult =
+  Apollo.SubscriptionResult<NewUserSubscription>

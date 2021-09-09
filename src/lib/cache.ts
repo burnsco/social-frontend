@@ -18,12 +18,6 @@ export const cacheOptions = new InMemoryCache({
         },
 
         posts: concatPagination(),
-        post(_, { args, toReference }) {
-          return toReference({
-            __typename: "Post",
-            id: args?.postId
-          })
-        },
         selectedChatRoomId: {
           read() {
             return selectedChatRoomId()
@@ -37,27 +31,7 @@ export const cacheOptions = new InMemoryCache({
       }
     },
     Post: {
-      fields: {
-        category: {
-          merge(existing, incoming) {
-            return { ...existing, ...incoming }
-          }
-        },
-        totalVotes: {
-          merge(existing, incoming) {
-            return { ...existing, ...incoming }
-          }
-        }
-      }
-    },
-    Category: {
-      fields: {
-        messages: {
-          merge(existing, incoming) {
-            return [...existing, ...incoming]
-          }
-        }
-      }
+      merge: true
     }
   }
 })
