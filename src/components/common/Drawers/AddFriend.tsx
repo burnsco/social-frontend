@@ -99,7 +99,7 @@ export default function AddFriendDrawer() {
                   }
                 })
               } catch (ex) {
-                throw new Error(ex)
+                console.log(ex)
               }
               if (response?.data?.addFriend.errors) {
                 actions.setErrors(

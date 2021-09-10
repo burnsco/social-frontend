@@ -5,7 +5,7 @@ const customTheme = extendTheme({
   useSystemColorMode: true,
   initialColorMode: "dark",
   styles: {
-    global: props => ({
+    global: (props: any) => ({
       html: {
         width: "100%",
         height: "100%",

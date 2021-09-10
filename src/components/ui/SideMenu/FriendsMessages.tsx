@@ -41,10 +41,8 @@ const OfflineCircle = () => (
 )
 
 export default function FriendsAndMessagesAccordion() {
-  const [
-    fetchFriends,
-    { data, loading, refetch: refetchFriends }
-  ] = useMyFriendsLazyQuery()
+  const [fetchFriends, { data, loading, refetch: refetchFriends }] =
+    useMyFriendsLazyQuery()
 
   const [
     fetchMessages,

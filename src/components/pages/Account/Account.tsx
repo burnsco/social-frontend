@@ -74,15 +74,11 @@ const AccountContent = (): JSX.Element => {
       })
   }, [])
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles
-  } = useDropzone({
-    onDrop,
-    maxFiles: 1
-  })
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      onDrop,
+      maxFiles: 1
+    })
 
   if (!meQueryLoading) {
     return (

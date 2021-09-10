@@ -80,7 +80,7 @@ export default function UserMenuDialog(username: string) {
             }
           })
         } catch (ex) {
-          throw new Error(ex)
+          console.log(ex)
         }
       }}
     >

@@ -16,10 +16,8 @@ const SubmitCommentForm = () => {
   const router = useRouter()
   const postId = router.query.id
 
-  const [
-    submitComment,
-    { loading: mutationLoading, error: mutationError }
-  ] = useCreateCommentMutation()
+  const [submitComment, { loading: mutationLoading, error: mutationError }] =
+    useCreateCommentMutation()
 
   return (
     <Box

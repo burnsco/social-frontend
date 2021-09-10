@@ -128,8 +128,8 @@ export default function CommentPage({ comment }: CommentQuery) {
                           )
                         }
                       })
-                    } catch (ex) {
-                      throw new Error(ex)
+                    } catch (ex: any) {
+                      console.log(ex)
                     }
                   }}
                 >

@@ -99,7 +99,7 @@ function CreateCategoryDrawer() {
                   }
                 })
               } catch (ex) {
-                throw new Error(ex)
+                console.log(ex)
               }
 
               if (response?.data?.createCategory?.category) {

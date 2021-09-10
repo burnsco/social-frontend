@@ -11,17 +11,15 @@ const CategoryPosts = (): JSX.Element => {
   const router = useRouter()
   const category = router.query.category as string
 
-  const [
-    fetchPosts,
-    { loading, data, fetchMore, networkStatus }
-  ] = usePostsLazyQuery({
-    variables: {
-      category: category,
-      skip: 0,
-      first: 2
-    },
-    notifyOnNetworkStatusChange: true
-  })
+  const [fetchPosts, { loading, data, fetchMore, networkStatus }] =
+    usePostsLazyQuery({
+      variables: {
+        category: category,
+        skip: 0,
+        first: 2
+      },
+      notifyOnNetworkStatusChange: true
+    })
 
   useEffect(() => fetchPosts(), [fetchPosts])
 

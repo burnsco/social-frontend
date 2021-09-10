@@ -7,13 +7,11 @@ import { useEffect } from "react"
 import ShowMorePosts from "./showMore"
 
 export default function Posts() {
-  const [
-    fetchPosts,
-    { loading, data, fetchMore, networkStatus }
-  ] = usePostsLazyQuery({
-    variables: allPostsQueryVars,
-    notifyOnNetworkStatusChange: true
-  })
+  const [fetchPosts, { loading, data, fetchMore, networkStatus }] =
+    usePostsLazyQuery({
+      variables: allPostsQueryVars,
+      notifyOnNetworkStatusChange: true
+    })
 
   useEffect(() => fetchPosts(), [fetchPosts])
 

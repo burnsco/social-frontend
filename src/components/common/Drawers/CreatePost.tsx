@@ -116,7 +116,7 @@ export default function CreatePostDrawer() {
         onClose()
       }
     } catch (error) {
-      throw new Error(error)
+      console.log(error)
     }
   }
 
@@ -145,15 +145,11 @@ export default function CreatePostDrawer() {
       })
   }, [])
 
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    acceptedFiles
-  } = useDropzone({
-    onDrop,
-    maxFiles: 1
-  })
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      onDrop,
+      maxFiles: 1
+    })
 
   return (
     <>

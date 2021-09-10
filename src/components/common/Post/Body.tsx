@@ -61,7 +61,7 @@ export default function PostBody({
                     }
                   })
                 } catch (error) {
-                  throw new Error(error)
+                  console.log(error)
                 }
               }}
             >
