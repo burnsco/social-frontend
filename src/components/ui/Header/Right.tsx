@@ -126,7 +126,7 @@ export default function HeaderMenu() {
     )
   }
   return (
-    <Stack spacing={4} mr={1} direction="row" align="center">
+    <Stack spacing={4} mr={2} direction="row" align="center">
       <DynamicRegisterDrawer />
       <DynamicLoginDrawer />
     </Stack>

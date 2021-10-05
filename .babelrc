@@ -6,7 +6,6 @@
     }
   },
   "plugins": [
-    "babel-plugin-chakra-ui",
     "babel-plugin-import-graphql",
     [
       "module-resolver",

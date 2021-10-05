@@ -1,13 +1,17 @@
+import { ThemedContainer } from "@/components/common/ThemedContainer"
 import useNewUserNotification from "@/hooks/useNewUserNotify"
 import {
+  Badge,
   chakra,
   Flex,
   IconButton,
+  Text,
   useColorMode,
   useColorModeValue,
   useSafeLayoutEffect,
   useToast
 } from "@chakra-ui/react"
+import React from "react"
 import { FaMoon, FaSun } from "react-icons/fa"
 import NavSection from "./Center"
 import LogoSection from "./Left"
@@ -19,7 +23,7 @@ const HeaderContent = () => {
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
 
   return (
-    <Flex w="100%" h="100%" px="6" align="center" justify="space-between">
+    <Flex w="100%" h="100%" px="4" align="center" justify="space-around">
       <LogoSection />
       <NavSection />
       <MenuIconsSection />
@@ -39,6 +43,7 @@ const HeaderContent = () => {
 const Header = () => {
   const headerBG = useColorModeValue("white", "#202020")
   const headerShadow = useColorModeValue("md", "dark-lg")
+  const colorScheme = useColorModeValue("green", "orange")
   const toast = useToast()
   const newUser = useNewUserNotification()
 
@@ -46,11 +51,16 @@ const Header = () => {
     if (newUser) {
       toast({
         position: "bottom-left",
-        title: `User "${newUser}"`,
-        description: "Has just joined the community!",
-        status: "warning",
-        duration: 5000,
-        isClosable: true
+        render: () => (
+          <ThemedContainer p={4}>
+            <Badge colorScheme={colorScheme} variant="solid" p={1}>
+              {newUser}
+            </Badge>{" "}
+            <Text as="em" color="gray.50">
+              Has just joined the community!
+            </Text>
+          </ThemedContainer>
+        )
       })
     }
   }, [newUser])

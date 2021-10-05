@@ -35,12 +35,12 @@ export type AddUserMutationResponse = {
 
 export type Category = {
   __typename?: "Category"
-  id: Scalars["ID"]
-  createdAt: Scalars["String"]
-  name: Scalars["String"]
   avatar?: Maybe<Scalars["String"]>
-  messages?: Maybe<Array<Message>>
   chatUsers?: Maybe<Array<User>>
+  createdAt: Scalars["String"]
+  id: Scalars["ID"]
+  messages?: Maybe<Array<Message>>
+  name: Scalars["String"]
 }
 
 export type CategoryInput = {
@@ -49,18 +49,18 @@ export type CategoryInput = {
 
 export type CategoryMutationResponse = {
   __typename?: "CategoryMutationResponse"
-  errors?: Maybe<Array<FieldError>>
   category?: Maybe<Category>
+  errors?: Maybe<Array<FieldError>>
 }
 
 export type Comment = {
   __typename?: "Comment"
-  id: Scalars["ID"]
-  createdAt: Scalars["String"]
-  updatedAt: Scalars["String"]
   body: Scalars["String"]
+  createdAt: Scalars["String"]
   createdBy: User
+  id: Scalars["ID"]
   post: Post
+  updatedAt: Scalars["String"]
 }
 
 export type CommentInput = {
@@ -70,38 +70,38 @@ export type CommentInput = {
 
 export type CommentMutationResponse = {
   __typename?: "CommentMutationResponse"
-  errors?: Maybe<Array<FieldError>>
   comment?: Maybe<Comment>
+  errors?: Maybe<Array<FieldError>>
   post?: Maybe<Post>
 }
 
 export type CreatePostInput = {
   categoryId: Scalars["Int"]
-  title: Scalars["String"]
-  text?: Maybe<Scalars["String"]>
   image?: Maybe<Scalars["String"]>
-  link?: Maybe<Scalars["String"]>
   imageH?: Maybe<Scalars["Int"]>
   imageW?: Maybe<Scalars["Int"]>
+  link?: Maybe<Scalars["String"]>
+  text?: Maybe<Scalars["String"]>
+  title: Scalars["String"]
 }
 
 export type EditPostInput = {
-  postId: Scalars["Int"]
   categoryId: Scalars["Int"]
-  title: Scalars["String"]
-  text?: Maybe<Scalars["String"]>
   image?: Maybe<Scalars["String"]>
-  link?: Maybe<Scalars["String"]>
   imageH?: Maybe<Scalars["String"]>
   imageW?: Maybe<Scalars["String"]>
+  link?: Maybe<Scalars["String"]>
+  postId: Scalars["Int"]
+  text?: Maybe<Scalars["String"]>
+  title: Scalars["String"]
 }
 
 export type EditUserInput = {
-  email?: Maybe<Scalars["Email"]>
-  username?: Maybe<Scalars["String"]>
-  password?: Maybe<Scalars["String"]>
-  avatar?: Maybe<Scalars["String"]>
   about?: Maybe<Scalars["String"]>
+  avatar?: Maybe<Scalars["String"]>
+  email?: Maybe<Scalars["Email"]>
+  password?: Maybe<Scalars["String"]>
+  username?: Maybe<Scalars["String"]>
 }
 
 export type FieldError = {
@@ -117,56 +117,48 @@ export type LoginInput = {
 
 export type Message = {
   __typename?: "Message"
-  id: Scalars["ID"]
-  createdAt: Scalars["String"]
-  content: Scalars["String"]
-  sentBy: User
   category: Category
+  content: Scalars["String"]
+  createdAt: Scalars["String"]
+  id: Scalars["ID"]
+  sentBy: User
 }
 
 export type MessageInput = {
-  content: Scalars["String"]
   categoryId: Scalars["Int"]
+  content: Scalars["String"]
 }
 
 export type Mutation = {
   __typename?: "Mutation"
+  addFriend: AddUserMutationResponse
   createCategory: CategoryMutationResponse
-  joinChatRoom: UserLeaveJoinSubResponse
-  leaveChatRoom: UserLeaveJoinSubResponse
   createComment: CommentMutationResponse
-  editComment: CommentMutationResponse
   createMessage: Scalars["Boolean"]
   createPost: PostMutationResponse
-  editPost: PostMutationResponse
   deletePost: PostMutationResponse
-  vote: VoteMutationResponse
-  sendPrivateMessage: Scalars["Boolean"]
-  forgotPassword: Scalars["Boolean"]
-  register: UserMutationResponse
+  editComment: CommentMutationResponse
+  editPost: PostMutationResponse
   editUser: UserMutationResponse
-  addFriend: AddUserMutationResponse
+  forgotPassword: Scalars["Boolean"]
+  joinChatRoom: UserLeaveJoinSubResponse
+  leaveChatRoom: UserLeaveJoinSubResponse
   login: UserMutationResponse
   logout: UserLogoutMutationResponse
+  register: UserMutationResponse
+  sendPrivateMessage: Scalars["Boolean"]
+  vote: VoteMutationResponse
+}
+
+export type MutationAddFriendArgs = {
+  data: AddUserInput
 }
 
 export type MutationCreateCategoryArgs = {
   data: CategoryInput
 }
 
-export type MutationJoinChatRoomArgs = {
-  data: CategoryInput
-}
-
-export type MutationLeaveChatRoomArgs = {
-  data: CategoryInput
-}
-
 export type MutationCreateCommentArgs = {
-  data: CommentInput
-}
-
-export type MutationEditCommentArgs = {
   data: CommentInput
 }
 
@@ -178,64 +170,72 @@ export type MutationCreatePostArgs = {
   data: CreatePostInput
 }
 
+export type MutationDeletePostArgs = {
+  category?: Maybe<Scalars["String"]>
+  first?: Maybe<Scalars["Int"]>
+  name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  postId?: Maybe<Scalars["Int"]>
+  skip?: Maybe<Scalars["Int"]>
+}
+
+export type MutationEditCommentArgs = {
+  data: CommentInput
+}
+
 export type MutationEditPostArgs = {
   data: EditPostInput
-}
-
-export type MutationDeletePostArgs = {
-  first?: Maybe<Scalars["Int"]>
-  postId?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
-  category?: Maybe<Scalars["String"]>
-  skip?: Maybe<Scalars["Int"]>
-  name?: Maybe<Scalars["String"]>
-}
-
-export type MutationVoteArgs = {
-  data: VoteInput
-}
-
-export type MutationSendPrivateMessageArgs = {
-  data: PrivateMessageInput
-}
-
-export type MutationForgotPasswordArgs = {
-  email: EditUserInput
-}
-
-export type MutationRegisterArgs = {
-  data: RegisterInput
 }
 
 export type MutationEditUserArgs = {
   data: EditUserInput
 }
 
-export type MutationAddFriendArgs = {
-  data: AddUserInput
+export type MutationForgotPasswordArgs = {
+  email: EditUserInput
+}
+
+export type MutationJoinChatRoomArgs = {
+  data: CategoryInput
+}
+
+export type MutationLeaveChatRoomArgs = {
+  data: CategoryInput
 }
 
 export type MutationLoginArgs = {
   data: LoginInput
 }
 
+export type MutationRegisterArgs = {
+  data: RegisterInput
+}
+
+export type MutationSendPrivateMessageArgs = {
+  data: PrivateMessageInput
+}
+
+export type MutationVoteArgs = {
+  data: VoteInput
+}
+
 export type Post = {
   __typename?: "Post"
-  id: Scalars["ID"]
+  author: User
+  category: Category
+  comments?: Maybe<Array<Comment>>
   createdAt: Scalars["String"]
-  updatedAt: Scalars["String"]
-  title: Scalars["String"]
-  text?: Maybe<Scalars["String"]>
-  link?: Maybe<Scalars["String"]>
+  id: Scalars["ID"]
   image?: Maybe<Scalars["String"]>
   imageH?: Maybe<Scalars["Int"]>
   imageW?: Maybe<Scalars["Int"]>
-  author: User
-  category: Category
-  votes?: Maybe<Array<Vote>>
-  comments?: Maybe<Array<Comment>>
+  link?: Maybe<Scalars["String"]>
+  text?: Maybe<Scalars["String"]>
+  title: Scalars["String"]
   totalComments?: Maybe<_QueryMeta>
   totalVotes?: Maybe<_QueryMeta>
+  updatedAt: Scalars["String"]
+  votes?: Maybe<Array<Vote>>
 }
 
 export type PostMutationResponse = {
@@ -246,12 +246,12 @@ export type PostMutationResponse = {
 
 export type PrivateMessage = {
   __typename?: "PrivateMessage"
-  id: Scalars["ID"]
-  createdAt: Scalars["String"]
-  updatedAt: Scalars["String"]
   body: Scalars["String"]
+  createdAt: Scalars["String"]
+  id: Scalars["ID"]
   sentBy: User
   sentTo: User
+  updatedAt: Scalars["String"]
 }
 
 export type PrivateMessageInput = {
@@ -261,83 +261,83 @@ export type PrivateMessageInput = {
 
 export type Query = {
   __typename?: "Query"
-  category?: Maybe<Category>
-  categories?: Maybe<Array<Category>>
-  comment: Comment
-  comments?: Maybe<Array<Comment>>
-  message?: Maybe<Message>
-  messages?: Maybe<Array<Message>>
   _allPostsMeta: _QueryMeta
   _categoryPostsMeta: _QueryMeta
+  categories?: Maybe<Array<Category>>
+  category?: Maybe<Category>
+  comment: Comment
+  comments?: Maybe<Array<Comment>>
+  me?: Maybe<User>
+  message?: Maybe<Message>
+  messages?: Maybe<Array<Message>>
+  myChatRooms?: Maybe<Array<Category>>
+  myFriends?: Maybe<Array<User>>
+  myPrivateMessages?: Maybe<Array<PrivateMessage>>
   post?: Maybe<Post>
   posts?: Maybe<Array<Post>>
   privateMessage?: Maybe<PrivateMessage>
   user?: Maybe<User>
   users?: Maybe<Array<User>>
-  me?: Maybe<User>
-  myChatRooms?: Maybe<Array<Category>>
-  myPrivateMessages?: Maybe<Array<PrivateMessage>>
-  myFriends?: Maybe<Array<User>>
+}
+
+export type Query_CategoryPostsMetaArgs = {
+  category?: Maybe<Scalars["String"]>
+  first?: Maybe<Scalars["Int"]>
+  name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  postId?: Maybe<Scalars["Int"]>
+  skip?: Maybe<Scalars["Int"]>
+}
+
+export type QueryCategoriesArgs = {
+  first?: Maybe<Scalars["Int"]>
+  name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  skip?: Maybe<Scalars["Int"]>
 }
 
 export type QueryCategoryArgs = {
   categoryId: Scalars["Int"]
 }
 
-export type QueryCategoriesArgs = {
-  first?: Maybe<Scalars["Int"]>
-  skip?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
-  name?: Maybe<Scalars["String"]>
-}
-
 export type QueryCommentArgs = {
-  first?: Maybe<Scalars["Int"]>
-  postId?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
   category?: Maybe<Scalars["String"]>
-  skip?: Maybe<Scalars["Int"]>
+  first?: Maybe<Scalars["Int"]>
   name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  postId?: Maybe<Scalars["Int"]>
+  skip?: Maybe<Scalars["Int"]>
 }
 
 export type QueryCommentsArgs = {
-  first?: Maybe<Scalars["Int"]>
-  postId?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
   category?: Maybe<Scalars["String"]>
-  skip?: Maybe<Scalars["Int"]>
+  first?: Maybe<Scalars["Int"]>
   name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  postId?: Maybe<Scalars["Int"]>
+  skip?: Maybe<Scalars["Int"]>
 }
 
 export type QueryMessagesArgs = {
   categoryId: Scalars["Int"]
 }
 
-export type Query_CategoryPostsMetaArgs = {
-  first?: Maybe<Scalars["Int"]>
-  postId?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
-  category?: Maybe<Scalars["String"]>
-  skip?: Maybe<Scalars["Int"]>
-  name?: Maybe<Scalars["String"]>
-}
-
 export type QueryPostArgs = {
-  first?: Maybe<Scalars["Int"]>
-  postId?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
   category?: Maybe<Scalars["String"]>
-  skip?: Maybe<Scalars["Int"]>
+  first?: Maybe<Scalars["Int"]>
   name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  postId?: Maybe<Scalars["Int"]>
+  skip?: Maybe<Scalars["Int"]>
 }
 
 export type QueryPostsArgs = {
-  first?: Maybe<Scalars["Int"]>
-  postId?: Maybe<Scalars["Int"]>
-  orderBy?: Maybe<Scalars["String"]>
   category?: Maybe<Scalars["String"]>
-  skip?: Maybe<Scalars["Int"]>
+  first?: Maybe<Scalars["Int"]>
   name?: Maybe<Scalars["String"]>
+  orderBy?: Maybe<Scalars["String"]>
+  postId?: Maybe<Scalars["Int"]>
+  skip?: Maybe<Scalars["Int"]>
 }
 
 export type QueryUserArgs = {
@@ -345,11 +345,11 @@ export type QueryUserArgs = {
 }
 
 export type RegisterInput = {
-  email: Scalars["Email"]
-  username: Scalars["String"]
-  password: Scalars["String"]
-  avatar?: Maybe<Scalars["String"]>
   about?: Maybe<Scalars["String"]>
+  avatar?: Maybe<Scalars["String"]>
+  email: Scalars["Email"]
+  password: Scalars["String"]
+  username: Scalars["String"]
 }
 
 export type Subscription = {
@@ -369,24 +369,24 @@ export type SubscriptionNewPrivateMessageArgs = {
 
 export type User = {
   __typename?: "User"
-  id: Scalars["ID"]
-  createdAt: Scalars["String"]
-  updatedAt: Scalars["String"]
-  online?: Maybe<Scalars["Boolean"]>
-  email: Scalars["Email"]
-  username: Scalars["String"]
-  avatar?: Maybe<Scalars["String"]>
   about?: Maybe<Scalars["String"]>
-  friends: Array<User>
-  privateMessages: Array<PrivateMessage>
+  avatar?: Maybe<Scalars["String"]>
   chatRooms: Array<Category>
+  createdAt: Scalars["String"]
+  email: Scalars["Email"]
+  friends: Array<User>
+  id: Scalars["ID"]
+  online?: Maybe<Scalars["Boolean"]>
+  privateMessages: Array<PrivateMessage>
+  updatedAt: Scalars["String"]
+  username: Scalars["String"]
 }
 
 export type UserLeaveJoinSubResponse = {
   __typename?: "UserLeaveJoinSubResponse"
+  category?: Maybe<Category>
   errors?: Maybe<Array<FieldError>>
   user?: Maybe<User>
-  category?: Maybe<Category>
 }
 
 export type UserLogoutMutationResponse = {
@@ -398,17 +398,17 @@ export type UserLogoutMutationResponse = {
 export type UserMutationResponse = {
   __typename?: "UserMutationResponse"
   errors?: Maybe<Array<FieldError>>
-  user?: Maybe<User>
   message?: Maybe<Message>
+  user?: Maybe<User>
 }
 
 export type Vote = {
   __typename?: "Vote"
-  id: Scalars["ID"]
+  castBy: User
   createdAt: Scalars["String"]
+  id: Scalars["ID"]
   updatedAt: Scalars["String"]
   value: Scalars["Int"]
-  castBy: User
 }
 
 export type VoteInput = {
@@ -419,8 +419,8 @@ export type VoteInput = {
 export type VoteMutationResponse = {
   __typename?: "VoteMutationResponse"
   errors?: Maybe<Array<FieldError>>
-  vote?: Maybe<Vote>
   post?: Maybe<Post>
+  vote?: Maybe<Vote>
 }
 
 export type _QueryMeta = {
@@ -429,51 +429,66 @@ export type _QueryMeta = {
   score?: Maybe<Scalars["Int"]>
 }
 
-export type CategoryDetailsFragment = { __typename?: "Category" } & Pick<
-  Category,
-  "createdAt" | "id" | "name"
->
+export type CategoryDetailsFragment = {
+  __typename?: "Category"
+  createdAt: string
+  id: string
+  name: string
+}
 
-export type CommentDetailsFragment = { __typename?: "Comment" } & Pick<
-  Comment,
-  "id" | "createdAt" | "updatedAt" | "body"
->
+export type CommentDetailsFragment = {
+  __typename?: "Comment"
+  id: string
+  createdAt: string
+  updatedAt: string
+  body: string
+}
 
-export type PostDetailsFragment = { __typename?: "Post" } & Pick<
-  Post,
-  | "id"
-  | "createdAt"
-  | "updatedAt"
-  | "title"
-  | "imageH"
-  | "imageW"
-  | "text"
-  | "image"
-  | "link"
->
+export type PostDetailsFragment = {
+  __typename?: "Post"
+  id: string
+  createdAt: string
+  updatedAt: string
+  title: string
+  imageH?: number | null | undefined
+  imageW?: number | null | undefined
+  text?: string | null | undefined
+  image?: string | null | undefined
+  link?: string | null | undefined
+}
 
-export type UserDetailsFragment = { __typename?: "User" } & Pick<
-  User,
-  "id" | "username" | "online"
->
+export type UserDetailsFragment = {
+  __typename?: "User"
+  id: string
+  username: string
+  online?: boolean | null | undefined
+}
 
-export type UserMeDetailsFragment = { __typename?: "User" } & Pick<
-  User,
-  "id" | "username" | "email" | "about" | "avatar"
->
+export type UserMeDetailsFragment = {
+  __typename?: "User"
+  id: string
+  username: string
+  email: any
+  about?: string | null | undefined
+  avatar?: string | null | undefined
+}
 
 export type CreateSubredditMutationVariables = Exact<{
   data: CategoryInput
 }>
 
-export type CreateSubredditMutation = { __typename?: "Mutation" } & {
-  createCategory: { __typename?: "CategoryMutationResponse" } & {
-    category?: Maybe<{ __typename?: "Category" } & CategoryDetailsFragment>
-    errors?: Maybe<
-      Array<
-        { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
-      >
-    >
+export type CreateSubredditMutation = {
+  __typename?: "Mutation"
+  createCategory: {
+    __typename?: "CategoryMutationResponse"
+    category?:
+      | { __typename?: "Category"; createdAt: string; id: string; name: string }
+      | null
+      | undefined
+    errors?:
+      | Array<{ __typename?: "FieldError"; field: string; message: string }>
+      | null
+      | undefined
   }
 }
 
@@ -481,15 +496,22 @@ export type JoinChatRoomMutationVariables = Exact<{
   data: CategoryInput
 }>
 
-export type JoinChatRoomMutation = { __typename?: "Mutation" } & {
-  joinChatRoom: { __typename?: "UserLeaveJoinSubResponse" } & {
-    category?: Maybe<
-      { __typename?: "Category" } & Pick<Category, "id" | "name"> & {
-          chatUsers?: Maybe<
-            Array<{ __typename?: "User" } & Pick<User, "id" | "username">>
-          >
+export type JoinChatRoomMutation = {
+  __typename?: "Mutation"
+  joinChatRoom: {
+    __typename?: "UserLeaveJoinSubResponse"
+    category?:
+      | {
+          __typename?: "Category"
+          id: string
+          name: string
+          chatUsers?:
+            | Array<{ __typename?: "User"; id: string; username: string }>
+            | null
+            | undefined
         }
-    >
+      | null
+      | undefined
   }
 }
 
@@ -497,31 +519,44 @@ export type CreateCommentMutationVariables = Exact<{
   data: CommentInput
 }>
 
-export type CreateCommentMutation = { __typename?: "Mutation" } & {
-  createComment: { __typename?: "CommentMutationResponse" } & {
-    comment?: Maybe<
-      { __typename?: "Comment" } & Pick<Comment, "id" | "body"> & {
-          createdBy: { __typename?: "User" } & Pick<User, "id" | "username">
-          post: { __typename?: "Post" } & Pick<Post, "id">
+export type CreateCommentMutation = {
+  __typename?: "Mutation"
+  createComment: {
+    __typename?: "CommentMutationResponse"
+    comment?:
+      | {
+          __typename?: "Comment"
+          id: string
+          body: string
+          createdBy: { __typename?: "User"; id: string; username: string }
+          post: { __typename?: "Post"; id: string }
         }
-    >
-    post?: Maybe<
-      { __typename?: "Post" } & Pick<Post, "id" | "title"> & {
-          totalComments?: Maybe<
-            { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-          >
-          totalVotes?: Maybe<
-            { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-          >
-          comments?: Maybe<
-            Array<
-              { __typename?: "Comment" } & Pick<Comment, "id"> & {
-                  createdBy: { __typename?: "User" } & Pick<User, "username">
-                }
-            >
-          >
+      | null
+      | undefined
+    post?:
+      | {
+          __typename?: "Post"
+          id: string
+          title: string
+          totalComments?:
+            | { __typename?: "_QueryMeta"; count?: number | null | undefined }
+            | null
+            | undefined
+          totalVotes?:
+            | { __typename?: "_QueryMeta"; count?: number | null | undefined }
+            | null
+            | undefined
+          comments?:
+            | Array<{
+                __typename?: "Comment"
+                id: string
+                createdBy: { __typename?: "User"; username: string }
+              }>
+            | null
+            | undefined
         }
-    >
+      | null
+      | undefined
   }
 }
 
@@ -529,36 +564,74 @@ export type CreateMessageMutationVariables = Exact<{
   data: MessageInput
 }>
 
-export type CreateMessageMutation = { __typename?: "Mutation" } & Pick<
-  Mutation,
-  "createMessage"
->
+export type CreateMessageMutation = {
+  __typename?: "Mutation"
+  createMessage: boolean
+}
 
 export type CreatePostMutationVariables = Exact<{
   data: CreatePostInput
 }>
 
-export type CreatePostMutation = { __typename?: "Mutation" } & {
-  createPost: { __typename?: "PostMutationResponse" } & {
-    post?: Maybe<
-      { __typename?: "Post" } & {
-        comments?: Maybe<
-          Array<
-            { __typename?: "Comment" } & {
-              createdBy: { __typename?: "User" } & UserDetailsFragment
-            } & CommentDetailsFragment
-          >
-        >
-        author: { __typename?: "User" } & UserDetailsFragment
-        category: { __typename?: "Category" } & CategoryDetailsFragment
-        totalComments?: Maybe<
-          { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-        >
-        totalVotes?: Maybe<
-          { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "score" | "count">
-        >
-      } & PostDetailsFragment
-    >
+export type CreatePostMutation = {
+  __typename?: "Mutation"
+  createPost: {
+    __typename?: "PostMutationResponse"
+    post?:
+      | {
+          __typename?: "Post"
+          id: string
+          createdAt: string
+          updatedAt: string
+          title: string
+          imageH?: number | null | undefined
+          imageW?: number | null | undefined
+          text?: string | null | undefined
+          image?: string | null | undefined
+          link?: string | null | undefined
+          comments?:
+            | Array<{
+                __typename?: "Comment"
+                id: string
+                createdAt: string
+                updatedAt: string
+                body: string
+                createdBy: {
+                  __typename?: "User"
+                  id: string
+                  username: string
+                  online?: boolean | null | undefined
+                }
+              }>
+            | null
+            | undefined
+          author: {
+            __typename?: "User"
+            id: string
+            username: string
+            online?: boolean | null | undefined
+          }
+          category: {
+            __typename?: "Category"
+            createdAt: string
+            id: string
+            name: string
+          }
+          totalComments?:
+            | { __typename?: "_QueryMeta"; count?: number | null | undefined }
+            | null
+            | undefined
+          totalVotes?:
+            | {
+                __typename?: "_QueryMeta"
+                score?: number | null | undefined
+                count?: number | null | undefined
+              }
+            | null
+            | undefined
+        }
+      | null
+      | undefined
   }
 }
 
@@ -566,9 +639,11 @@ export type DeletePostMutationVariables = Exact<{
   postId?: Maybe<Scalars["Int"]>
 }>
 
-export type DeletePostMutation = { __typename?: "Mutation" } & {
-  deletePost: { __typename?: "PostMutationResponse" } & {
-    post?: Maybe<{ __typename?: "Post" } & Pick<Post, "id">>
+export type DeletePostMutation = {
+  __typename?: "Mutation"
+  deletePost: {
+    __typename?: "PostMutationResponse"
+    post?: { __typename?: "Post"; id: string } | null | undefined
   }
 }
 
@@ -576,18 +651,35 @@ export type EditPostMutationVariables = Exact<{
   data: EditPostInput
 }>
 
-export type EditPostMutation = { __typename?: "Mutation" } & {
-  editPost: { __typename?: "PostMutationResponse" } & {
-    post?: Maybe<
-      { __typename?: "Post" } & {
-        category: { __typename?: "Category" } & CategoryDetailsFragment
-      } & PostDetailsFragment
-    >
-    errors?: Maybe<
-      Array<
-        { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
-      >
-    >
+export type EditPostMutation = {
+  __typename?: "Mutation"
+  editPost: {
+    __typename?: "PostMutationResponse"
+    post?:
+      | {
+          __typename?: "Post"
+          id: string
+          createdAt: string
+          updatedAt: string
+          title: string
+          imageH?: number | null | undefined
+          imageW?: number | null | undefined
+          text?: string | null | undefined
+          image?: string | null | undefined
+          link?: string | null | undefined
+          category: {
+            __typename?: "Category"
+            createdAt: string
+            id: string
+            name: string
+          }
+        }
+      | null
+      | undefined
+    errors?:
+      | Array<{ __typename?: "FieldError"; field: string; message: string }>
+      | null
+      | undefined
   }
 }
 
@@ -595,17 +687,27 @@ export type AddFriendMutationVariables = Exact<{
   data: AddUserInput
 }>
 
-export type AddFriendMutation = { __typename?: "Mutation" } & {
-  addFriend: { __typename?: "AddUserMutationResponse" } & {
-    me?: Maybe<{ __typename?: "User" } & Pick<User, "id" | "username">>
-    friend?: Maybe<
-      { __typename?: "User" } & Pick<User, "id" | "username" | "online">
-    >
-    errors?: Maybe<
-      Array<
-        { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
-      >
-    >
+export type AddFriendMutation = {
+  __typename?: "Mutation"
+  addFriend: {
+    __typename?: "AddUserMutationResponse"
+    me?:
+      | { __typename?: "User"; id: string; username: string }
+      | null
+      | undefined
+    friend?:
+      | {
+          __typename?: "User"
+          id: string
+          username: string
+          online?: boolean | null | undefined
+        }
+      | null
+      | undefined
+    errors?:
+      | Array<{ __typename?: "FieldError"; field: string; message: string }>
+      | null
+      | undefined
   }
 }
 
@@ -613,19 +715,25 @@ export type EditUserMutationVariables = Exact<{
   data: EditUserInput
 }>
 
-export type EditUserMutation = { __typename?: "Mutation" } & {
-  editUser: { __typename?: "UserMutationResponse" } & {
-    errors?: Maybe<
-      Array<
-        { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
-      >
-    >
-    user?: Maybe<
-      { __typename?: "User" } & Pick<
-        User,
-        "id" | "username" | "about" | "email" | "avatar"
-      >
-    >
+export type EditUserMutation = {
+  __typename?: "Mutation"
+  editUser: {
+    __typename?: "UserMutationResponse"
+    errors?:
+      | Array<{ __typename?: "FieldError"; field: string; message: string }>
+      | null
+      | undefined
+    user?:
+      | {
+          __typename?: "User"
+          id: string
+          username: string
+          about?: string | null | undefined
+          email: any
+          avatar?: string | null | undefined
+        }
+      | null
+      | undefined
   }
 }
 
@@ -633,42 +741,48 @@ export type LoginMutationVariables = Exact<{
   data: LoginInput
 }>
 
-export type LoginMutation = { __typename?: "Mutation" } & {
-  login: { __typename?: "UserMutationResponse" } & {
-    errors?: Maybe<
-      Array<
-        { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
-      >
-    >
-    user?: Maybe<
-      { __typename?: "User" } & Pick<User, "id" | "username" | "email">
-    >
+export type LoginMutation = {
+  __typename?: "Mutation"
+  login: {
+    __typename?: "UserMutationResponse"
+    errors?:
+      | Array<{ __typename?: "FieldError"; field: string; message: string }>
+      | null
+      | undefined
+    user?:
+      | { __typename?: "User"; id: string; username: string; email: any }
+      | null
+      | undefined
   }
 }
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never }>
 
-export type LogoutMutation = { __typename?: "Mutation" } & {
-  logout: { __typename?: "UserLogoutMutationResponse" } & Pick<
-    UserLogoutMutationResponse,
-    "message" | "success"
-  >
+export type LogoutMutation = {
+  __typename?: "Mutation"
+  logout: {
+    __typename?: "UserLogoutMutationResponse"
+    message?: string | null | undefined
+    success?: string | null | undefined
+  }
 }
 
 export type RegisterMutationVariables = Exact<{
   data: RegisterInput
 }>
 
-export type RegisterMutation = { __typename?: "Mutation" } & {
-  register: { __typename?: "UserMutationResponse" } & {
-    user?: Maybe<
-      { __typename?: "User" } & Pick<User, "id" | "username" | "email">
-    >
-    errors?: Maybe<
-      Array<
-        { __typename?: "FieldError" } & Pick<FieldError, "field" | "message">
-      >
-    >
+export type RegisterMutation = {
+  __typename?: "Mutation"
+  register: {
+    __typename?: "UserMutationResponse"
+    user?:
+      | { __typename?: "User"; id: string; username: string; email: any }
+      | null
+      | undefined
+    errors?:
+      | Array<{ __typename?: "FieldError"; field: string; message: string }>
+      | null
+      | undefined
   }
 }
 
@@ -676,25 +790,35 @@ export type SendPrivateMessageMutationVariables = Exact<{
   data: PrivateMessageInput
 }>
 
-export type SendPrivateMessageMutation = { __typename?: "Mutation" } & Pick<
-  Mutation,
-  "sendPrivateMessage"
->
+export type SendPrivateMessageMutation = {
+  __typename?: "Mutation"
+  sendPrivateMessage: boolean
+}
 
 export type CreateVoteMutationVariables = Exact<{
   data: VoteInput
 }>
 
-export type CreateVoteMutation = { __typename?: "Mutation" } & {
-  vote: { __typename?: "VoteMutationResponse" } & {
-    vote?: Maybe<{ __typename?: "Vote" } & Pick<Vote, "value" | "id">>
-    post?: Maybe<
-      { __typename?: "Post" } & Pick<Post, "id"> & {
-          totalVotes?: Maybe<
-            { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count" | "score">
-          >
+export type CreateVoteMutation = {
+  __typename?: "Mutation"
+  vote: {
+    __typename?: "VoteMutationResponse"
+    vote?: { __typename?: "Vote"; value: number; id: string } | null | undefined
+    post?:
+      | {
+          __typename?: "Post"
+          id: string
+          totalVotes?:
+            | {
+                __typename?: "_QueryMeta"
+                count?: number | null | undefined
+                score?: number | null | undefined
+              }
+            | null
+            | undefined
         }
-    >
+      | null
+      | undefined
   }
 }
 
@@ -705,36 +829,63 @@ export type CategoriesQueryVariables = Exact<{
   name?: Maybe<Scalars["String"]>
 }>
 
-export type CategoriesQuery = { __typename?: "Query" } & {
-  categories?: Maybe<
-    Array<{ __typename?: "Category" } & CategoryDetailsFragment>
-  >
+export type CategoriesQuery = {
+  __typename?: "Query"
+  categories?:
+    | Array<{
+        __typename?: "Category"
+        createdAt: string
+        id: string
+        name: string
+      }>
+    | null
+    | undefined
 }
 
 export type CategoryQueryVariables = Exact<{
   categoryId: Scalars["Int"]
 }>
 
-export type CategoryQuery = { __typename?: "Query" } & {
-  category?: Maybe<
-    { __typename?: "Category" } & Pick<Category, "id" | "name"> & {
-        chatUsers?: Maybe<
-          Array<
-            { __typename?: "User" } & Pick<User, "id" | "username" | "online">
-          >
-        >
+export type CategoryQuery = {
+  __typename?: "Query"
+  category?:
+    | {
+        __typename?: "Category"
+        id: string
+        name: string
+        chatUsers?:
+          | Array<{
+              __typename?: "User"
+              id: string
+              username: string
+              online?: boolean | null | undefined
+            }>
+          | null
+          | undefined
       }
-  >
+    | null
+    | undefined
 }
 
 export type CommentQueryVariables = Exact<{
   postId?: Maybe<Scalars["Int"]>
 }>
 
-export type CommentQuery = { __typename?: "Query" } & {
-  comment: { __typename?: "Comment" } & {
-    createdBy: { __typename?: "User" } & UserDetailsFragment
-  } & CommentDetailsFragment
+export type CommentQuery = {
+  __typename?: "Query"
+  comment: {
+    __typename?: "Comment"
+    id: string
+    createdAt: string
+    updatedAt: string
+    body: string
+    createdBy: {
+      __typename?: "User"
+      id: string
+      username: string
+      online?: boolean | null | undefined
+    }
+  }
 }
 
 export type CommentsQueryVariables = Exact<{
@@ -744,14 +895,24 @@ export type CommentsQueryVariables = Exact<{
   postId?: Maybe<Scalars["Int"]>
 }>
 
-export type CommentsQuery = { __typename?: "Query" } & {
-  comments?: Maybe<
-    Array<
-      { __typename?: "Comment" } & {
-        createdBy: { __typename?: "User" } & UserDetailsFragment
-      } & CommentDetailsFragment
-    >
-  >
+export type CommentsQuery = {
+  __typename?: "Query"
+  comments?:
+    | Array<{
+        __typename?: "Comment"
+        id: string
+        createdAt: string
+        updatedAt: string
+        body: string
+        createdBy: {
+          __typename?: "User"
+          id: string
+          username: string
+          online?: boolean | null | undefined
+        }
+      }>
+    | null
+    | undefined
 }
 
 export type CommentsForPostQueryVariables = Exact<{
@@ -759,58 +920,107 @@ export type CommentsForPostQueryVariables = Exact<{
   orderBy?: Maybe<Scalars["String"]>
 }>
 
-export type CommentsForPostQuery = { __typename?: "Query" } & {
-  post?: Maybe<
-    { __typename?: "Post" } & Pick<Post, "id"> & {
-        comments?: Maybe<
-          Array<
-            { __typename?: "Comment" } & {
-              createdBy: { __typename?: "User" } & UserDetailsFragment
-            } & CommentDetailsFragment
-          >
-        >
+export type CommentsForPostQuery = {
+  __typename?: "Query"
+  post?:
+    | {
+        __typename?: "Post"
+        id: string
+        comments?:
+          | Array<{
+              __typename?: "Comment"
+              id: string
+              createdAt: string
+              updatedAt: string
+              body: string
+              createdBy: {
+                __typename?: "User"
+                id: string
+                username: string
+                online?: boolean | null | undefined
+              }
+            }>
+          | null
+          | undefined
       }
-  >
+    | null
+    | undefined
 }
 
 export type ChatRoomMessagesQueryVariables = Exact<{
   categoryId: Scalars["Int"]
 }>
 
-export type ChatRoomMessagesQuery = { __typename?: "Query" } & {
-  messages?: Maybe<
-    Array<
-      { __typename?: "Message" } & Pick<
-        Message,
-        "id" | "createdAt" | "content"
-      > & {
-          sentBy: { __typename?: "User" } & Pick<User, "id" | "username">
-          category: { __typename?: "Category" } & Pick<Category, "id" | "name">
-        }
-    >
-  >
+export type ChatRoomMessagesQuery = {
+  __typename?: "Query"
+  messages?:
+    | Array<{
+        __typename?: "Message"
+        id: string
+        createdAt: string
+        content: string
+        sentBy: { __typename?: "User"; id: string; username: string }
+        category: { __typename?: "Category"; id: string; name: string }
+      }>
+    | null
+    | undefined
 }
 
 export type PostQueryVariables = Exact<{
   postId: Scalars["Int"]
 }>
 
-export type PostQuery = { __typename?: "Query" } & {
-  post?: Maybe<
-    { __typename?: "Post" } & {
-      category: { __typename?: "Category" } & CategoryDetailsFragment
-      author: { __typename?: "User" } & UserDetailsFragment
-      comments?: Maybe<
-        Array<{ __typename?: "Comment" } & CommentDetailsFragment>
-      >
-      totalComments?: Maybe<
-        { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-      >
-      totalVotes?: Maybe<
-        { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "score" | "count">
-      >
-    } & PostDetailsFragment
-  >
+export type PostQuery = {
+  __typename?: "Query"
+  post?:
+    | {
+        __typename?: "Post"
+        id: string
+        createdAt: string
+        updatedAt: string
+        title: string
+        imageH?: number | null | undefined
+        imageW?: number | null | undefined
+        text?: string | null | undefined
+        image?: string | null | undefined
+        link?: string | null | undefined
+        category: {
+          __typename?: "Category"
+          createdAt: string
+          id: string
+          name: string
+        }
+        author: {
+          __typename?: "User"
+          id: string
+          username: string
+          online?: boolean | null | undefined
+        }
+        comments?:
+          | Array<{
+              __typename?: "Comment"
+              id: string
+              createdAt: string
+              updatedAt: string
+              body: string
+            }>
+          | null
+          | undefined
+        totalComments?:
+          | { __typename?: "_QueryMeta"; count?: number | null | undefined }
+          | null
+          | undefined
+        totalVotes?:
+          | {
+              __typename?: "_QueryMeta"
+              score?: number | null | undefined
+              count?: number | null | undefined
+            }
+          | null
+          | undefined
+      }
+    | null
+    | undefined
 }
 
 export type PostsQueryVariables = Exact<{
@@ -820,125 +1030,206 @@ export type PostsQueryVariables = Exact<{
   category?: Maybe<Scalars["String"]>
 }>
 
-export type PostsQuery = { __typename?: "Query" } & {
-  posts?: Maybe<
-    Array<
-      { __typename?: "Post" } & {
-        category: { __typename?: "Category" } & CategoryDetailsFragment
-        author: { __typename?: "User" } & UserDetailsFragment
-        comments?: Maybe<
-          Array<{ __typename?: "Comment" } & CommentDetailsFragment>
-        >
-        totalComments?: Maybe<
-          { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-        >
-        totalVotes?: Maybe<
-          { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "score" | "count">
-        >
-      } & PostDetailsFragment
-    >
-  >
-  _allPostsMeta: { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-  _categoryPostsMeta: { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
+export type PostsQuery = {
+  __typename?: "Query"
+  posts?:
+    | Array<{
+        __typename?: "Post"
+        id: string
+        createdAt: string
+        updatedAt: string
+        title: string
+        imageH?: number | null | undefined
+        imageW?: number | null | undefined
+        text?: string | null | undefined
+        image?: string | null | undefined
+        link?: string | null | undefined
+        category: {
+          __typename?: "Category"
+          createdAt: string
+          id: string
+          name: string
+        }
+        author: {
+          __typename?: "User"
+          id: string
+          username: string
+          online?: boolean | null | undefined
+        }
+        comments?:
+          | Array<{
+              __typename?: "Comment"
+              id: string
+              createdAt: string
+              updatedAt: string
+              body: string
+            }>
+          | null
+          | undefined
+        totalComments?:
+          | { __typename?: "_QueryMeta"; count?: number | null | undefined }
+          | null
+          | undefined
+        totalVotes?:
+          | {
+              __typename?: "_QueryMeta"
+              score?: number | null | undefined
+              count?: number | null | undefined
+            }
+          | null
+          | undefined
+      }>
+    | null
+    | undefined
+  _allPostsMeta: {
+    __typename?: "_QueryMeta"
+    count?: number | null | undefined
+  }
+  _categoryPostsMeta: {
+    __typename?: "_QueryMeta"
+    count?: number | null | undefined
+  }
 }
 
 export type MeQueryVariables = Exact<{ [key: string]: never }>
 
-export type MeQuery = { __typename?: "Query" } & {
-  me?: Maybe<{ __typename?: "User" } & UserMeDetailsFragment>
+export type MeQuery = {
+  __typename?: "Query"
+  me?:
+    | {
+        __typename?: "User"
+        id: string
+        username: string
+        email: any
+        about?: string | null | undefined
+        avatar?: string | null | undefined
+      }
+    | null
+    | undefined
 }
 
 export type MyChatRoomsQueryVariables = Exact<{ [key: string]: never }>
 
-export type MyChatRoomsQuery = { __typename?: "Query" } & {
-  myChatRooms?: Maybe<
-    Array<
-      { __typename?: "Category" } & Pick<Category, "id" | "name"> & {
-          chatUsers?: Maybe<
-            Array<{ __typename?: "User" } & Pick<User, "id" | "username">>
-          >
-        }
-    >
-  >
+export type MyChatRoomsQuery = {
+  __typename?: "Query"
+  myChatRooms?:
+    | Array<{
+        __typename?: "Category"
+        id: string
+        name: string
+        chatUsers?:
+          | Array<{ __typename?: "User"; id: string; username: string }>
+          | null
+          | undefined
+      }>
+    | null
+    | undefined
 }
 
 export type MyFriendsQueryVariables = Exact<{ [key: string]: never }>
 
-export type MyFriendsQuery = { __typename?: "Query" } & {
-  myFriends?: Maybe<
-    Array<{ __typename?: "User" } & Pick<User, "id" | "username" | "online">>
-  >
+export type MyFriendsQuery = {
+  __typename?: "Query"
+  myFriends?:
+    | Array<{
+        __typename?: "User"
+        id: string
+        username: string
+        online?: boolean | null | undefined
+      }>
+    | null
+    | undefined
 }
 
 export type MyPrivateMessagesQueryVariables = Exact<{ [key: string]: never }>
 
-export type MyPrivateMessagesQuery = { __typename?: "Query" } & {
-  myPrivateMessages?: Maybe<
-    Array<
-      { __typename?: "PrivateMessage" } & Pick<
-        PrivateMessage,
-        "id" | "createdAt" | "body"
-      > & {
-          sentBy: { __typename?: "User" } & Pick<User, "id" | "username">
-          sentTo: { __typename?: "User" } & Pick<User, "id" | "username">
-        }
-    >
-  >
+export type MyPrivateMessagesQuery = {
+  __typename?: "Query"
+  myPrivateMessages?:
+    | Array<{
+        __typename?: "PrivateMessage"
+        id: string
+        createdAt: string
+        body: string
+        sentBy: { __typename?: "User"; id: string; username: string }
+        sentTo: { __typename?: "User"; id: string; username: string }
+      }>
+    | null
+    | undefined
 }
 
 export type UserQueryVariables = Exact<{
   data: EditUserInput
 }>
 
-export type UserQuery = { __typename?: "Query" } & {
-  user?: Maybe<
-    { __typename?: "User" } & Pick<
-      User,
-      "id" | "username" | "email" | "about" | "online"
-    >
-  >
+export type UserQuery = {
+  __typename?: "Query"
+  user?:
+    | {
+        __typename?: "User"
+        id: string
+        username: string
+        email: any
+        about?: string | null | undefined
+        online?: boolean | null | undefined
+      }
+    | null
+    | undefined
 }
 
 export type UsersQueryVariables = Exact<{ [key: string]: never }>
 
-export type UsersQuery = { __typename?: "Query" } & {
-  users?: Maybe<
-    Array<
-      { __typename?: "User" } & Pick<
-        User,
-        "id" | "username" | "email" | "about"
-      >
-    >
-  >
+export type UsersQuery = {
+  __typename?: "Query"
+  users?:
+    | Array<{
+        __typename?: "User"
+        id: string
+        username: string
+        email: any
+        about?: string | null | undefined
+      }>
+    | null
+    | undefined
 }
 
 export type UpdateMetaQueryVariables = Exact<{
   category?: Maybe<Scalars["String"]>
 }>
 
-export type UpdateMetaQuery = { __typename?: "Query" } & {
-  _allPostsMeta: { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
-  _categoryPostsMeta: { __typename?: "_QueryMeta" } & Pick<_QueryMeta, "count">
+export type UpdateMetaQuery = {
+  __typename?: "Query"
+  _allPostsMeta: {
+    __typename?: "_QueryMeta"
+    count?: number | null | undefined
+  }
+  _categoryPostsMeta: {
+    __typename?: "_QueryMeta"
+    count?: number | null | undefined
+  }
 }
 
 export type CategoryChatSubSubscriptionVariables = Exact<{
   categoryId: Scalars["Int"]
 }>
 
-export type CategoryChatSubSubscription = { __typename?: "Subscription" } & {
-  newMessage: { __typename?: "Message" } & Pick<
-    Message,
-    "id" | "createdAt" | "content"
-  > & {
-      sentBy: { __typename?: "User" } & Pick<User, "id" | "username">
-      category: { __typename?: "Category" } & Pick<Category, "id" | "name">
-    }
+export type CategoryChatSubSubscription = {
+  __typename?: "Subscription"
+  newMessage: {
+    __typename?: "Message"
+    id: string
+    createdAt: string
+    content: string
+    sentBy: { __typename?: "User"; id: string; username: string }
+    category: { __typename?: "Category"; id: string; name: string }
+  }
 }
 
 export type NewUserSubscriptionVariables = Exact<{ [key: string]: never }>
 
-export type NewUserSubscription = { __typename?: "Subscription" } & {
-  newUser: { __typename?: "User" } & Pick<User, "id" | "username" | "email">
+export type NewUserSubscription = {
+  __typename?: "Subscription"
+  newUser: { __typename?: "User"; id: string; username: string; email: any }
 }
 
 export const CategoryDetailsFragmentDoc = gql`

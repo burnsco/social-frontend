@@ -12,7 +12,7 @@ export default function SideMenuContainer() {
   })
   return (
     <Skeleton isLoaded={!loading}>
-      <Box bg={bg} minW="200px" maxW="300px" boxShadow="xs">
+      <Box borderRadius="sm" bg={bg} minW="200px" maxW="300px" boxShadow="xs">
         {data && data.me ? <AuthorizedSideMenu /> : <NoAuthSideMenu />}
       </Box>
     </Skeleton>

@@ -1,22 +1,7 @@
 module.exports = {
+  webpack5: false,
   images: {
     loader: "cloudinary",
     path: "https://res.cloudinary.com/dmztdsduf"
-  },
-  reactStrictMode: true,
-  webpack(config, options) {
-    config.module.rules.push({
-      test: /\.graphql$/,
-      exclude: /node_modules/,
-      use: [options.defaultLoaders.babel, { loader: "graphql-let/loader" }]
-    })
-
-    config.module.rules.push({
-      test: /\.ya?ml$/,
-      type: "json",
-      use: "yaml-loader"
-    })
-
-    return config
   }
 }
