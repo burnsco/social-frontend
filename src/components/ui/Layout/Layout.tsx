@@ -46,23 +46,26 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
         />
       </Head>
 
-      <Header />
-      <Box px={["0em", "1em", "3em", "4em"]} py="6em">
-        <Stack isInline spacing={14}>
-          <Box as="main" width="full">
-            {children}
-          </Box>
-          <Box
-            as="aside"
-            minW="25%"
-            maxW="350px"
-            display={["none", "none", "block", "block"]}
-          >
-            <SideMenuContainer />
-          </Box>
-        </Stack>
+      <Box border="1px solid red">
+        <Header />
+
+        <Box px={["0em", "1em", "3em", "4em"]} py="6em">
+          <Stack isInline spacing={14}>
+            <Box as="main" width="full">
+              {children}
+            </Box>
+            <Box
+              as="aside"
+              minW="25%"
+              maxW="350px"
+              display={["none", "none", "block", "block"]}
+            >
+              <SideMenuContainer />
+            </Box>
+          </Stack>
+        </Box>
+        <Footer />
       </Box>
-      <Footer />
     </>
   )
 }

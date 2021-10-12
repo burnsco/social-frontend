@@ -63,8 +63,8 @@ export default function HeaderMenu() {
 
   if (data && data?.me?.username && !loading) {
     return (
-      <HStack spacing={2}>
-        <ButtonGroup spacing="4">
+      <HStack>
+        <ButtonGroup spacing="4" mr="2">
           <DynamicChatRoomDrawer />
           <DynamicCreatePostDrawer />
           <DynamicCreateCategoryDrawer />

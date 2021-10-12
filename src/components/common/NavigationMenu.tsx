@@ -2,6 +2,9 @@ import { useCategoriesLazyQuery } from "@/generated/graphql"
 import {
   Button,
   Flex,
+  IconButton,
+  Input,
+  InputGroup,
   Menu,
   MenuButton,
   MenuItem,
@@ -9,9 +12,9 @@ import {
   useColorModeValue
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { BsArrowDown, BsArrowLeft } from "react-icons/bs"
-import { FaHome } from "react-icons/fa"
+import { FaHome, FaSearch } from "react-icons/fa"
 
 export default function NavigationMenu() {
   const router = useRouter()
@@ -34,6 +37,22 @@ export default function NavigationMenu() {
     }
     return "Home"
   }
+
+  const SearchNavigationTest = () => (
+    <Flex flexGrow={2}>
+      <InputGroup size="md" maxW="md">
+        <Input placeholder="Search" variant="filled" />
+
+        <IconButton
+          variant="outline"
+          colorScheme="teal"
+          aria-label="Search Site"
+          fontSize="20px"
+          icon={<FaSearch />}
+        />
+      </InputGroup>
+    </Flex>
+  )
 
   const NavigationDisplay = () => (
     <Flex flexGrow={2} mr={1}>
@@ -73,7 +92,7 @@ export default function NavigationMenu() {
   )
 
   if (!loading) {
-    return <NavigationDisplay />
+    return <SearchNavigationTest />
   }
   return null
 }

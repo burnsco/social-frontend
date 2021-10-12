@@ -51,7 +51,7 @@ export default function AddFriendPopOver() {
                 <FaUserFriends size="1.5em" />
               </HStack>
             </PopoverTrigger>
-            <PopoverContent bg={bg} h="37.5rem" w="40rem">
+            <PopoverContent bg={bg}>
               <PopoverHeader pt={4} fontWeight="bold" border="0">
                 Add Friend
               </PopoverHeader>

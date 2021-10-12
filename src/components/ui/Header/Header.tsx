@@ -66,20 +66,17 @@ const Header = () => {
   }, [newUser])
 
   return (
-    <chakra.header
+    <chakra.nav
       pos="fixed"
-      top="0"
-      zIndex="1"
+      zIndex="1000"
+      height="3.5rem"
+      maxW="1400px"
       bg={headerBG}
-      left="0"
-      right="0"
       boxShadow={headerShadow}
       width="full"
     >
-      <chakra.div height="3.5rem" maxW="1200px">
-        <HeaderContent />
-      </chakra.div>
-    </chakra.header>
+      <HeaderContent />
+    </chakra.nav>
   )
 }
 
