@@ -1,4 +1,4 @@
-import Logo2 from "@/components/common/Logo2"
+import Logo from "@/components/common/Logo"
 import { Flex } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 
@@ -15,7 +15,7 @@ const LogoSection = () => {
       display={{ base: "flex" }}
     >
       <Flex cursor="pointer" align="center" onClick={() => router.push("/")}>
-        <Logo2 />
+        <Logo />
       </Flex>
     </Flex>
   )
