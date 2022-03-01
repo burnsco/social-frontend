@@ -1,6 +1,6 @@
 import PostList from '@/components/pages/PostList'
 import { PostsDocument, PostsQuery } from '@/generated/graphql'
-import { addApolloState, initializeApollo } from '@/lib/apolloClient'
+import { initializeApollo } from '@/lib/apolloClient'
 import { allPostsQueryVars } from '@/types/pagination'
 
 export async function getStaticProps() {
@@ -11,12 +11,12 @@ export async function getStaticProps() {
     variables: allPostsQueryVars,
   })
 
-  return addApolloState(apolloClient, {
+  return {
     props: {
       initialApolloState: apolloClient.cache.extract(),
     },
     revalidate: 10,
-  })
+  }
 }
 
 export default function IndexPage() {

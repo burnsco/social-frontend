@@ -1,7 +1,7 @@
 import { ChakraField, ChakraSelect } from '@/components/common/index'
 import {
   CreatePostInput,
-  useCategoriesLazyQuery,
+  useCategoriesQuery,
   useCreatePostMutation,
 } from '@/generated/graphql'
 import { CreatePostInputType } from '@/types/Post/types'
@@ -54,7 +54,7 @@ export default function CreatePostDrawer() {
   const router = useRouter()
   const toast = useToast()
 
-  const [getSubreddits, { data }] = useCategoriesLazyQuery()
+  const { data, loading: loadingCategories } = useCategoriesQuery()
   const [submitPost, { loading }] = useCreatePostMutation()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -148,6 +148,10 @@ export default function CreatePostDrawer() {
       onDrop,
       maxFiles: 1,
     })
+
+  if (loadingCategories) {
+    return <div>...loading</div>
+  }
 
   return (
     <>

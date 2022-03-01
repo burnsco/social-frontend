@@ -8,8 +8,6 @@ import {
 } from '@apollo/client'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
-import { merge } from 'lodash'
-import isEqual from 'lodash/isEqual'
 import { useMemo } from 'react'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { cacheOptions } from './cache'
@@ -21,8 +19,6 @@ export const selectedChatRoomName: ReactiveVar<string> =
 let apolloClient: ApolloClient<NormalizedCacheObject>
 
 const WS_URI = `ws://localhost:4000/subscriptions`
-
-export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__'
 
 function createApolloClient() {
   const ssrMode = typeof window === 'undefined'
@@ -41,7 +37,7 @@ function createApolloClient() {
     reconnect: true,
   })
   const wsLink = new WebSocketLink(client)
-  const link = process.browser
+  const link = typeof window
     ? split(
         ({ query }) => {
           const operations = getMainDefinition(query)
@@ -65,41 +61,16 @@ export function initializeApollo(initialState: any = null) {
   const _apolloClient = apolloClient ?? createApolloClient()
 
   if (initialState) {
-    // Get existing cache, loaded during client side data fetching
     const existingCache = _apolloClient.extract()
-
-    // Merge the initialState from getStaticProps/getServerSideProps in the existing cache
-    const data = merge(existingCache, initialState, {
-      // combine arrays using object equality (like in sets)
-      arrayMerge: (destinationArray: any, sourceArray: any) => [
-        ...sourceArray,
-        ...destinationArray.filter((d: any) =>
-          sourceArray.every((s: any) => !isEqual(d, s))
-        ),
-      ],
-    })
-
-    // Restore the cache with the merged data
-    _apolloClient.cache.restore(data)
+    _apolloClient.cache.restore({ ...existingCache, ...initialState })
   }
-  // For SSG and SSR always create a new Apollo Client
   if (typeof window === 'undefined') return _apolloClient
-  // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient
 }
 
-export function addApolloState(client: any, pageProps: any) {
-  if (pageProps?.props) {
-    pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract()
-  }
-
-  return pageProps
-}
-
-export function useApollo(pageProps: any) {
-  const state = pageProps[APOLLO_STATE_PROP_NAME]
-  const store = useMemo(() => initializeApollo(state), [state])
+export function useApollo(initialState: any) {
+  const store = useMemo(() => initializeApollo(initialState), [initialState])
   return store
 }
