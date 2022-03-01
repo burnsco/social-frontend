@@ -17,7 +17,6 @@
     }
   ],
   "rules": {
-
     "@typescript-eslint/no-explicit-any": "off",
 
     "testing-library/no-debug": "off",
