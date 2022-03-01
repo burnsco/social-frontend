@@ -2,9 +2,9 @@ import {
   FormControl,
   FormErrorMessage,
   FormHelperText,
-  Select
-} from "@chakra-ui/react"
-import { useField } from "formik"
+  Select,
+} from '@chakra-ui/react'
+import { useField } from 'formik'
 
 type ChakraFieldProps = React.SelectHTMLAttributes<HTMLSelectElement> & {
   name: string

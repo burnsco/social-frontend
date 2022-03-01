@@ -1,9 +1,9 @@
-import { useCreateMessageMutation } from "@/generated/graphql"
-import { selectedChatRoomId } from "@/lib/apolloClient"
-import { useReactiveVar } from "@apollo/client"
-import { HStack } from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import ChatField from "../../Forms/ChatField"
+import { useCreateMessageMutation } from '@/generated/graphql'
+import { selectedChatRoomId } from '@/lib/apolloClient'
+import { useReactiveVar } from '@apollo/client'
+import { HStack } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import ChatField from '../../Forms/ChatField'
 
 export default function ChatInput() {
   const selectedCategoryId = useReactiveVar(selectedChatRoomId)
@@ -14,9 +14,9 @@ export default function ChatInput() {
       variables: {
         data: {
           content: values.content,
-          categoryId: Number(selectedCategoryId)
-        }
-      }
+          categoryId: Number(selectedCategoryId),
+        },
+      },
     })
 
     actions.resetForm()
@@ -25,7 +25,7 @@ export default function ChatInput() {
 
   return (
     <HStack w="full" p={1}>
-      <Formik initialValues={{ content: "" }} onSubmit={handleSubmitMessage}>
+      <Formik initialValues={{ content: '' }} onSubmit={handleSubmitMessage}>
         <Form>
           <ChatField
             label=""

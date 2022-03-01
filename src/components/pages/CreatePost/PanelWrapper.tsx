@@ -1,9 +1,9 @@
-import { ChakraField } from "@/components/common/index"
-import { TabPanel } from "@chakra-ui/react"
-import { FC } from "react"
+import { ChakraField } from '@/components/common/index'
+import { TabPanel } from '@chakra-ui/react'
+import { FC } from 'react'
 
 export const PannelWrapper: FC<{ children: React.ReactNode }> = ({
-  children
+  children,
 }) => (
   <TabPanel>
     <ChakraField

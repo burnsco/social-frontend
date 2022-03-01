@@ -1,8 +1,8 @@
-import { EditUserField } from "@/components/common/index"
-import { Layout } from "@/components/ui"
-import { useEditUserMutation, useMeQuery } from "@/generated/graphql"
-import { EditUserSchema } from "@/types/User/schemas"
-import { convertToErrorMap } from "@/utils/index"
+import { EditUserField } from '@/components/common/index'
+import { Layout } from '@/components/ui'
+import { useEditUserMutation, useMeQuery } from '@/generated/graphql'
+import { EditUserSchema } from '@/types/User/schemas'
+import { convertToErrorMap } from '@/utils/index'
 import {
   Accordion,
   AccordionButton,
@@ -19,48 +19,48 @@ import {
   Container,
   Spinner,
   useColorModeValue,
-  VisuallyHidden
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useCallback, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import request from "superagent"
+  VisuallyHidden,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import request from 'superagent'
 
 const AccountContent = (): JSX.Element => {
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  const [imageUrl, setImageUrl] = useState<string>("")
-  const bg = useColorModeValue("white", "#1A1A1B")
+  const [imageUrl, setImageUrl] = useState<string>('')
+  const bg = useColorModeValue('white', '#1A1A1B')
   const { data, loading: meQueryLoading } = useMeQuery()
   const [editUser, { loading: editUserLoading }] = useEditUserMutation()
 
   const accountFormData = [
-    { id: "edit-user-username-field", field: "username", title: "Username" },
+    { id: 'edit-user-username-field', field: 'username', title: 'Username' },
     {
-      id: "edit-user-password-field",
-      field: "password",
-      title: "Password",
-      type: "password"
+      id: 'edit-user-password-field',
+      field: 'password',
+      title: 'Password',
+      type: 'password',
     },
     {
-      id: "edit-user-email-field",
-      field: "email",
-      title: "Email",
-      type: "email"
+      id: 'edit-user-email-field',
+      field: 'email',
+      title: 'Email',
+      type: 'email',
     },
-    { id: "edit-user-about-field", field: "about", title: "About" }
+    { id: 'edit-user-about-field', field: 'about', title: 'About' },
   ]
 
-  const onDrop = useCallback(acceptedFile => {
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dmztdsduf/upload"
-    const cloudinaryPreset = "qapnebg6"
+  const onDrop = useCallback((acceptedFile) => {
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dmztdsduf/upload'
+    const cloudinaryPreset = 'qapnebg6'
 
     request
       .post(cloudinaryUrl)
-      .field("upload_preset", cloudinaryPreset)
-      .field("file", acceptedFile)
-      .field("multiple", false)
-      .on("progress", progress => {
+      .field('upload_preset', cloudinaryPreset)
+      .field('file', acceptedFile)
+      .field('multiple', false)
+      .on('progress', (progress) => {
         if (progress && progress.percent) {
           setUploadProgress(progress.percent)
         }
@@ -77,7 +77,7 @@ const AccountContent = (): JSX.Element => {
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
       onDrop,
-      maxFiles: 1
+      maxFiles: 1,
     })
 
   if (!meQueryLoading) {
@@ -87,11 +87,11 @@ const AccountContent = (): JSX.Element => {
           <Box shadow="sm" borderWidth="1px" rounded="md" bg={bg} p={5}>
             <Formik
               initialValues={{
-                username: data?.me?.username ?? "",
-                about: data?.me?.about ?? "",
+                username: data?.me?.username ?? '',
+                about: data?.me?.about ?? '',
                 email: data?.me?.email,
-                password: "",
-                avatar: imageUrl
+                password: '',
+                avatar: imageUrl,
               }}
               validationSchema={EditUserSchema}
               onSubmit={async (values, actions) => {
@@ -100,9 +100,9 @@ const AccountContent = (): JSX.Element => {
                   const response = await editUser({
                     variables: {
                       data: {
-                        ...values
-                      }
-                    }
+                        ...values,
+                      },
+                    },
                   })
                   if (response.data?.editUser?.errors) {
                     actions.setErrors(
@@ -116,7 +116,7 @@ const AccountContent = (): JSX.Element => {
                 <Form>
                   <Accordion allowToggle>
                     <>
-                      {accountFormData.map(formItem => (
+                      {accountFormData.map((formItem) => (
                         <AccordionItem key={formItem.id}>
                           <h2>
                             <AccordionButton>
@@ -129,7 +129,7 @@ const AccountContent = (): JSX.Element => {
                           <AccordionPanel pb={4}>
                             <EditUserField
                               name={formItem.field}
-                              type={formItem.type || "text"}
+                              type={formItem.type || 'text'}
                               id={formItem.field}
                               label=""
                             />
@@ -161,8 +161,8 @@ const AccountContent = (): JSX.Element => {
                                   ) : (
                                     <p>
                                       {uploadProgress === 0
-                                        ? "Drag and drop your avatar here, or click to select file"
-                                        : "Uploading..."}
+                                        ? 'Drag and drop your avatar here, or click to select file'
+                                        : 'Uploading...'}
                                     </p>
                                   )}
                                 </Center>

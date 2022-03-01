@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState } from 'react'
 
 type InitialState = boolean | (() => boolean)
 
@@ -7,7 +7,7 @@ export function useToggle(initialState: InitialState = false) {
 
   const on = useCallback(() => setValue(true), [])
   const off = useCallback(() => setValue(false), [])
-  const toggle = useCallback(() => setValue(prev => !prev), [])
+  const toggle = useCallback(() => setValue((prev) => !prev), [])
 
   return [value, { on, off, toggle }] as const
 }

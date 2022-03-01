@@ -1,18 +1,18 @@
-import { InputField } from "@/components/common/index"
-import { useCreateMessageMutation } from "@/generated/graphql"
-import { selectedChatRoomId } from "@/lib/apolloClient"
-import { useReactiveVar } from "@apollo/client"
+import { InputField } from '@/components/common/index'
+import { useCreateMessageMutation } from '@/generated/graphql'
+import { selectedChatRoomId } from '@/lib/apolloClient'
+import { useReactiveVar } from '@apollo/client'
 import {
   Box,
   Button,
   HStack,
   useColorModeValue,
-  VStack
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
+  VStack,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
 
 export default function ChatInput() {
-  const submitButtonColor = useColorModeValue("purple", "blue")
+  const submitButtonColor = useColorModeValue('purple', 'blue')
 
   const selectedCategoryId = useReactiveVar(selectedChatRoomId)
   const [submitMessage] = useCreateMessageMutation()
@@ -22,9 +22,9 @@ export default function ChatInput() {
       variables: {
         data: {
           content: values.content,
-          categoryId: Number(selectedCategoryId)
-        }
-      }
+          categoryId: Number(selectedCategoryId),
+        },
+      },
     })
 
     actions.resetForm()
@@ -33,7 +33,7 @@ export default function ChatInput() {
 
   return (
     <Box>
-      <Formik initialValues={{ content: "" }} onSubmit={handleSubmitMessage}>
+      <Formik initialValues={{ content: '' }} onSubmit={handleSubmitMessage}>
         <Form>
           <VStack w="full">
             <HStack w="full">

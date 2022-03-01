@@ -1,5 +1,5 @@
-import { Box, Button } from "@chakra-ui/react"
-import { memo } from "react"
+import { Box, Button } from '@chakra-ui/react'
+import { memo } from 'react'
 
 type MorePostsProps = {
   loadMorePosts: () => void
@@ -10,7 +10,7 @@ type MorePostsProps = {
 const ShowMorePosts = ({
   loadMorePosts,
   areMorePosts,
-  loadingMorePosts
+  loadingMorePosts,
 }: MorePostsProps) => {
   if (areMorePosts) {
     return (
@@ -20,7 +20,7 @@ const ShowMorePosts = ({
           onClick={() => loadMorePosts()}
           disabled={loadingMorePosts}
         >
-          {loadingMorePosts ? "Loading..." : "Show More"}
+          {loadingMorePosts ? 'Loading...' : 'Show More'}
         </Button>
       </Box>
     )

@@ -1,5 +1,5 @@
-import { ThemedContainer } from "@/components/common/ThemedContainer"
-import useNewUserNotification from "@/hooks/useNewUserNotify"
+import { ThemedContainer } from '@/components/common/ThemedContainer'
+import useNewUserNotification from '@/hooks/useNewUserNotify'
 import {
   Badge,
   chakra,
@@ -9,17 +9,16 @@ import {
   useColorMode,
   useColorModeValue,
   useSafeLayoutEffect,
-  useToast
-} from "@chakra-ui/react"
-import React from "react"
-import { FaMoon, FaSun } from "react-icons/fa"
-import NavSection from "./Center"
-import LogoSection from "./Left"
-import MenuIconsSection from "./Right"
+  useToast,
+} from '@chakra-ui/react'
+import { FaMoon, FaSun } from 'react-icons/fa'
+import NavSection from './Center'
+import LogoSection from './Left'
+import MenuIconsSection from './Right'
 
 const HeaderContent = () => {
   const { toggleColorMode: toggleMode } = useColorMode()
-  const text = useColorModeValue("dark", "light")
+  const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
 
   return (
@@ -40,27 +39,27 @@ const HeaderContent = () => {
   )
 }
 
-const Header = () => {
-  const headerBG = useColorModeValue("white", "#202020")
-  const headerShadow = useColorModeValue("md", "dark-lg")
-  const colorScheme = useColorModeValue("green", "orange")
+export default function Header() {
+  const headerBG = useColorModeValue('white', '#202020')
+  const headerShadow = useColorModeValue('md', 'dark-lg')
+  const colorScheme = useColorModeValue('green', 'orange')
   const toast = useToast()
   const newUser = useNewUserNotification()
 
   useSafeLayoutEffect(() => {
     if (newUser) {
       toast({
-        position: "bottom-left",
+        position: 'bottom-left',
         render: () => (
           <ThemedContainer p={4}>
             <Badge colorScheme={colorScheme} variant="solid" p={1}>
               {newUser}
-            </Badge>{" "}
+            </Badge>{' '}
             <Text as="em" color="gray.50">
               Has just joined the community!
             </Text>
           </ThemedContainer>
-        )
+        ),
       })
     }
   }, [newUser])
@@ -79,5 +78,3 @@ const Header = () => {
     </chakra.nav>
   )
 }
-
-export default Header

@@ -1,13 +1,14 @@
-import { ChakraField } from "@/components/common/index"
-import { useAddFriendMutation } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import convertToErrorMap from "@/utils/toErrorMap"
-import { gql } from "@apollo/client"
+import { useAddFriendMutation } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import convertToErrorMap from '@/utils/toErrorMap'
+import { gql } from '@apollo/client'
 import {
   Box,
   Button,
   ButtonGroup,
+  FormControl,
   HStack,
+  Input,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -17,48 +18,53 @@ import {
   PopoverHeader,
   PopoverTrigger,
   useColorModeValue,
+  useDisclosure,
   useToast,
-  VisuallyHidden
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import React from "react"
-import { FaUserFriends } from "react-icons/fa"
+  VisuallyHidden,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import React from 'react'
+import ReactFocusLock from 'react-focus-lock'
+import { FaUserFriends } from 'react-icons/fa'
 
 export default function AddFriendPopOver() {
   const [loggedInUser] = useLoggedInUser()
-
-  const bg = useColorModeValue("whitesmoke", "gray.900")
+  const { onOpen, onClose, isOpen } = useDisclosure()
+  const bg = useColorModeValue('whitesmoke', 'gray.900')
   const toast = useToast()
-  const buttonColor = useColorModeValue("purple", "blue")
+  const buttonColor = useColorModeValue('purple', 'blue')
 
   const [addFriend, { loading }] = useAddFriendMutation()
 
-  const initialFocusRef = React.useRef<HTMLButtonElement | null>(null)
+  const initialFocusRef = React.useRef<HTMLInputElement | null>(null)
 
   if (loading) return <VisuallyHidden>loading/adding friend</VisuallyHidden>
 
   return (
     <>
       <Popover
+        isOpen={isOpen}
         initialFocusRef={initialFocusRef}
-        placement="bottom"
-        closeOnBlur={true}
+        onOpen={onOpen}
+        onClose={onClose}
+        placement="right"
+        closeOnBlur={false}
       >
-        {({ isOpen, onClose }) => (
+        {({ onClose }) => (
           <>
             <PopoverTrigger>
               <HStack>
                 <FaUserFriends size="1.5em" />
               </HStack>
             </PopoverTrigger>
-            <PopoverContent bg={bg}>
-              <PopoverHeader pt={4} fontWeight="bold" border="0">
+            <PopoverContent bg={bg} p="2">
+              <PopoverHeader pt={2} fontWeight="bold" fontSize="lg" border="0">
                 Add Friend
               </PopoverHeader>
               <PopoverArrow />
               <PopoverCloseButton />
               <Formik
-                initialValues={{ username: "" }}
+                initialValues={{ username: '' }}
                 onSubmit={async (values, actions) => {
                   actions.setSubmitting(false)
                   let response
@@ -66,8 +72,8 @@ export default function AddFriendPopOver() {
                     response = await addFriend({
                       variables: {
                         data: {
-                          username: values.username
-                        }
+                          username: values.username,
+                        },
                       },
                       update(cache, { data }) {
                         if (loggedInUser && !data?.addFriend.errors) {
@@ -83,15 +89,15 @@ export default function AddFriendPopOver() {
                                       username
                                       online
                                     }
-                                  `
+                                  `,
                                 })
                                 return [newFriendRef, ...existingFriends]
-                              }
-                            }
+                              },
+                            },
                           })
                         }
                         return null
-                      }
+                      },
                     })
                   } catch (ex: any) {
                     console.log(ex)
@@ -111,52 +117,55 @@ export default function AddFriendPopOver() {
                     const { friend } = response.data.addFriend
                     toast({
                       id: `user-${friend.username}-added`,
-                      title: "Success",
+                      title: 'Success',
                       description: `User '${friend.username}' is now your friend `,
-                      status: "success",
+                      status: 'success',
                       duration: 9000,
-                      isClosable: true
+                      isClosable: true,
                     })
                     actions.resetForm()
                     onClose()
                   }
                 }}
               >
-                {({ isSubmitting }) => {
+                {({ isSubmitting, errors }) => {
                   return (
                     <Form>
-                      <PopoverBody>
-                        <ChakraField
-                          id="username"
-                          name="username"
-                          label="Username: "
-                        />
-                      </PopoverBody>
+                      <FormControl isInvalid={!!errors}>
+                        <PopoverBody my="4">
+                          <ReactFocusLock>
+                            <Input
+                              ref={initialFocusRef}
+                              id="username"
+                              name="username"
+                            />
+                          </ReactFocusLock>
+                        </PopoverBody>
 
-                      <PopoverFooter
-                        border="0"
-                        d="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                        pb={4}
-                      >
-                        <Box fontSize="sm">
-                          {isSubmitting ? "searching..." : null}
-                        </Box>
-                        <ButtonGroup size="sm">
-                          <Button onClick={onClose} colorScheme="red">
-                            Cancel
-                          </Button>
-                          <Button
-                            type="submit"
-                            isLoading={isSubmitting}
-                            colorScheme={buttonColor}
-                            ref={initialFocusRef}
-                          >
-                            Confirm
-                          </Button>
-                        </ButtonGroup>
-                      </PopoverFooter>
+                        <PopoverFooter
+                          border="0"
+                          d="flex"
+                          alignItems="center"
+                          justifyContent="space-between"
+                        >
+                          <Box fontSize="sm">
+                            {isSubmitting ? 'searching...' : null}
+                          </Box>
+                          <ButtonGroup size="sm">
+                            <Button onClick={onClose} colorScheme="red">
+                              Cancel
+                            </Button>
+                            <Button
+                              type="submit"
+                              isLoading={isSubmitting}
+                              isDisabled={!isSubmitting}
+                              colorScheme={buttonColor}
+                            >
+                              Confirm
+                            </Button>
+                          </ButtonGroup>
+                        </PopoverFooter>
+                      </FormControl>
                     </Form>
                   )
                 }}

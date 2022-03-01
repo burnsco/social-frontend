@@ -3,9 +3,9 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  InputRightAddon
-} from "@chakra-ui/react"
-import { useField } from "formik"
+  InputRightAddon,
+} from '@chakra-ui/react'
+import { useField } from 'formik'
 
 type ChakraFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string
@@ -25,7 +25,7 @@ export default function ChatField({
 
   return (
     <FormControl>
-      <FormLabel fontSize={`${size}` || "sm"} htmlFor={props.name || props.id}>
+      <FormLabel fontSize={`${size}` || 'sm'} htmlFor={props.name || props.id}>
         {label}
       </FormLabel>
       <InputGroup size="lg">

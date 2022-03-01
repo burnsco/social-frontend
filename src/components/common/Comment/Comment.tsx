@@ -1,7 +1,7 @@
-import { CommentQuery, useAddFriendMutation } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import { timeDifferenceForDate } from "@/utils/index"
-import { gql } from "@apollo/client"
+import { CommentQuery, useAddFriendMutation } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import { timeDifferenceForDate } from '@/utils/index'
+import { gql } from '@apollo/client'
 import {
   Box,
   Button,
@@ -15,25 +15,25 @@ import {
   MenuList,
   Stack,
   Text,
-  useColorModeValue
-} from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import React from "react"
-import { BsLightning } from "react-icons/bs"
-import { FaUserCircle } from "react-icons/fa"
-import { IoAddCircle } from "react-icons/io5"
-import { MdEmail, MdMessage } from "react-icons/md"
-import { OfflineCircle, OnlineCircle } from "../OnlineOffline"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { BsLightning } from 'react-icons/bs'
+import { FaUserCircle } from 'react-icons/fa'
+import { IoAddCircle } from 'react-icons/io5'
+import { MdEmail, MdMessage } from 'react-icons/md'
+import { OfflineCircle, OnlineCircle } from '../OnlineOffline'
 
 export default function CommentPage({ comment }: CommentQuery) {
   const [loggedInUser] = useLoggedInUser()
   const [addFriend, { loading }] = useAddFriendMutation()
 
-  const bg = useColorModeValue("white", "#202020")
-  const stackColor = useColorModeValue("gray.600", "gray.400")
+  const bg = useColorModeValue('white', '#202020')
+  const stackColor = useColorModeValue('gray.600', 'gray.400')
   const router = useRouter()
-  const huh = useColorModeValue("darkblue", "lightblue")
-  const votebg = useColorModeValue("gray.50", "#313131")
+  const huh = useColorModeValue('darkblue', 'lightblue')
+  const votebg = useColorModeValue('gray.50', '#313131')
 
   // #TODO fix voting, make it like or nothing
   // click the lightening bolt on/off
@@ -99,8 +99,8 @@ export default function CommentPage({ comment }: CommentQuery) {
                       response = await addFriend({
                         variables: {
                           data: {
-                            username: comment?.createdBy.username
-                          }
+                            username: comment?.createdBy.username,
+                          },
                         },
                         update(cache, { data }) {
                           if (loggedInUser) {
@@ -116,17 +116,17 @@ export default function CommentPage({ comment }: CommentQuery) {
                                         username
                                         online
                                       }
-                                    `
+                                    `,
                                   })
                                   return [newFriendRef, ...existingFriends]
-                                }
-                              }
+                                },
+                              },
                             })
                           }
                           throw new Error(
-                            "Something went wrong adding a friend"
+                            'Something went wrong adding a friend'
                           )
-                        }
+                        },
                       })
                     } catch (ex: any) {
                       console.log(ex)
@@ -136,11 +136,11 @@ export default function CommentPage({ comment }: CommentQuery) {
                   <IoAddCircle />
                   <Box ml={3}>Add to Friends</Box>
                 </MenuItem>
-                <MenuItem onClick={() => router.push("/user/account")}>
+                <MenuItem onClick={() => router.push('/user/account')}>
                   <MdEmail />
                   <Box ml={3}>Message</Box>
                 </MenuItem>
-                <MenuItem onClick={() => router.push("/user/account")}>
+                <MenuItem onClick={() => router.push('/user/account')}>
                   <MdMessage />
                   <Box ml={3}>Chat</Box>
                 </MenuItem>
@@ -151,8 +151,8 @@ export default function CommentPage({ comment }: CommentQuery) {
               color={huh}
               ml="1"
               _hover={{
-                textDecoration: "underline",
-                cursor: "pointer"
+                textDecoration: 'underline',
+                cursor: 'pointer',
               }}
             ></Box>
             <Box display="inline" ml="2">

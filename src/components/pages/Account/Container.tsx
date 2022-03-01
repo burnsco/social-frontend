@@ -1,5 +1,5 @@
-import Layout from "@/components/ui/Layout"
-import AccountContent from "./Account"
+import Layout from '@/components/ui/Layout'
+import AccountContent from './Account'
 
 const AccountContainer = () => {
   return (

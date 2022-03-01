@@ -1,17 +1,17 @@
-import { Layout } from "@/components/ui/index"
-import { useMeQuery } from "@/generated/graphql"
+import { Layout } from '@/components/ui/index'
+import { useMeQuery } from '@/generated/graphql'
 import {
   Avatar,
   Box,
   Heading,
   Text,
   useColorModeValue,
-  VisuallyHidden
-} from "@chakra-ui/react"
+  VisuallyHidden,
+} from '@chakra-ui/react'
 
 export default function MePage() {
   const { data, loading } = useMeQuery()
-  const bg = useColorModeValue("white", "#1A1A1B")
+  const bg = useColorModeValue('white', '#1A1A1B')
 
   if (loading) return <VisuallyHidden>Loading your profile</VisuallyHidden>
 

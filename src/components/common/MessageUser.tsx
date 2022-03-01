@@ -1,6 +1,6 @@
-import { InputField } from "@/components/common/index"
-import { User, useSendPrivateMessageMutation } from "@/generated/graphql"
-import { sleep } from "@/utils/sleepy"
+import { InputField } from '@/components/common/index'
+import { User, useSendPrivateMessageMutation } from '@/generated/graphql'
+import { sleep } from '@/utils/sleepy'
 import {
   AlertDialog,
   AlertDialogBody,
@@ -14,11 +14,11 @@ import {
   chakra,
   IconButton,
   Tooltip,
-  useToast
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRef, useState } from "react"
-import { RiMailSendLine } from "react-icons/ri"
+  useToast,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRef, useState } from 'react'
+import { RiMailSendLine } from 'react-icons/ri'
 
 const MessageUser = (user: Partial<User>) => {
   const toast = useToast()
@@ -64,7 +64,7 @@ const MessageUser = (user: Partial<User>) => {
               </AlertDialogHeader>
 
               <Formik
-                initialValues={{ body: "" }}
+                initialValues={{ body: '' }}
                 onSubmit={async (values, actions) => {
                   actions.setSubmitting(false)
                   sleep(1000)
@@ -72,18 +72,18 @@ const MessageUser = (user: Partial<User>) => {
                     variables: {
                       data: {
                         userId: Number(user.id),
-                        body: values.body
-                      }
-                    }
+                        body: values.body,
+                      },
+                    },
                   })
                   if (!response.errors) {
                     toast({
-                      position: "bottom-left",
+                      position: 'bottom-left',
                       render: () => (
                         <Box color="white" p={3} bg="blue.500">
                           Message Sent!
                         </Box>
-                      )
+                      ),
                     })
                     onClose()
                   }

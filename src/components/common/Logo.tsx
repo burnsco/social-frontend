@@ -1,4 +1,4 @@
-import { chakra, ChakraProps } from "@chakra-ui/react"
+import { chakra, ChakraProps } from '@chakra-ui/react'
 
 const Logo = (props: ChakraProps) => {
   return (

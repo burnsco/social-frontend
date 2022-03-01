@@ -1,16 +1,16 @@
-import { InputField } from "@/components/common/index"
-import { useCreateCommentMutation } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import CreateCommentSchema from "@/types/Comment/schemas"
-import { gql } from "@apollo/client"
-import { Box, Button, useColorModeValue, useToast } from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRouter } from "next/router"
+import { InputField } from '@/components/common/index'
+import { useCreateCommentMutation } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import CreateCommentSchema from '@/types/Comment/schemas'
+import { gql } from '@apollo/client'
+import { Box, Button, useColorModeValue, useToast } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 
 const SubmitCommentForm = () => {
-  const buttomScheme = useColorModeValue("purple", "orange")
-  const bg = useColorModeValue("white", "#202020")
-  const hoverBc = useColorModeValue("gray.200", "gray.600")
+  const buttomScheme = useColorModeValue('purple', 'orange')
+  const bg = useColorModeValue('white', '#202020')
+  const hoverBc = useColorModeValue('gray.200', 'gray.600')
   const toast = useToast()
   const loggedInUser = useLoggedInUser()
   const router = useRouter()
@@ -26,13 +26,13 @@ const SubmitCommentForm = () => {
       rounded="md"
       p={3}
       _hover={{
-        boxShadow: "lg",
-        borderWidth: "1px",
-        borderColor: hoverBc
+        boxShadow: 'lg',
+        borderWidth: '1px',
+        borderColor: hoverBc,
       }}
     >
       <Formik
-        initialValues={{ body: "", postId: 0 }}
+        initialValues={{ body: '', postId: 0 }}
         validationSchema={CreateCommentSchema}
         onSubmit={async (values, actions) => {
           actions.setSubmitting(false)
@@ -40,8 +40,8 @@ const SubmitCommentForm = () => {
             variables: {
               data: {
                 body: values.body,
-                postId: Number(postId)
-              }
+                postId: Number(postId),
+              },
             },
             update(cache, { data }) {
               cache.modify({
@@ -62,13 +62,13 @@ const SubmitCommentForm = () => {
                             online
                           }
                         }
-                      `
+                      `,
                     })
                     return [newCommentRef, ...existingComments]
-                  }
-                }
+                  },
+                },
               })
-            }
+            },
           })
           if (
             response &&
@@ -78,16 +78,16 @@ const SubmitCommentForm = () => {
           ) {
             toast({
               id: `${response.data.createComment.comment.body}-toast`,
-              title: "Your comment was posted successfully.",
-              status: "success",
+              title: 'Your comment was posted successfully.',
+              status: 'success',
               duration: 3000,
-              isClosable: true
+              isClosable: true,
             })
             actions.resetForm()
           }
         }}
       >
-        {formik => (
+        {(formik) => (
           <Form>
             <InputField id="body" name="body" label="" textarea />
             <Button
@@ -107,12 +107,12 @@ const SubmitCommentForm = () => {
       </Formik>
       {mutationError &&
         toast({
-          id: "error",
-          title: "An error occurred.",
-          description: "There was an error trying to submit your comment",
-          status: "error",
+          id: 'error',
+          title: 'An error occurred.',
+          description: 'There was an error trying to submit your comment',
+          status: 'error',
           duration: 3000,
-          isClosable: true
+          isClosable: true,
         })}
     </Box>
   )

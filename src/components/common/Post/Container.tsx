@@ -1,11 +1,11 @@
-import { Box, useColorModeValue } from "@chakra-ui/react"
+import { Box, useColorModeValue } from '@chakra-ui/react'
 
 const PostContainer: React.FC<{ children: React.ReactNode; bg: string }> = ({
   children,
-  bg
+  bg,
 }): JSX.Element => {
-  const bc = useColorModeValue("gray.100", "#313131")
-  const hoverbc = useColorModeValue("gray.200", "gray.600")
+  const bc = useColorModeValue('gray.100', '#313131')
+  const hoverbc = useColorModeValue('gray.200', 'gray.600')
   return (
     <Box
       boxShadow="sm"
@@ -18,9 +18,9 @@ const PostContainer: React.FC<{ children: React.ReactNode; bg: string }> = ({
       width="100%"
       maxH="800px"
       _hover={{
-        boxShadow: "md",
-        borderWidth: "1px",
-        borderColor: hoverbc
+        boxShadow: 'md',
+        borderWidth: '1px',
+        borderColor: hoverbc,
       }}
     >
       {children}

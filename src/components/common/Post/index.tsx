@@ -1,14 +1,14 @@
-import { PostQuery } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import { Alert, Flex, useColorModeValue } from "@chakra-ui/react"
-import PostBody from "./Body"
-import PostContainer from "./Container"
-import PostFooter from "./Footer"
-import PostHeader from "./Header"
-import VoteBox from "./VoteBox"
+import { PostQuery } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import { Alert, Flex, useColorModeValue } from '@chakra-ui/react'
+import PostBody from './Body'
+import PostContainer from './Container'
+import PostFooter from './Footer'
+import PostHeader from './Header'
+import VoteBox from './VoteBox'
 
 export default function NewPost(props: PostQuery) {
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
   const [loggedInUser] = useLoggedInUser()
 
   if (props.post) {

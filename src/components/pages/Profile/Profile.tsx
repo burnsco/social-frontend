@@ -1,8 +1,8 @@
-import { ChakraField } from "@/components/common/index"
-import Layout from "@/components/ui/Layout"
-import { useEditUserMutation, useMeQuery } from "@/generated/graphql"
-import useCloudDrop from "@/hooks/useCloudDrop"
-import { EditUserSchema } from "@/types/User/schemas"
+import { ChakraField } from '@/components/common/index'
+import Layout from '@/components/ui/Layout'
+import { useEditUserMutation, useMeQuery } from '@/generated/graphql'
+import useCloudDrop from '@/hooks/useCloudDrop'
+import { EditUserSchema } from '@/types/User/schemas'
 import {
   Alert,
   AlertIcon,
@@ -10,9 +10,9 @@ import {
   Button,
   Progress,
   Spinner,
-  useColorModeValue
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
 
 const ProfilePage = () => {
   useCloudDrop()
@@ -22,9 +22,9 @@ const ProfilePage = () => {
     uploadProgress,
     getRootProps,
     getInputProps,
-    isDragActive
+    isDragActive,
   } = useCloudDrop()
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
 
   const { data, loading } = useMeQuery()
 
@@ -40,11 +40,11 @@ const ProfilePage = () => {
         <Box shadow="sm" borderWidth="1px" rounded="md" p={4} bg={bg}>
           <Formik
             initialValues={{
-              username: data?.me?.username ?? "",
-              about: data?.me?.about ?? "",
-              email: data?.me?.email ?? "",
-              password: "",
-              avatar: data?.me?.avatar ?? ""
+              username: data?.me?.username ?? '',
+              about: data?.me?.about ?? '',
+              email: data?.me?.email ?? '',
+              password: '',
+              avatar: data?.me?.avatar ?? '',
             }}
             validationSchema={EditUserSchema}
             onSubmit={(values, actions) => {
@@ -56,9 +56,9 @@ const ProfilePage = () => {
                       username: values.username,
                       about: values.about,
                       email: values.about,
-                      avatar: imageUrl
-                    }
-                  }
+                      avatar: imageUrl,
+                    },
+                  },
                 })
               }, 1000)
             }}

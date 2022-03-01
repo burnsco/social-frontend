@@ -1,4 +1,4 @@
-import { useMeLazyQuery } from "@/generated/graphql"
+import { useMeLazyQuery } from '@/generated/graphql'
 import {
   Avatar,
   Box,
@@ -8,9 +8,9 @@ import {
   ListItem,
   Spacer,
   Stack,
-  Text
-} from "@chakra-ui/react"
-import React from "react"
+  Text,
+} from '@chakra-ui/react'
+import React from 'react'
 
 export default function ChatList(props: any) {
   const { handleSubscription } = props
@@ -25,7 +25,7 @@ export default function ChatList(props: any) {
   const messagesEndRef = React.useRef<HTMLDivElement | null>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   React.useEffect(() => {
@@ -43,8 +43,8 @@ export default function ChatList(props: any) {
                 direction="row"
                 bg={
                   message.sentBy.username === meData?.me?.username
-                    ? "gray.500"
-                    : "gray.800"
+                    ? 'gray.500'
+                    : 'gray.800'
                 }
               >
                 <Avatar

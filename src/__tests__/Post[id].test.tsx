@@ -1,71 +1,72 @@
-import PostAndCommentsPage from "@/components/pages/SinglePost/SingePostPage"
-import { PostDocument } from "@/generated/graphql"
-import { render, waitForElementToBeRemoved } from "@/utils/test-utils"
-import { MockedProvider } from "@apollo/client/testing"
-import "@testing-library/jest-dom"
+import PostAndCommentsPage from '@/components/pages/SinglePost/SingePostPage'
+import { PostDocument } from '@/generated/graphql'
+import { render, waitForElementToBeRemoved } from '@/utils/test-utils'
+import { MockedProvider } from '@apollo/client/testing'
+import '@testing-library/jest-dom'
+import { screen } from '@testing-library/react'
 
-const useRouter = jest.spyOn(require("next/router"), "useRouter")
+const useRouter = jest.spyOn(require('next/router'), 'useRouter')
 
 const mocks = {
   request: {
     query: PostDocument,
     variables: {
-      postId: "1"
-    }
+      postId: '1',
+    },
   },
   result: {
     data: {
       post: {
         author: {
-          id: "1",
-          username: "bob"
+          id: '1',
+          username: 'bob',
         },
         category: {
-          id: "1",
-          name: "react"
+          id: '1',
+          name: 'react',
         },
         comments: [],
-        createdAt: "1603212919000",
-        id: "1",
-        image: "",
-        link: "",
-        text: "you agree?",
-        title: "react rocks!",
+        createdAt: '1603212919000',
+        id: '1',
+        image: '',
+        link: '',
+        text: 'you agree?',
+        title: 'react rocks!',
         totalComments: {
-          count: 0
+          count: 0,
         },
         totalVotes: {
           count: 0,
-          score: null
+          score: null,
         },
-        updatedAt: "1603212919000",
-        video: ""
-      }
-    }
-  }
+        updatedAt: '1603212919000',
+        video: '',
+      },
+    },
+  },
 }
 
-jest.mock("next/dynamic", () => () => {
+jest.mock('next/dynamic', () => () => {
   const DynamicComponent = () => null
-  DynamicComponent.displayName = "LoadableComponent"
+  DynamicComponent.displayName = 'LoadableComponent'
   DynamicComponent.preload = jest.fn()
   return DynamicComponent
 })
 
-describe("Single Post", () => {
+describe('Single Post', () => {
   it("Author/Category/Text/Title renders.' ", async () => {
     useRouter.mockImplementation(() => ({
-      route: "/r/[category]/[id]",
-      pathname: "/r/[category]/[id]",
-      query: { id: "1", category: "react" },
-      asPath: "/r/react/1"
+      route: '/r/[category]/[id]',
+      pathname: '/r/[category]/[id]',
+      query: { id: '1', category: 'react' },
+      asPath: '/r/react/1',
     }))
 
     const { getByText } = render(
       <MockedProvider
         defaultOptions={{
-          watchQuery: { fetchPolicy: "no-cache" },
-          query: { fetchPolicy: "no-cache" }
+          watchQuery: { fetchPolicy: 'no-cache' },
+          query: { fetchPolicy: 'no-cache' },
         }}
         mocks={[mocks]}
         addTypename={false}
@@ -74,17 +75,17 @@ describe("Single Post", () => {
       </MockedProvider>
     )
 
-    const loading = getByText(/loading/i)
+    const loading = screen.getByText(/loading/i)
     expect(loading).toBeInTheDocument()
 
     await waitForElementToBeRemoved(loading).then(() => {
-      const author = getByText(/bob/i)
+      const author = screen.getByText(/bob/i)
       expect(author).toBeInTheDocument()
-      const category = getByText(/react rocks!/i)
+      const category = screen.getByText(/react rocks!/i)
       expect(category).toBeInTheDocument()
-      const text = getByText(/you agree?/i)
+      const text = screen.getByText(/you agree?/i)
       expect(text).toBeInTheDocument()
-      const title = getByText(/react rocks!/i)
+      const title = screen.getByText(/react rocks!/i)
       expect(title).toBeInTheDocument()
     })
   })

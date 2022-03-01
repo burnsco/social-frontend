@@ -1,14 +1,14 @@
-import { useCommentsForPostQuery } from "@/generated/graphql"
-import { Skeleton, Stack, Text } from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import CommentPage from "./index"
+import { useCommentsForPostQuery } from '@/generated/graphql'
+import { Skeleton, Stack, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import CommentPage from './index'
 
 const CommentsPageWithData = () => {
   const router = useRouter()
   const postId = router.query.id
 
   const { data, loading } = useCommentsForPostQuery({
-    variables: { postId: Number(postId) }
+    variables: { postId: Number(postId) },
   })
 
   if (data && data.post && data.post.comments) {

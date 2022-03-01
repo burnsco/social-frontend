@@ -5,9 +5,9 @@ import {
   FormLabel,
   Input,
   Textarea,
-  useColorModeValue
-} from "@chakra-ui/react"
-import { useField } from "formik"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { useField } from 'formik'
 
 type ChakraFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string
@@ -26,11 +26,11 @@ export default function InputField({
   ...props
 }: ChakraFieldProps) {
   const [field, { error, touched }] = useField(props)
-  const bg = useColorModeValue("gray.100", "black")
+  const bg = useColorModeValue('gray.100', 'black')
 
   return (
     <FormControl isInvalid={!!error}>
-      <FormLabel fontSize={`${size}` || "sm"} htmlFor={props.name}>
+      <FormLabel fontSize={`${size}` || 'sm'} htmlFor={props.name}>
         {label}
       </FormLabel>
       {textarea ? (
@@ -40,7 +40,6 @@ export default function InputField({
           bg={bg}
           focusBorderColor="red.300"
           aria-describedby={`${props.id}-feedback ${props.id}-help`}
-          type={type}
           id={field.name}
           placeholder={props.placeholder}
         />
@@ -50,7 +49,6 @@ export default function InputField({
           {...props}
           focusBorderColor="red.300"
           aria-describedby={`${props.id}-feedback ${props.id}-help`}
-          type={type}
           id={field.name}
           placeholder={props.placeholder}
         />

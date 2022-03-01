@@ -1,9 +1,9 @@
-import { ChakraField } from "@/components/common/index"
-import { useCreateSubredditMutation } from "@/generated/graphql"
-import { CategorySchema } from "@/types/Category/schemas"
-import { CategoryInputType } from "@/types/Category/types"
-import { convertToErrorMap } from "@/utils/index"
-import { gql } from "@apollo/client"
+import { ChakraField } from '@/components/common/index'
+import { useCreateSubredditMutation } from '@/generated/graphql'
+import { CategorySchema } from '@/types/Category/schemas'
+import { CategoryInputType } from '@/types/Category/types'
+import { convertToErrorMap } from '@/utils/index'
+import { gql } from '@apollo/client'
 import {
   Button,
   chakra,
@@ -18,19 +18,19 @@ import {
   Tooltip,
   useColorModeValue,
   useDisclosure,
-  useToast
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRouter } from "next/router"
-import { useRef } from "react"
-import { MdCreateNewFolder } from "react-icons/md"
+  useToast,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
+import { useRef } from 'react'
+import { MdCreateNewFolder } from 'react-icons/md'
 
 function CreateCategoryDrawer() {
-  const drawerBG = useColorModeValue("whitesmoke", "gray.900")
+  const drawerBG = useColorModeValue('whitesmoke', 'gray.900')
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
-  const buttonColor = useColorModeValue("purple", "blue")
+  const buttonColor = useColorModeValue('purple', 'blue')
   const [createCategory, { loading }] = useCreateSubredditMutation()
   const btnRef = useRef<HTMLButtonElement | null>(null)
 
@@ -56,7 +56,7 @@ function CreateCategoryDrawer() {
       </Tooltip>
       <Drawer
         isOpen={isOpen}
-        placement="bottom"
+        placement="right"
         onClose={onClose}
         finalFocusRef={btnRef}
       >
@@ -74,8 +74,8 @@ function CreateCategoryDrawer() {
                 response = await createCategory({
                   variables: {
                     data: {
-                      name: values.name
-                    }
+                      name: values.name,
+                    },
                   },
                   update(cache, { data }) {
                     if (!data?.createCategory.errors) {
@@ -89,14 +89,14 @@ function CreateCategoryDrawer() {
                                   id
                                   name
                                 }
-                              `
+                              `,
                             })
                             return [newCategoryRef, ...existingCategories]
-                          }
-                        }
+                          },
+                        },
                       })
                     }
-                  }
+                  },
                 })
               } catch (ex) {
                 console.log(ex)
@@ -107,10 +107,10 @@ function CreateCategoryDrawer() {
                   id: `${response.data.createCategory.category.name}-category`,
                   title: `${response.data.createCategory.category.name}!`,
                   description:
-                    "Your subreddit/category was created successfully.",
-                  status: "success",
+                    'Your subreddit/category was created successfully.',
+                  status: 'success',
                   duration: 9000,
-                  isClosable: true
+                  isClosable: true,
                 })
                 router.push(`/r/${response?.data.createCategory.category.name}`)
                 onClose()

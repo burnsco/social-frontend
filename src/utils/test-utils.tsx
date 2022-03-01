@@ -1,8 +1,8 @@
-import { ChakraProvider } from "@chakra-ui/react"
-import theme from "@chakra-ui/theme"
-import { render, RenderOptions } from "@testing-library/react"
-import * as React from "react"
-export * from "@testing-library/react"
+import { ChakraProvider } from '@chakra-ui/react'
+import theme from '@chakra-ui/theme'
+import { render, RenderOptions } from '@testing-library/react'
+import * as React from 'react'
+export * from '@testing-library/react'
 // override render method
 export { customRender as render }
 

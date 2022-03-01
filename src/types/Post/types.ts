@@ -1,11 +1,11 @@
-import { CreatePostInput } from "@/generated/graphql"
+import { CreatePostInput } from '@/generated/graphql'
 
 export const CreatePostInputType: CreatePostInput = {
   categoryId: 0,
-  title: "",
-  text: "",
-  link: "",
-  image: "",
+  title: '',
+  text: '',
+  link: '',
+  image: '',
   imageW: undefined,
-  imageH: undefined
+  imageH: undefined,
 }

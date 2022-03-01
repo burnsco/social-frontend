@@ -1,5 +1,5 @@
-import { ChakraField } from "@/components/common/index"
-import { PannelWrapper } from "./PanelWrapper"
+import { ChakraField } from '@/components/common/index'
+import { PannelWrapper } from './PanelWrapper'
 
 export const RegularPost = () => (
   <PannelWrapper>

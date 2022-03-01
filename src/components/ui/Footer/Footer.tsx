@@ -1,6 +1,10 @@
-import MessageUser from "@/components/common/MessageUser"
-import { OfflineCircle, OnlineCircle } from "@/components/common/OnlineOffline"
-import { useMyFriendsLazyQuery, User } from "@/generated/graphql"
+import MessageUser from '@/components/common/MessageUser'
+import { OfflineCircle, OnlineCircle } from '@/components/common/OnlineOffline'
+import {
+  useMyFriendsQuery,
+  User,
+  useSendPrivateMessageMutation,
+} from '@/generated/graphql'
 import {
   Avatar,
   Badge,
@@ -25,26 +29,21 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Spacer,
-  useColorModeValue
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import React, { useEffect } from "react"
-import { FaUserFriends } from "react-icons/fa"
-import { ImSpinner } from "react-icons/im"
-import { useSendPrivateMessageMutation } from "../../../generated/graphql"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import React from 'react'
+import { FaUserFriends } from 'react-icons/fa'
+import { ImSpinner } from 'react-icons/im'
 
 // create apollo variables for each chat room (chat user session) ?
 // create a subscription to a chat with each friend (much like chat)
 // or just show them if they have a messag length of > 0
 
 export default function Footer() {
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
 
-  const [fetchFriends, { data, loading, refetch }] = useMyFriendsLazyQuery({
-    ssr: false
-  })
-
-  useEffect(() => fetchFriends(), [fetchFriends])
+  const { data, loading, error } = useMyFriendsQuery()
 
   const FriendsCount = () => {
     if (data && data.myFriends && data.myFriends.length > 0) {
@@ -63,10 +62,9 @@ export default function Footer() {
 
   const FriendsMenu = () => (
     <>
-      {data && data.myFriends && refetch ? (
+      {data && data.myFriends ? (
         <Menu>
           <MenuButton
-            onClick={() => refetch()}
             as={Button}
             rightIcon={!loading ? <FaUserFriends /> : <ImSpinner />}
           >
@@ -96,39 +94,6 @@ export default function Footer() {
     </>
   )
 
-  const ChatMenu = () => (
-    <>
-      {data && data.myFriends && refetch ? (
-        <Menu>
-          <MenuButton
-            onClick={() => refetch()}
-            as={Button}
-            rightIcon={!loading ? <FaUserFriends /> : <ImSpinner />}
-          >
-            <FriendsCount />
-            FRIENDS
-          </MenuButton>
-          <MenuList>
-            {data.myFriends.map((user: any) => (
-              <MenuItem key={`friend-${user.id}`}>
-                <Avatar
-                  size="xs"
-                  name="Ryan Florence"
-                  src="https://bit.ly/ryan-florence"
-                  mr={3}
-                />
-                {user.username} {user && <MessageUser {...user} />}
-                {user.online ? <OnlineCircle /> : <OfflineCircle />}
-              </MenuItem>
-            ))}
-          </MenuList>
-        </Menu>
-      ) : (
-        <Heading>No Friends</Heading>
-      )}
-    </>
-  )
-
   function FooterContent() {
     const initialFocusRef = React.useRef<HTMLInputElement | null>(null)
 
@@ -138,9 +103,9 @@ export default function Footer() {
       const response = await submitMessage({
         variables: {
           data: {
-            ...values
-          }
-        }
+            ...values,
+          },
+        },
       })
 
       actions.resetForm()
@@ -160,9 +125,6 @@ export default function Footer() {
             >
               <PopoverTrigger>
                 <Box
-                  onClick={() => {
-                    if (refetch !== undefined) refetch()
-                  }}
                   as={Button}
                   rightIcon={!loading ? <FaUserFriends /> : <ImSpinner />}
                 >
@@ -198,7 +160,7 @@ export default function Footer() {
                 <PopoverFooter p={0}>
                   <InputGroup w="full" size="md">
                     <Formik
-                      initialValues={{ body: "", userId: user.id }}
+                      initialValues={{ body: '', userId: user.id }}
                       onSubmit={handleSubmitMessage}
                     >
                       <Form>

@@ -1,5 +1,5 @@
-import { Box, Button, Skeleton, Spinner } from "@chakra-ui/react"
-import { memo } from "react"
+import { Box, Button, Skeleton, Spinner } from '@chakra-ui/react'
+import { memo } from 'react'
 
 type MoreCommentsProps = {
   loadMoreComments: () => void
@@ -10,7 +10,7 @@ type MoreCommentsProps = {
 const ShowMoreComments = ({
   loadMoreComments,
   areMoreComments,
-  loadingMoreComments
+  loadingMoreComments,
 }: MoreCommentsProps) => {
   return (
     <Box m={2}>
@@ -21,7 +21,7 @@ const ShowMoreComments = ({
             onClick={() => loadMoreComments()}
             disabled={loadingMoreComments}
           >
-            {loadingMoreComments ? <Spinner /> : "Show More"}
+            {loadingMoreComments ? <Spinner /> : 'Show More'}
           </Button>
         )}
       </Skeleton>

@@ -7,10 +7,10 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text
-} from "@chakra-ui/react"
-import { useField } from "formik"
-import { useState } from "react"
+  Text,
+} from '@chakra-ui/react'
+import { useField } from 'formik'
+import { useState } from 'react'
 
 type ChakraFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string
@@ -36,8 +36,8 @@ export default function PasswordField({
 
   return (
     <FormControl isInvalid={!!error}>
-      <FormLabel fontSize={`${size}` || "sm"} htmlFor={props.name || props.id}>
-        {label}{" "}
+      <FormLabel fontSize={`${size}` || 'sm'} htmlFor={props.name || props.id}>
+        {label}{' '}
         {showFeedback ? (
           <Text
             fontSize="md"
@@ -47,7 +47,7 @@ export default function PasswordField({
             display="inline"
             color="greenyellow"
           >
-            {!error && field.value.trim().length > 6 && "✓"}
+            {!error && field.value.trim().length > 6 && '✓'}
           </Text>
         ) : null}
       </FormLabel>
@@ -57,14 +57,14 @@ export default function PasswordField({
           {...props}
           focusBorderColor="red.300"
           aria-describedby={`${props.id}-feedback ${props.id}-help`}
-          type={show ? "text" : "password"}
+          type={show ? 'text' : 'password'}
           onFocus={handleFocus}
           id={field.name}
           placeholder={props.placeholder}
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="md" onClick={handleClick}>
-            {show ? "Hide" : "Show"}
+            {show ? 'Hide' : 'Show'}
           </Button>
         </InputRightElement>
       </InputGroup>

@@ -1,19 +1,15 @@
-import NewPost from "@/components/common/Post"
-import { usePostsLazyQuery } from "@/generated/graphql"
-import { allPostsQueryVars } from "@/types/pagination"
-import { NetworkStatus } from "@apollo/client"
-import { Box, Text, VisuallyHidden, VStack } from "@chakra-ui/react"
-import { useEffect } from "react"
-import ShowMorePosts from "./showMore"
+import NewPost from '@/components/common/Post'
+import { usePostsQuery } from '@/generated/graphql'
+import { allPostsQueryVars } from '@/types/pagination'
+import { NetworkStatus } from '@apollo/client'
+import { Box, Text, VisuallyHidden, VStack } from '@chakra-ui/react'
+import ShowMorePosts from './showMore'
 
 export default function Posts() {
-  const [fetchPosts, { loading, data, fetchMore, networkStatus }] =
-    usePostsLazyQuery({
-      variables: allPostsQueryVars,
-      notifyOnNetworkStatusChange: true
-    })
-
-  useEffect(() => fetchPosts(), [fetchPosts])
+  const { loading, data, fetchMore, networkStatus } = usePostsQuery({
+    variables: allPostsQueryVars,
+    notifyOnNetworkStatusChange: true,
+  })
 
   const loadingMorePosts = networkStatus === NetworkStatus.fetchMore
 
@@ -25,8 +21,8 @@ export default function Posts() {
     if (fetchMore) {
       fetchMore({
         variables: {
-          skip: data?.posts?.length ?? 0
-        }
+          skip: data?.posts?.length ?? 0,
+        },
       })
     }
   }

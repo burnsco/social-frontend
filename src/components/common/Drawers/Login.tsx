@@ -1,9 +1,9 @@
-import { ChakraField } from "@/components/common/index"
-import { MeDocument, useLoginMutation } from "@/generated/graphql"
-import { LoginSchema } from "@/types/User/schemas"
-import { LoginUserInputType } from "@/types/User/types"
-import { convertToErrorMap } from "@/utils/index"
-import { sleep } from "@/utils/sleepy"
+import { ChakraField } from '@/components/common/index'
+import { MeDocument, useLoginMutation } from '@/generated/graphql'
+import { LoginSchema } from '@/types/User/schemas'
+import { LoginUserInputType } from '@/types/User/types'
+import { convertToErrorMap } from '@/utils/index'
+import { sleep } from '@/utils/sleepy'
 import {
   Button,
   Drawer,
@@ -16,11 +16,11 @@ import {
   Stack,
   useColorModeValue,
   useDisclosure,
-  useToast
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRouter } from "next/router"
-import { useRef } from "react"
+  useToast,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
+import { useRef } from 'react'
 
 export default function LoginDrawer() {
   const router = useRouter()
@@ -28,9 +28,9 @@ export default function LoginDrawer() {
   const toast = useToast()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef<HTMLButtonElement | null>(null)
-  const colorScheme = useColorModeValue("purple", "blue")
-  const buttonScheme = useColorModeValue("purple", "orange")
-  const drawerBG = useColorModeValue("whitesmoke", "gray.900")
+  const colorScheme = useColorModeValue('purple', 'blue')
+  const buttonScheme = useColorModeValue('purple', 'orange')
+  const drawerBG = useColorModeValue('whitesmoke', 'gray.900')
 
   return (
     <>
@@ -62,18 +62,18 @@ export default function LoginDrawer() {
                 variables: {
                   data: {
                     email: values.email,
-                    password: values.password
-                  }
+                    password: values.password,
+                  },
                 },
                 update: (cache, { data }) => {
                   cache.writeQuery({
                     query: MeDocument,
                     data: {
-                      __typename: "Query",
-                      me: data?.login.user
-                    }
+                      __typename: 'Query',
+                      me: data?.login.user,
+                    },
                   })
-                }
+                },
               })
               if (response?.data?.login?.errors) {
                 setErrors(convertToErrorMap(response?.data?.login?.errors))
@@ -81,12 +81,12 @@ export default function LoginDrawer() {
                 toast({
                   id: `${response?.data?.login?.user?.username}-toast`,
                   title: `Welcome ${response?.data?.login?.user?.username}!`,
-                  description: "You were logged in successfully",
-                  status: "success",
+                  description: 'You were logged in successfully',
+                  status: 'success',
                   duration: 2000,
-                  isClosable: true
+                  isClosable: true,
                 })
-                router.push("/")
+                router.push('/')
               }
             }}
           >

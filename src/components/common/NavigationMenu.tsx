@@ -1,4 +1,4 @@
-import { useCategoriesLazyQuery } from "@/generated/graphql"
+import { useCategoriesQuery } from '@/generated/graphql'
 import {
   Button,
   Flex,
@@ -9,33 +9,30 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  useColorModeValue
-} from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import React, { useEffect } from "react"
-import { BsArrowDown, BsArrowLeft } from "react-icons/bs"
-import { FaHome, FaSearch } from "react-icons/fa"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import { BsArrowDown, BsArrowLeft } from 'react-icons/bs'
+import { FaHome, FaSearch } from 'react-icons/fa'
 
 export default function NavigationMenu() {
   const router = useRouter()
 
-  const [fetchCategories, { loading, data }] = useCategoriesLazyQuery()
+  const { loading, data } = useCategoriesQuery()
 
-  useEffect(() => fetchCategories(), [fetchCategories])
-
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
 
   const renderPath = () => {
     if (router && router.pathname) {
-      if (router.pathname === "/") {
-        return "Home"
+      if (router.pathname === '/') {
+        return 'Home'
       } else if (!router.query.category) {
         return `${router.asPath}`
       } else {
         return `${router.query.category}`
       }
     }
-    return "Home"
+    return 'Home'
   }
 
   const SearchNavigationTest = () => (

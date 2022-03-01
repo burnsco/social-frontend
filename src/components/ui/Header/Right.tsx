@@ -1,4 +1,4 @@
-import { useLogoutMutation, useMeQuery } from "@/generated/graphql"
+import { useLogoutMutation, useMeQuery } from '@/generated/graphql'
 import {
   Avatar,
   Box,
@@ -13,49 +13,44 @@ import {
   MenuList,
   Stack,
   useColorModeValue,
-  VisuallyHidden
-} from "@chakra-ui/react"
-import dynamic from "next/dynamic"
-import { useRouter } from "next/router"
-import { AiOutlineLogout } from "react-icons/ai"
-import { FaUserCircle } from "react-icons/fa"
-import { MdSettings } from "react-icons/md"
-import AddFriendPopOver from "../../common/AddFriendPopOver"
+  VisuallyHidden,
+} from '@chakra-ui/react'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import { AiOutlineLogout } from 'react-icons/ai'
+import { FaUserCircle } from 'react-icons/fa'
+import { MdSettings } from 'react-icons/md'
+import AddFriendPopOver from '../../common/AddFriendPopOver'
 
 const DynamicChatRoomDrawer = dynamic(
-  () => import("@/components/common/Drawers/Chat"),
+  () => import('@/components/common/Drawers/Chat'),
   { ssr: false }
 )
 
 const DynamicRegisterDrawer = dynamic(
-  () => import("@/components/common/Drawers/Register"),
+  () => import('@/components/common/Drawers/Register'),
   { ssr: false }
 )
 
 const DynamicLoginDrawer = dynamic(
-  () => import("@/components/common/Drawers/Login"),
+  () => import('@/components/common/Drawers/Login'),
   {
-    ssr: false
+    ssr: false,
   }
 )
 
 const DynamicCreateCategoryDrawer = dynamic(
-  () => import("@/components/common/Drawers/CreateSubreddit"),
+  () => import('@/components/common/Drawers/CreateSubreddit'),
   { ssr: false }
 )
 const DynamicCreatePostDrawer = dynamic(
-  () => import("@/components/common/Drawers/CreatePost"),
-  { ssr: false }
-)
-
-const DynamicAddFriendDrawer = dynamic(
-  () => import("@/components/common/Drawers/AddFriend"),
+  () => import('@/components/common/Drawers/CreatePost'),
   { ssr: false }
 )
 
 export default function HeaderMenu() {
   const router = useRouter()
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
   const { data, loading } = useMeQuery({ ssr: false })
   const [logout, { client }] = useLogoutMutation()
 
@@ -80,7 +75,7 @@ export default function HeaderMenu() {
               <Avatar
                 size="xs"
                 name="Ryan Florence"
-                src={data?.me.avatar || "https://bit.ly/ryan-florence"}
+                src={data?.me.avatar || 'https://bit.ly/ryan-florence'}
               />
             }
             size="md"
@@ -89,19 +84,19 @@ export default function HeaderMenu() {
           <MenuList opacity="0.7" bg={bg}>
             <MenuGroup title={data.me.username} color="lightsteelblue">
               <MenuDivider />
-              <MenuItem onClick={() => router.push("/user")}>
+              <MenuItem onClick={() => router.push('/user')}>
                 <FaUserCircle />
                 <Box ml={3}>Profile</Box>
               </MenuItem>
-              <MenuItem onClick={() => router.push("/user/account")}>
+              <MenuItem onClick={() => router.push('/user/account')}>
                 <MdSettings />
                 <Box ml={3}>Account</Box>
               </MenuItem>
-              <MenuItem onClick={() => router.push("/user/account")}>
+              <MenuItem onClick={() => router.push('/user/account')}>
                 <MdSettings />
                 <Box ml={3}>Friends</Box>
               </MenuItem>
-              <MenuItem onClick={() => router.push("/user/account")}>
+              <MenuItem onClick={() => router.push('/user/account')}>
                 <MdSettings />
                 <Box ml={3}>Messages</Box>
               </MenuItem>
@@ -113,7 +108,7 @@ export default function HeaderMenu() {
                 onClick={async () => {
                   await logout()
                   await client.resetStore()
-                  await router.push("/")
+                  await router.push('/')
                 }}
               >
                 <AiOutlineLogout />

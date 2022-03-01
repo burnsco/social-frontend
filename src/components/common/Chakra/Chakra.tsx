@@ -1,5 +1,5 @@
-import theme from "@/styles/theme"
-import { ChakraProvider, ColorModeScript } from "@chakra-ui/react"
+import theme from '@/styles/theme'
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 
 interface ChakraProps {
   children: React.ReactNode

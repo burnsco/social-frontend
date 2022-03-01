@@ -1,6 +1,6 @@
-import { useCategoryLazyQuery } from "@/generated/graphql"
-import { selectedChatRoomId } from "@/lib/apolloClient"
-import { useReactiveVar } from "@apollo/client"
+import { useCategoryQuery } from '@/generated/graphql'
+import { selectedChatRoomId } from '@/lib/apolloClient'
+import { useReactiveVar } from '@apollo/client'
 import {
   Avatar,
   Box,
@@ -8,18 +8,14 @@ import {
   List,
   ListItem,
   Skeleton,
-  Stack
-} from "@chakra-ui/react"
-import React, { useEffect } from "react"
+  Stack,
+} from '@chakra-ui/react'
 
 export default function ChatUsers() {
   const chatId = useReactiveVar(selectedChatRoomId)
-  const [getChatRoomUsers, { data, loading }] = useCategoryLazyQuery()
-
-  useEffect(
-    () => getChatRoomUsers({ variables: { categoryId: Number(chatId) } }),
-    [getChatRoomUsers, chatId]
-  )
+  const { data, loading, error } = useCategoryQuery({
+    variables: { categoryId: Number(chatId) },
+  })
 
   if (data && data.category && data.category.chatUsers) {
     return (

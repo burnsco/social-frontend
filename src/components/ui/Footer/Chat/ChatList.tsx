@@ -7,9 +7,9 @@ import {
   ListItem,
   Spacer,
   Stack,
-  Text
-} from "@chakra-ui/react"
-import React from "react"
+  Text,
+} from '@chakra-ui/react'
+import React from 'react'
 
 export default function ChatList(props: any) {
   const { handleSubscription } = props
@@ -22,7 +22,7 @@ export default function ChatList(props: any) {
   const messagesEndRef = React.useRef<HTMLDivElement | null>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   React.useEffect(() => {
@@ -30,22 +30,22 @@ export default function ChatList(props: any) {
   }, [data])
 
   const colorSchemes = [
-    "blue",
-    "cyan",
-    "gray",
-    "green",
-    "orange",
-    "pink",
-    "purple",
-    "red",
-    "teal",
-    "yellow",
-    "linkedin",
-    "facebook",
-    "messenger",
-    "whatsapp",
-    "twitter",
-    "telegram"
+    'blue',
+    'cyan',
+    'gray',
+    'green',
+    'orange',
+    'pink',
+    'purple',
+    'red',
+    'teal',
+    'yellow',
+    'linkedin',
+    'facebook',
+    'messenger',
+    'whatsapp',
+    'twitter',
+    'telegram',
   ]
 
   if (!loading && data && data.messages) {

@@ -1,8 +1,8 @@
-import DeletePostDialog from "@/components/common/DeletePostDialog"
-import { useAddFriendMutation, User } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import { timeDifferenceForDate } from "@/utils/index"
-import { gql } from "@apollo/client"
+import DeletePostDialog from '@/components/common/DeletePostDialog'
+import { useAddFriendMutation, User } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import { timeDifferenceForDate } from '@/utils/index'
+import { gql } from '@apollo/client'
 import {
   Box,
   Button,
@@ -16,14 +16,14 @@ import {
   MenuList,
   Spacer,
   useColorModeValue,
-  useToast
-} from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import React from "react"
-import { FaUserCircle } from "react-icons/fa"
-import { IoAddCircle } from "react-icons/io5"
-import { MdEmail, MdMessage } from "react-icons/md"
-import { OfflineCircle, OnlineCircle } from "../OnlineOffline"
+  useToast,
+} from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { FaUserCircle } from 'react-icons/fa'
+import { IoAddCircle } from 'react-icons/io5'
+import { MdEmail, MdMessage } from 'react-icons/md'
+import { OfflineCircle, OnlineCircle } from '../OnlineOffline'
 
 type PostHeaderType = {
   category?: string | null
@@ -38,11 +38,11 @@ export default function PostHeader({
   author,
   createdAt,
   postId,
-  updatedAt
+  updatedAt,
 }: PostHeaderType) {
   const [loggedInUser] = useLoggedInUser()
-  const fontColor = useColorModeValue("#1A1A1B", "gray.200")
-  const bg = useColorModeValue("white", "#202020")
+  const fontColor = useColorModeValue('#1A1A1B', 'gray.200')
+  const bg = useColorModeValue('white', '#202020')
   const router = useRouter()
   const toast = useToast()
   const [addFriend, { loading }] = useAddFriendMutation()
@@ -54,8 +54,8 @@ export default function PostHeader({
         response = await addFriend({
           variables: {
             data: {
-              username
-            }
+              username,
+            },
           },
           update(cache, { data }) {
             if (loggedInUser && !data?.addFriend.errors) {
@@ -71,15 +71,15 @@ export default function PostHeader({
                           username
                           online
                         }
-                      `
+                      `,
                     })
                     return [newFriendRef, ...existingFriends]
-                  }
-                }
+                  },
+                },
               })
             }
             return null
-          }
+          },
         })
       } catch (ex) {
         return ex
@@ -94,11 +94,11 @@ export default function PostHeader({
         const { friend } = response.data.addFriend
         toast({
           id: `user-${friend.username}-added`,
-          title: "Success",
+          title: 'Success',
           description: `User '${friend.username}' is now your friend `,
-          status: "success",
+          status: 'success',
           duration: 9000,
-          isClosable: true
+          isClosable: true,
         })
       }
     }
@@ -119,11 +119,11 @@ export default function PostHeader({
         <IoAddCircle />
         <Box ml={3}>Add to Friends</Box>
       </MenuItem>
-      <MenuItem onClick={() => router.push("/user/account")}>
+      <MenuItem onClick={() => router.push('/user/account')}>
         <MdEmail />
         <Box ml={3}>Message</Box>
       </MenuItem>
-      <MenuItem onClick={() => router.push("/user/account")}>
+      <MenuItem onClick={() => router.push('/user/account')}>
         <MdMessage />
         <Box ml={3}>Chat</Box>
       </MenuItem>
@@ -179,13 +179,13 @@ export default function PostHeader({
       fontWeight="600"
       color="orange.500"
       _hover={{
-        textDecoration: "underline"
+        textDecoration: 'underline',
       }}
     >
       <Box
         _hover={{
-          textDecoration: "underline",
-          cursor: "pointer"
+          textDecoration: 'underline',
+          cursor: 'pointer',
         }}
         onClick={() => router.push(`/r/${category}`)}
       >

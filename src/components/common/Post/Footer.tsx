@@ -1,6 +1,6 @@
-import { Box, Button, Flex, HStack } from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import { RiMessage2Fill } from "react-icons/ri"
+import { Box, Button, Flex, HStack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import { RiMessage2Fill } from 'react-icons/ri'
 
 type PostFooterType = {
   category?: string | null
@@ -11,7 +11,7 @@ type PostFooterType = {
 export default function PostFooter({
   category,
   id,
-  commentsCount
+  commentsCount,
 }: PostFooterType) {
   const router = useRouter()
   return (
@@ -20,7 +20,7 @@ export default function PostFooter({
         <HStack>
           <RiMessage2Fill />
           <Box
-            _hover={{ textTransform: "none" }}
+            _hover={{ textTransform: 'none' }}
             onClick={() => router.push(`/r/${category}/${id}`)}
           >
             {commentsCount} Comments

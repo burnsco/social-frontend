@@ -1,5 +1,5 @@
-import { Post, useDeletePostMutation } from "@/generated/graphql"
-import { sleep } from "@/utils/sleepy"
+import { Post, useDeletePostMutation } from '@/generated/graphql'
+import { sleep } from '@/utils/sleepy'
 import {
   AlertDialog,
   AlertDialogBody,
@@ -8,10 +8,10 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   Button,
-  IconButton
-} from "@chakra-ui/react"
-import { useRef, useState } from "react"
-import { AiFillDelete } from "react-icons/ai"
+  IconButton,
+} from '@chakra-ui/react'
+import { useRef, useState } from 'react'
+import { AiFillDelete } from 'react-icons/ai'
 
 type DeletePostType = {
   postId: string
@@ -64,7 +64,7 @@ export function DeletePostDialog({ postId, post }: DeletePostType) {
                       sleep(1000)
                       await deletePost({
                         variables: {
-                          postId: Number(postId)
+                          postId: Number(postId),
                         },
                         update(cache, { data }) {
                           if (data?.deletePost) {
@@ -74,14 +74,14 @@ export function DeletePostDialog({ postId, post }: DeletePostType) {
                                 comments(existingCommentRefs, { readField }) {
                                   return existingCommentRefs.filter(
                                     (commentRef: any) =>
-                                      postId !== readField("id", commentRef)
+                                      postId !== readField('id', commentRef)
                                   )
-                                }
-                              }
+                                },
+                              },
                             })
                           }
                           return null
-                        }
+                        },
                       })
                       onClose()
                     }

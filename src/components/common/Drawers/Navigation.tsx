@@ -1,4 +1,4 @@
-import { NextChakraLink } from "@/components/common/index"
+import { NextChakraLink } from '@/components/common/index'
 import {
   Box,
   Button,
@@ -14,20 +14,20 @@ import {
   ListItem,
   Skeleton,
   useColorModeValue,
-  useDisclosure
-} from "@chakra-ui/react"
-import { useRef, useState } from "react"
-import { ImArrowDown, ImArrowRight } from "react-icons/im"
-import { useCategoriesQuery } from "../../../generated/graphql"
+  useDisclosure,
+} from '@chakra-ui/react'
+import { useRef, useState } from 'react'
+import { ImArrowDown, ImArrowRight } from 'react-icons/im'
+import { useCategoriesQuery } from '../../../generated/graphql'
 
 export default function NavigationDrawer() {
-  const [input, setInput] = useState("")
-  const bg = useColorModeValue("translucent", "translucent")
-  const color = useColorModeValue("gray.700", "gray.300")
-  const hoverColor = useColorModeValue("black", "white")
-  const hoverBG = useColorModeValue("#ebedf0", "#3661ed")
+  const [input, setInput] = useState('')
+  const bg = useColorModeValue('translucent', 'translucent')
+  const color = useColorModeValue('gray.700', 'gray.300')
+  const hoverColor = useColorModeValue('black', 'white')
+  const hoverBG = useColorModeValue('#ebedf0', '#3661ed')
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const drawerContentBG = useColorModeValue("whitesmoke", "gray.900")
+  const drawerContentBG = useColorModeValue('whitesmoke', 'gray.900')
   const { loading, data } = useCategoriesQuery()
 
   const btnRef = useRef<HTMLButtonElement | null>(null)
@@ -59,16 +59,16 @@ export default function NavigationDrawer() {
               mb={2}
               placeholder="Search subreddits"
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={(e) => setInput(e.target.value)}
             />
             <Skeleton isLoaded={!loading}>
               <List>
                 {data && data.categories
                   ? data.categories
-                      .filter(c =>
+                      .filter((c) =>
                         c.name.toLowerCase().includes(input.toLowerCase())
                       )
-                      .map(cat => (
+                      .map((cat) => (
                         <ListItem p={1} key={`sideNav-${cat.name}-${cat.id}`}>
                           <NextChakraLink
                             p={1}
@@ -78,7 +78,7 @@ export default function NavigationDrawer() {
                             _hover={{
                               color: hoverColor,
                               bg: hoverBG,
-                              marginLeft: 1
+                              marginLeft: 1,
                             }}
                             href="/r/[category]"
                             as={`/r/${cat.name}`}

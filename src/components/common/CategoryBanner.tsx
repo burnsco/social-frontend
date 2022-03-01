@@ -5,16 +5,15 @@ import {
   Button,
   Center,
   Flex,
-  useColorModeValue
-} from "@chakra-ui/react"
-import React from "react"
+  useColorModeValue,
+} from '@chakra-ui/react'
 
 export default function CategoryBanner() {
   const Title = () => <Box>title</Box>
   const Path = () => <Box>path</Box>
   const Join = () => <Button>join</Button>
 
-  const bc = useColorModeValue("gray.100", "#313131")
+  const bc = useColorModeValue('gray.100', '#313131')
 
   return (
     <Flex

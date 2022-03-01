@@ -1,8 +1,8 @@
-import { ChakraField } from "@/components/common/index"
-import { useAddFriendMutation } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import convertToErrorMap from "@/utils/toErrorMap"
-import { gql } from "@apollo/client"
+import { ChakraField } from '@/components/common/index'
+import { useAddFriendMutation } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import convertToErrorMap from '@/utils/toErrorMap'
+import { gql } from '@apollo/client'
 import {
   Button,
   chakra,
@@ -17,18 +17,18 @@ import {
   Tooltip,
   useColorModeValue,
   useDisclosure,
-  useToast
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRef } from "react"
-import { FaUserFriends } from "react-icons/fa"
+  useToast,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRef } from 'react'
+import { FaUserFriends } from 'react-icons/fa'
 
 export default function AddFriendDrawer() {
   const [loggedInUser] = useLoggedInUser()
-  const drawerBg = useColorModeValue("whitesmoke", "gray.900")
+  const drawerBg = useColorModeValue('whitesmoke', 'gray.900')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
-  const buttonColor = useColorModeValue("purple", "blue")
+  const buttonColor = useColorModeValue('purple', 'blue')
   const [addFriend, { loading }] = useAddFriendMutation()
   const btnRef = useRef<HTMLButtonElement | null>(null)
 
@@ -63,7 +63,7 @@ export default function AddFriendDrawer() {
           <DrawerCloseButton />
           <DrawerHeader>Add Friend</DrawerHeader>
           <Formik
-            initialValues={{ username: "" }}
+            initialValues={{ username: '' }}
             onSubmit={async (values, actions) => {
               actions.setSubmitting(false)
               let response
@@ -71,8 +71,8 @@ export default function AddFriendDrawer() {
                 response = await addFriend({
                   variables: {
                     data: {
-                      username: values.username
-                    }
+                      username: values.username,
+                    },
                   },
                   update(cache, { data }) {
                     if (loggedInUser && !data?.addFriend.errors) {
@@ -88,15 +88,15 @@ export default function AddFriendDrawer() {
                                   username
                                   online
                                 }
-                              `
+                              `,
                             })
                             return [newFriendRef, ...existingFriends]
-                          }
-                        }
+                          },
+                        },
                       })
                     }
                     return null
-                  }
+                  },
                 })
               } catch (ex) {
                 console.log(ex)
@@ -116,11 +116,11 @@ export default function AddFriendDrawer() {
                 const { friend } = response.data.addFriend
                 toast({
                   id: `user-${friend.username}-added`,
-                  title: "Sucess",
+                  title: 'Sucess',
                   description: `User '${friend.username}' is now your friend `,
-                  status: "success",
+                  status: 'success',
                   duration: 9000,
-                  isClosable: true
+                  isClosable: true,
                 })
                 onClose()
               }

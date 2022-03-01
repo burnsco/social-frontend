@@ -1,6 +1,6 @@
-import { useAddFriendMutation } from "@/generated/graphql"
-import { useLoggedInUser } from "@/hooks/useLoggedInUser"
-import { gql } from "@apollo/client"
+import { useAddFriendMutation } from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import { gql } from '@apollo/client'
 import {
   Box,
   ListItem,
@@ -10,17 +10,17 @@ import {
   MenuGroup,
   MenuItem,
   MenuList,
-  useColorModeValue
-} from "@chakra-ui/react"
-import { useRouter } from "next/router"
-import React from "react"
-import { FaUserCircle } from "react-icons/fa"
-import { ImSpinner } from "react-icons/im"
-import { IoAddCircle } from "react-icons/io5"
-import { MdEmail } from "react-icons/md"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { FaUserCircle } from 'react-icons/fa'
+import { ImSpinner } from 'react-icons/im'
+import { IoAddCircle } from 'react-icons/io5'
+import { MdEmail } from 'react-icons/md'
 
 export default function UserMenuDialog(username: string) {
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
   const [addFriend, { loading }] = useAddFriendMutation()
   const router = useRouter()
   const [loggedInUser] = useLoggedInUser()
@@ -36,7 +36,7 @@ export default function UserMenuDialog(username: string) {
   )
 
   const MessageUserButton = () => (
-    <MenuItem onClick={() => router.push("/user/account")}>
+    <MenuItem onClick={() => router.push('/user/account')}>
       <MdEmail />
       <Box ml={3}>Message</Box>
     </MenuItem>
@@ -52,8 +52,8 @@ export default function UserMenuDialog(username: string) {
           response = await addFriend({
             variables: {
               data: {
-                username
-              }
+                username,
+              },
             },
             update(cache, { data }) {
               if (me) {
@@ -69,15 +69,15 @@ export default function UserMenuDialog(username: string) {
                             username
                             online
                           }
-                        `
+                        `,
                       })
                       return [newFriendRef, ...existingFriends]
-                    }
-                  }
+                    },
+                  },
                 })
               }
-              throw new Error("Something went wrong adding a friend")
-            }
+              throw new Error('Something went wrong adding a friend')
+            },
           })
         } catch (ex) {
           console.log(ex)

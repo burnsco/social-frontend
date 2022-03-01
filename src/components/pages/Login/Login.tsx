@@ -1,22 +1,22 @@
-import { ChakraField } from "@/components/common/index"
-import { Wrapper } from "@/components/common/wrapper"
-import { Layout } from "@/components/ui"
-import { MeDocument, MeQuery, useLoginMutation } from "@/generated/graphql"
-import { LoginSchema } from "@/types/User/schemas"
-import { LoginUserInputType } from "@/types/User/types"
-import { convertToErrorMap } from "@/utils/index"
+import { ChakraField } from '@/components/common/index'
+import { Wrapper } from '@/components/common/wrapper'
+import { Layout } from '@/components/ui'
+import { MeDocument, MeQuery, useLoginMutation } from '@/generated/graphql'
+import { LoginSchema } from '@/types/User/schemas'
+import { LoginUserInputType } from '@/types/User/types'
+import { convertToErrorMap } from '@/utils/index'
 import {
   Box,
   Button,
   useColorModeValue,
   useToast,
-  VisuallyHidden
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRouter } from "next/router"
+  VisuallyHidden,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 
 export default function LoginPage() {
-  const bg = useColorModeValue("white", "#1A1A1B")
+  const bg = useColorModeValue('white', '#1A1A1B')
   const router = useRouter()
   const toast = useToast()
   const [Login, { loading: loginAttempt }] = useLoginMutation()
@@ -34,29 +34,29 @@ export default function LoginPage() {
               const response = await Login({
                 variables: {
                   data: {
-                    ...values
-                  }
+                    ...values,
+                  },
                 },
                 update: (cache, { data }) => {
                   cache.writeQuery<MeQuery>({
                     query: MeDocument,
                     data: {
-                      __typename: "Query",
-                      me: data?.login.user
-                    }
+                      __typename: 'Query',
+                      me: data?.login.user,
+                    },
                   })
-                }
+                },
               })
               if (response.data?.login?.user) {
                 toast({
                   id: `${response.data.login.user.username}-toast`,
                   title: `Welcome ${response.data.login.user.username}!`,
-                  description: "Your account was created successfully.",
-                  status: "success",
+                  description: 'Your account was created successfully.',
+                  status: 'success',
                   duration: 9000,
-                  isClosable: true
+                  isClosable: true,
                 })
-                router.push("/")
+                router.push('/')
               } else if (response.data?.login.errors) {
                 setErrors(convertToErrorMap(response.data.login.errors))
               }

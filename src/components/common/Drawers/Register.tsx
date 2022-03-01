@@ -1,9 +1,9 @@
-import { ChakraField, PasswordField } from "@/components/common/index"
-import { MeDocument, useRegisterMutation } from "@/generated/graphql"
-import { RegisterSchema } from "@/types/User/schemas"
-import { RegisterUserInputType } from "@/types/User/types"
-import { convertToErrorMap } from "@/utils/index"
-import { sleep } from "@/utils/sleepy"
+import { ChakraField, PasswordField } from '@/components/common/index'
+import { MeDocument, useRegisterMutation } from '@/generated/graphql'
+import { RegisterSchema } from '@/types/User/schemas'
+import { RegisterUserInputType } from '@/types/User/types'
+import { convertToErrorMap } from '@/utils/index'
+import { sleep } from '@/utils/sleepy'
 import {
   Button,
   Drawer,
@@ -16,20 +16,20 @@ import {
   Heading,
   Stack,
   useColorModeValue,
-  useDisclosure
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRouter } from "next/router"
-import { useRef } from "react"
+  useDisclosure,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
+import { useRef } from 'react'
 
 export default function RegisterDrawer() {
   const router = useRouter()
   const [register] = useRegisterMutation()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef<HTMLButtonElement | null>(null)
-  const colorScheme = useColorModeValue("purple", "blue")
-  const buttonScheme = useColorModeValue("purple", "orange")
-  const colorbg = useColorModeValue("whitesmoke", "gray.900")
+  const colorScheme = useColorModeValue('purple', 'blue')
+  const buttonScheme = useColorModeValue('purple', 'orange')
+  const colorbg = useColorModeValue('whitesmoke', 'gray.900')
 
   return (
     <>
@@ -64,23 +64,23 @@ export default function RegisterDrawer() {
                   data: {
                     username: values.username,
                     email: values.email,
-                    password: values.password
-                  }
+                    password: values.password,
+                  },
                 },
                 update: (cache, { data }) => {
                   cache.writeQuery({
                     query: MeDocument,
                     data: {
-                      __typename: "Query",
-                      me: data?.register.user
-                    }
+                      __typename: 'Query',
+                      me: data?.register.user,
+                    },
                   })
-                }
+                },
               })
               if (response?.data?.register?.errors) {
                 setErrors(convertToErrorMap(response?.data?.register?.errors))
               } else {
-                router.push("/")
+                router.push('/')
               }
             }}
           >

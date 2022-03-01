@@ -11,11 +11,11 @@ function timeDifference(curr?: number, prev?: number) {
   const elapsed = curr - prev
 
   if (elapsed < milliSecondsPerMinute / 3) {
-    return "just now"
+    return 'just now'
   }
 
   if (elapsed < milliSecondsPerMinute) {
-    return "less than 1 min ago"
+    return 'less than 1 min ago'
   }
   if (elapsed < milliSecondsPerHour) {
     return `${Math.round(elapsed / milliSecondsPerMinute)} mins ago`

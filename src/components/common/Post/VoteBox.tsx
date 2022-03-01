@@ -1,6 +1,6 @@
-import { useCreateVoteMutation } from "@/generated/graphql"
-import { Flex, IconButton, Text, useColorModeValue } from "@chakra-ui/react"
-import { ImArrowDown, ImArrowUp } from "react-icons/im"
+import { useCreateVoteMutation } from '@/generated/graphql'
+import { Flex, IconButton, Text, useColorModeValue } from '@chakra-ui/react'
+import { ImArrowDown, ImArrowUp } from 'react-icons/im'
 
 type VoteBoxType = {
   postId?: string
@@ -11,9 +11,9 @@ type VoteBoxType = {
 export default function VoteBox({
   postId,
   postScore,
-  isLoggedIn
+  isLoggedIn,
 }: VoteBoxType) {
-  const bg = useColorModeValue("gray.50", "#313131")
+  const bg = useColorModeValue('gray.50', '#313131')
   const [vote, { loading }] = useCreateVoteMutation()
 
   if (postId) {
@@ -31,7 +31,7 @@ export default function VoteBox({
           isDisabled={loading || !isLoggedIn}
           onClick={async () => {
             await vote({
-              variables: { data: { value: 1, postId: Number(postId) } }
+              variables: { data: { value: 1, postId: Number(postId) } },
             })
           }}
           variant="ghost"
@@ -48,7 +48,7 @@ export default function VoteBox({
           isDisabled={loading || !isLoggedIn}
           onClick={async () => {
             await vote({
-              variables: { data: { value: -1, postId: Number(postId) } }
+              variables: { data: { value: -1, postId: Number(postId) } },
             })
           }}
           variant="ghost"

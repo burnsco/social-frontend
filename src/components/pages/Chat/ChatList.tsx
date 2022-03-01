@@ -1,5 +1,5 @@
-import { Avatar, Box, Flex, List, ListItem, Spacer } from "@chakra-ui/react"
-import React, { useEffect } from "react"
+import { Avatar, Box, Flex, List, ListItem, Spacer } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
 
 // revert this back to when it was loaded on bottom (that style)
 
@@ -14,7 +14,7 @@ export default function ChatList(props: any) {
   const messagesEndRef = React.useRef<HTMLDivElement | null>(null)
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   React.useEffect(() => {

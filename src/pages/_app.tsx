@@ -1,15 +1,15 @@
-import { ChakraWrapper } from "@/components/common"
-import { useApollo } from "@/lib/apolloClient"
-import { ApolloProvider } from "@apollo/client"
-import type { AppProps } from "next/app"
-import Head from "next/head"
-import type { FC } from "react"
+import { ChakraWrapper } from '@/components/common'
+import { useApollo } from '@/lib/apolloClient'
+import { ApolloProvider } from '@apollo/client'
+import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import type { FC } from 'react'
 
 const Noop: FC = ({ children }) => <>{children}</>
 
 export default function App({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop
-  const apolloClient = useApollo(pageProps.initialApolloState)
+  const apolloClient = useApollo(pageProps)
   return (
     <>
       <Head>

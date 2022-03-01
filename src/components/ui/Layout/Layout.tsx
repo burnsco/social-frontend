@@ -1,13 +1,13 @@
-import { Header } from "@/components/ui"
-import { Box, Stack } from "@chakra-ui/react"
-import Head from "next/head"
-import PropTypes from "prop-types"
-import Footer from "../Footer/Footer"
-import SideMenuContainer from "../SideMenu/SideMenuContainer"
+import { Header } from '@/components/ui/Header'
+import { Box, Stack } from '@chakra-ui/react'
+import Head from 'next/head'
+import PropTypes from 'prop-types'
+import Footer from '../Footer/Footer'
+import SideMenuContainer from '../SideMenu/SideMenuContainer'
 
 const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
   children,
-  title
+  title,
 }) => {
   return (
     <>
@@ -48,8 +48,7 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
 
       <Box border="1px solid red">
         <Header />
-
-        <Box px={["0em", "1em", "3em", "4em"]} py="6em">
+        <Box px={['0em', '1em', '3em', '4em']} py="6em">
           <Stack isInline spacing={14}>
             <Box as="main" width="full">
               {children}
@@ -58,7 +57,7 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
               as="aside"
               minW="25%"
               maxW="350px"
-              display={["none", "none", "block", "block"]}
+              display={['none', 'none', 'block', 'block']}
             >
               <SideMenuContainer />
             </Box>
@@ -71,7 +70,7 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
 }
 
 Layout.propTypes = {
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 export default Layout

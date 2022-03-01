@@ -1,11 +1,11 @@
-import { ChakraField, ChakraSelect } from "@/components/common/index"
+import { ChakraField, ChakraSelect } from '@/components/common/index'
 import {
   CreatePostInput,
   useCategoriesLazyQuery,
-  useCreatePostMutation
-} from "@/generated/graphql"
-import { CreatePostInputType } from "@/types/Post/types"
-import { gql } from "@apollo/client"
+  useCreatePostMutation,
+} from '@/generated/graphql'
+import { CreatePostInputType } from '@/types/Post/types'
+import { gql } from '@apollo/client'
 import {
   Alert,
   AlertIcon,
@@ -33,21 +33,21 @@ import {
   useDisclosure,
   useToast,
   VisuallyHidden,
-  VStack
-} from "@chakra-ui/react"
-import { Form, Formik, FormikHelpers } from "formik"
-import { useRouter } from "next/router"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import { BsPaperclip, BsPencilSquare } from "react-icons/bs"
-import { MdLink } from "react-icons/md"
-import { RiPictureInPictureFill } from "react-icons/ri"
-import request from "superagent"
+  VStack,
+} from '@chakra-ui/react'
+import { Form, Formik, FormikHelpers } from 'formik'
+import { useRouter } from 'next/router'
+import { useCallback, useRef, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import { BsPaperclip, BsPencilSquare } from 'react-icons/bs'
+import { MdLink } from 'react-icons/md'
+import { RiPictureInPictureFill } from 'react-icons/ri'
+import request from 'superagent'
 
 export default function CreatePostDrawer() {
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  const [imageUrl, setImageUrl] = useState<string>("")
+  const [imageUrl, setImageUrl] = useState<string>('')
   const [imageH, setImageH] = useState<number>(0)
   const [imageW, setImageW] = useState<number>(0)
 
@@ -57,12 +57,10 @@ export default function CreatePostDrawer() {
   const [getSubreddits, { data }] = useCategoriesLazyQuery()
   const [submitPost, { loading }] = useCreatePostMutation()
 
-  useEffect(() => getSubreddits(), [getSubreddits])
-
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef<HTMLButtonElement | null>(null)
 
-  const drawerBG = useColorModeValue("whitesmoke", "gray.900")
+  const drawerBG = useColorModeValue('whitesmoke', 'gray.900')
 
   const createPostHandler = async (
     values: typeof CreatePostInputType,
@@ -80,8 +78,8 @@ export default function CreatePostDrawer() {
             link: values.link,
             image: imageUrl,
             imageH: imageH,
-            imageW: imageW
-          }
+            imageW: imageW,
+          },
         },
         update(cache, { data }) {
           cache.modify({
@@ -94,25 +92,25 @@ export default function CreatePostDrawer() {
                       id
                       title
                     }
-                  `
+                  `,
                 })
                 return [newPostRef, ...existingPosts]
-              }
-            }
+              },
+            },
           })
-        }
+        },
       })
 
       if (response.data?.createPost.post) {
         toast({
           id: `success-${response.data?.createPost.post.title}`,
           title: `${response.data?.createPost?.post.title}!`,
-          description: "Your post was submitted successfully.",
-          status: "success",
+          description: 'Your post was submitted successfully.',
+          status: 'success',
           duration: 9000,
-          isClosable: true
+          isClosable: true,
         })
-        router.push("/")
+        router.push('/')
         onClose()
       }
     } catch (error) {
@@ -120,16 +118,16 @@ export default function CreatePostDrawer() {
     }
   }
 
-  const onDrop = useCallback(acceptedFile => {
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dmztdsduf/upload"
-    const cloudinaryPreset = "qapnebg6"
+  const onDrop = useCallback((acceptedFile) => {
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dmztdsduf/upload'
+    const cloudinaryPreset = 'qapnebg6'
 
     request
       .post(cloudinaryUrl)
-      .field("upload_preset", cloudinaryPreset)
-      .field("file", acceptedFile)
-      .field("multiple", false)
-      .on("progress", progress => {
+      .field('upload_preset', cloudinaryPreset)
+      .field('file', acceptedFile)
+      .field('multiple', false)
+      .on('progress', (progress) => {
         if (progress && progress.percent) {
           setUploadProgress(progress.percent)
         }
@@ -148,7 +146,7 @@ export default function CreatePostDrawer() {
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
       onDrop,
-      maxFiles: 1
+      maxFiles: 1,
     })
 
   return (
@@ -186,7 +184,7 @@ export default function CreatePostDrawer() {
             initialValues={CreatePostInputType}
             onSubmit={(actions, values) => createPostHandler(actions, values)}
           >
-            {formik => {
+            {(formik) => {
               return (
                 <Form>
                   <DrawerBody>
@@ -198,7 +196,7 @@ export default function CreatePostDrawer() {
                         name="categoryId"
                         label=""
                       >
-                        {data?.categories?.map(subreddit => (
+                        {data?.categories?.map((subreddit) => (
                           <option
                             key={`subreddit-${subreddit.name}-sidemenu`}
                             value={subreddit.id}
@@ -296,8 +294,8 @@ export default function CreatePostDrawer() {
                                       ) : (
                                         <p>
                                           {uploadProgress === 0
-                                            ? "Drag and drop some files here, or click to select files"
-                                            : "Uploading..."}
+                                            ? 'Drag and drop some files here, or click to select files'
+                                            : 'Uploading...'}
                                         </p>
                                       )}
                                     </Center>

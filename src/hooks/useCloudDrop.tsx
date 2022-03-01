@@ -1,21 +1,21 @@
-import { useCallback, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import request from "superagent"
+import { useCallback, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
+import request from 'superagent'
 
 function useCloudDrop() {
   const [imageUrl, setImageUrl] = useState(null)
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  const onDrop = useCallback(acceptedFile => {
-    const cloudinaryUrl = "https://api.cloudinary.com/v1_1/dmztdsduf/upload"
-    const cloudinaryPreset = "qapnebg6"
+  const onDrop = useCallback((acceptedFile) => {
+    const cloudinaryUrl = 'https://api.cloudinary.com/v1_1/dmztdsduf/upload'
+    const cloudinaryPreset = 'qapnebg6'
 
     request
       .post(cloudinaryUrl)
-      .field("upload_preset", cloudinaryPreset)
-      .field("file", acceptedFile)
-      .field("multiple", false)
-      .on("progress", progress => {
+      .field('upload_preset', cloudinaryPreset)
+      .field('file', acceptedFile)
+      .field('multiple', false)
+      .on('progress', (progress) => {
         if (progress && progress.percent) {
           setUploadProgress(progress.percent)
         }
@@ -36,7 +36,7 @@ function useCloudDrop() {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    maxFiles: 1
+    maxFiles: 1,
   })
 
   return {
@@ -45,7 +45,7 @@ function useCloudDrop() {
     imageUrl,
     getRootProps,
     getInputProps,
-    isDragActive
+    isDragActive,
   }
 }
 

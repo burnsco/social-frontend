@@ -1,7 +1,7 @@
-import { InMemoryCache } from "@apollo/client"
-import { concatPagination } from "@apollo/client/utilities"
-import { Category } from "../generated/graphql"
-import { selectedChatRoomId, selectedChatRoomName } from "./apolloClient"
+import { InMemoryCache } from '@apollo/client'
+import { concatPagination } from '@apollo/client/utilities'
+import { Category } from '../generated/graphql'
+import { selectedChatRoomId, selectedChatRoomName } from './apolloClient'
 
 export const cacheOptions = new InMemoryCache({
   typePolicies: {
@@ -14,24 +14,24 @@ export const cacheOptions = new InMemoryCache({
             incoming: Category[]
           ): Category[] {
             return existing ? [...incoming, ...existing] : [...incoming]
-          }
+          },
         },
 
         posts: concatPagination(),
         selectedChatRoomId: {
           read() {
             return selectedChatRoomId()
-          }
+          },
         },
         selecteChatRoomName: {
           read() {
             return selectedChatRoomName()
-          }
-        }
-      }
+          },
+        },
+      },
     },
     Post: {
-      merge: true
-    }
-  }
+      merge: true,
+    },
+  },
 })

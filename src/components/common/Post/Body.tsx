@@ -1,4 +1,4 @@
-import { useEditPostMutation } from "@/generated/graphql"
+import { useEditPostMutation } from '@/generated/graphql'
 import {
   Box,
   Editable,
@@ -8,9 +8,9 @@ import {
   Link,
   Skeleton,
   Stack,
-  Text
-} from "@chakra-ui/react"
-import Image from "next/image"
+  Text,
+} from '@chakra-ui/react'
+import Image from 'next/image'
 
 type PostBodyType = {
   title?: string | null
@@ -31,7 +31,7 @@ export default function PostBody({
   imageH,
   link,
   image,
-  categoryId
+  categoryId,
 }: PostBodyType) {
   const [editPost, { loading: submittingEditedPost }] = useEditPostMutation()
 
@@ -40,25 +40,25 @@ export default function PostBody({
     title,
     text,
     link,
-    postId
+    postId,
   }: Partial<PostBodyType>) {
     if (title || text || link) {
       if (postId) {
         return (
           <Heading fontWeight="500" fontSize="xl" my={1} px={1}>
             <Editable
-              defaultValue={title || "Error"}
+              defaultValue={title || 'Error'}
               submitOnBlur
-              onSubmit={async props => {
+              onSubmit={async (props) => {
                 try {
                   const response = await editPost({
                     variables: {
                       data: {
                         title: props,
                         categoryId: Number(categoryId),
-                        postId: Number(postId)
-                      }
-                    }
+                        postId: Number(postId),
+                      },
+                    },
                   })
                 } catch (error) {
                   console.log(error)

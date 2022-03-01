@@ -1,10 +1,10 @@
-import CommentsPageWithData from "@/components/common/Comment/Data"
-import SubmitCommentForm from "@/components/common/Comment/Form"
-import NewPost from "@/components/common/Post"
-import Layout from "@/components/ui/Layout"
-import { useMeQuery, usePostQuery } from "@/generated/graphql"
-import { Alert, Box, Skeleton, Stack, VisuallyHidden } from "@chakra-ui/react"
-import { useRouter } from "next/router"
+import CommentsPageWithData from '@/components/common/Comment/Data'
+import SubmitCommentForm from '@/components/common/Comment/Form'
+import NewPost from '@/components/common/Post'
+import Layout from '@/components/ui/Layout'
+import { useMeQuery, usePostQuery } from '@/generated/graphql'
+import { Alert, Box, Skeleton, Stack, VisuallyHidden } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 
 export default function SinglePostPage() {
   const router = useRouter()
@@ -12,7 +12,7 @@ export default function SinglePostPage() {
   const postId = router.query.id
 
   const { data, loading, error } = usePostQuery({
-    variables: { postId: Number(postId) }
+    variables: { postId: Number(postId) },
   })
 
   const { data: userData } = useMeQuery({ ssr: false })

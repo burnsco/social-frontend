@@ -1,68 +1,33 @@
 {
-  "plugins": [
-    "@typescript-eslint",
-    "@typescript-eslint/eslint-plugin",
-    "react",
-    "react-hooks",
-    "prettier",
-    "jest-dom",
-    "testing-library"
-  ],
+  "root": true,
   "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
+    "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier",
-    "plugin:prettier/recommended",
     "plugin:testing-library/react",
-    "plugin:jest-dom/recommended"
+    "prettier"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "ecmaFeatures": {
-      "jsx": true
+  "plugins": ["@typescript-eslint", "testing-library"],
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
     }
-  },
-  "settings": {
-    "react": {
-      "pragma": "React",
-      "version": "detect"
-    },
-    "import/resolver": {
-      "babel-module": {},
-      "alias": [
-        ["@/generated/*", "src/generated/*"],
-        ["@/pages/*", "src/pages/*"],
-        ["@/components/*", "src/components/*"],
-        ["@/lib/*", "src/lib/*"],
-        ["@/hooks/*", "src/hooks/*"],
-        ["@/utils*", "src/utils*"],
-        ["@/types/*", "src/types/*"],
-        ["@/styles/*", "src/styles/*"],
-        ["@/assets/*", "src/assets/*"]
-      ]
-    }
-  },
-  "env": {
-    "browser": true,
-    "es2020": true,
-    "node": true,
-    "jest": true
-  },
-
+  ],
   "rules": {
+
+    "@typescript-eslint/no-explicit-any": "off",
+
     "testing-library/no-debug": "off",
-    "testing-library/prefer-screen-queries": "off",
     "react/display-name": "off",
     "react-hooks/rules-of-hooks": "error",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-empty-interface": "off",
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/no-explicit-any": "off",
+
     "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-use-before-define": "off",
@@ -114,13 +79,5 @@
     "@typescript-eslint/no-shadow": "off",
     "react-hooks/exhaustive-deps": "error",
     "import/no-named-as-default": "off"
-  },
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "parserOptions": {
-        "project": ["tsconfig.json"]
-      }
-    }
-  ]
+  }
 }

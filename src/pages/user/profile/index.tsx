@@ -1,7 +1,7 @@
-import dynamic from "next/dynamic"
+import dynamic from 'next/dynamic'
 
 const DynamicProfilePage = dynamic(
-  () => import("@/components/pages/Profile/Profile")
+  () => import('@/components/pages/Profile/Profile')
 )
 
 const ProfilePage = () => <DynamicProfilePage />

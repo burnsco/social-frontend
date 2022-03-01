@@ -1,6 +1,6 @@
-import { useCategoriesLazyQuery } from "@/generated/graphql"
-import { selectedChatRoomId, selectedChatRoomName } from "@/lib/apolloClient"
-import { useReactiveVar } from "@apollo/client"
+import { useCategoriesQuery } from '@/generated/graphql'
+import { selectedChatRoomId, selectedChatRoomName } from '@/lib/apolloClient'
+import { useReactiveVar } from '@apollo/client'
 import {
   Alert,
   Button,
@@ -10,24 +10,22 @@ import {
   MenuItem,
   MenuList,
   MenuOptionGroup,
-  useColorModeValue
-} from "@chakra-ui/react"
-import React, { useEffect } from "react"
-import { BsArrowDown, BsArrowLeft } from "react-icons/bs"
-import { FaHome } from "react-icons/fa"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { BsArrowDown, BsArrowLeft } from 'react-icons/bs'
+import { FaHome } from 'react-icons/fa'
 
 export default function ChatSelection() {
-  const bg = useColorModeValue("white", "#202020")
+  const bg = useColorModeValue('white', '#202020')
 
   const chatID = useReactiveVar(selectedChatRoomId)
   const chatName = useReactiveVar(selectedChatRoomName)
 
-  const [
-    fetchCategories,
-    { data: categoriesData, loading: loadingCategories, error: categoriesError }
-  ] = useCategoriesLazyQuery()
-
-  useEffect(() => fetchCategories(), [fetchCategories])
+  const {
+    data: categoriesData,
+    loading: loadingCategories,
+    error: categoriesError,
+  } = useCategoriesQuery()
 
   if (!categoriesError) {
     return (
@@ -46,12 +44,12 @@ export default function ChatSelection() {
                 rightIcon={isOpen ? <BsArrowDown /> : <BsArrowLeft />}
                 variant="outline"
               >
-                {loadingCategories ? "Loading..." : chatName}
+                {loadingCategories ? 'Loading...' : chatName}
               </MenuButton>
               {categoriesData && categoriesData.categories && (
                 <MenuList minWidth="240px" opacity="0.7" bg={bg}>
                   <MenuOptionGroup title="subreddits">
-                    {categoriesData.categories.map(item => (
+                    {categoriesData.categories.map((item) => (
                       <MenuItem
                         value={item.name}
                         key={`chat-selection-${item.id}}`}

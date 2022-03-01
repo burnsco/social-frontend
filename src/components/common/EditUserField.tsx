@@ -7,10 +7,10 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Text
-} from "@chakra-ui/react"
-import { useField } from "formik"
-import { useState } from "react"
+  Text,
+} from '@chakra-ui/react'
+import { useField } from 'formik'
+import { useState } from 'react'
 
 type ChakraFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string
@@ -36,8 +36,8 @@ export default function EditUserField({
 
   return (
     <FormControl isInvalid={!!error}>
-      <FormLabel fontSize={`${size}` || "sm"} htmlFor={props.name || props.id}>
-        {label}{" "}
+      <FormLabel fontSize={`${size}` || 'sm'} htmlFor={props.name || props.id}>
+        {label}{' '}
         {showFeedback ? (
           <Text
             fontSize="lg"
@@ -47,7 +47,7 @@ export default function EditUserField({
             display="inline"
             color="greenyellow"
           >
-            {!error && field.value.trim().length > 6 && "✓"}
+            {!error && field.value.trim().length > 6 && '✓'}
           </Text>
         ) : null}
       </FormLabel>
@@ -64,7 +64,7 @@ export default function EditUserField({
         />
         <InputRightElement width="4.5rem">
           <Button h="1.75rem" size="sm">
-            {"Change"}
+            {'Change'}
           </Button>
         </InputRightElement>
       </InputGroup>

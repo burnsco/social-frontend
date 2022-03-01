@@ -5,10 +5,10 @@ import {
   FormLabel,
   Input,
   Text,
-  Textarea
-} from "@chakra-ui/react"
-import { useField } from "formik"
-import { useState } from "react"
+  Textarea,
+} from '@chakra-ui/react'
+import { useField } from 'formik'
+import { useState } from 'react'
 
 type ChakraFieldProps = React.InputHTMLAttributes<HTMLInputElement> & {
   name: string
@@ -33,8 +33,8 @@ export default function ChakraField({
 
   return (
     <FormControl isInvalid={!!error}>
-      <FormLabel fontSize={`${size}` || "sm"} htmlFor={props.name}>
-        {label}{" "}
+      <FormLabel fontSize={`${size}` || 'sm'} htmlFor={props.name}>
+        {label}{' '}
         {showFeedback ? (
           <Text
             fontSize="md"
@@ -44,7 +44,7 @@ export default function ChakraField({
             display="inline"
             color="greenyellow"
           >
-            {!error && field.value.trim().length > 6 && "✓"}
+            {!error && field.value.trim().length > 6 && '✓'}
           </Text>
         ) : null}
       </FormLabel>
@@ -52,7 +52,6 @@ export default function ChakraField({
         <Textarea
           {...field}
           aria-describedby={`${props.id}-feedback ${props.id}-help`}
-          type={type}
           onFocus={handleFocus}
           id={field.name}
           placeholder={props.placeholder}

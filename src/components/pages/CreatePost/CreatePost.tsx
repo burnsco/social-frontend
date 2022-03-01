@@ -1,11 +1,11 @@
-import { ChakraSelect } from "@/components/common/index"
+import { ChakraSelect } from '@/components/common/index'
 import {
   useCategoriesLazyQuery,
-  useCreatePostMutation
-} from "@/generated/graphql"
-import { CreatePostSchema } from "@/types/Post/schemas"
-import { CreatePostInputType } from "@/types/Post/types"
-import { gql } from "@apollo/client"
+  useCreatePostMutation,
+} from '@/generated/graphql'
+import { CreatePostSchema } from '@/types/Post/schemas'
+import { CreatePostInputType } from '@/types/Post/types'
+import { gql } from '@apollo/client'
 import {
   Box,
   Button,
@@ -15,15 +15,15 @@ import {
   TabPanels,
   Tabs,
   useColorModeValue,
-  useToast
-} from "@chakra-ui/react"
-import { Form, Formik } from "formik"
-import { useRouter } from "next/router"
-import { LinkPost, MediaPost, RegularPost } from "./PostTypes"
+  useToast,
+} from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
+import { LinkPost, MediaPost, RegularPost } from './PostTypes'
 
 export default function CreatePost() {
   const router = useRouter()
-  const bg = useColorModeValue("white", "#1A1A1B")
+  const bg = useColorModeValue('white', '#1A1A1B')
   const toast = useToast()
 
   const [getSubreddits, { data }] = useCategoriesLazyQuery()
@@ -40,8 +40,8 @@ export default function CreatePost() {
           const response = await submitPost({
             variables: {
               data: {
-                ...values
-              }
+                ...values,
+              },
             },
             update(cache, { data }) {
               cache.modify({
@@ -54,29 +54,29 @@ export default function CreatePost() {
                           id
                           title
                         }
-                      `
+                      `,
                     })
                     return [newPostRef, ...existingPosts]
-                  }
-                }
+                  },
+                },
               })
-            }
+            },
           })
 
           if (response.data?.createPost.post) {
             toast({
               id: `${response.data?.createPost?.post.title}-toast`,
               title: `${response.data?.createPost?.post.title}!`,
-              description: "Your post was submitted successfully.",
-              status: "success",
+              description: 'Your post was submitted successfully.',
+              status: 'success',
               duration: 9000,
-              isClosable: true
+              isClosable: true,
             })
-            router.push("/")
+            router.push('/')
           }
         }}
       >
-        {formik => {
+        {(formik) => {
           return (
             <Form>
               <Stack spacing={5}>
@@ -88,7 +88,7 @@ export default function CreatePost() {
                   name="categoryId"
                   label=""
                 >
-                  {data?.categories?.map(subreddit => (
+                  {data?.categories?.map((subreddit) => (
                     <option
                       key={`subreddit-${subreddit.name}-sidemenu`}
                       value={subreddit.id}

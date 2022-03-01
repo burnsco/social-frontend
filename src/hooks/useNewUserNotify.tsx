@@ -1,4 +1,4 @@
-import { useNewUserSubscription } from "@/generated/graphql"
+import { useNewUserSubscription } from '@/generated/graphql'
 
 function useNewUserNotification() {
   const { data } = useNewUserSubscription()

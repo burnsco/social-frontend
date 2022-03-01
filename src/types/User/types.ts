@@ -1,20 +1,20 @@
-import { EditUserInput, LoginInput, RegisterInput } from "@/generated/graphql"
+import { EditUserInput, LoginInput, RegisterInput } from '@/generated/graphql'
 
 export const LoginUserInputType: LoginInput = {
-  email: "",
-  password: ""
+  email: '',
+  password: '',
 }
 
 export const RegisterUserInputType: RegisterInput = {
-  email: "",
-  password: "",
-  username: ""
+  email: '',
+  password: '',
+  username: '',
 }
 
 export const EditUserInputType: EditUserInput = {
-  username: "",
-  about: "",
-  email: "",
-  password: "",
-  avatar: ""
+  username: '',
+  about: '',
+  email: '',
+  password: '',
+  avatar: '',
 }

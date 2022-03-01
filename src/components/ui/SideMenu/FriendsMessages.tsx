@@ -1,5 +1,5 @@
-import MessageUser from "@/components/common/MessageUser"
-import { useMyFriendsLazyQuery, User } from "@/generated/graphql"
+import MessageUser from '@/components/common/MessageUser'
+import { useMyFriendsLazyQuery, User } from '@/generated/graphql'
 import {
   Accordion,
   AccordionButton,
@@ -12,11 +12,11 @@ import {
   chakra,
   Input,
   List,
-  ListItem
-} from "@chakra-ui/react"
-import React, { useEffect } from "react"
-import { ImSpinner } from "react-icons/im"
-import { useMyPrivateMessagesLazyQuery } from "../../../generated/graphql"
+  ListItem,
+} from '@chakra-ui/react'
+import React, { useEffect } from 'react'
+import { ImSpinner } from 'react-icons/im'
+import { useMyPrivateMessagesLazyQuery } from '../../../generated/graphql'
 
 const OnlineCircle = () => (
   <chakra.span
@@ -46,7 +46,7 @@ export default function FriendsAndMessagesAccordion() {
 
   const [
     fetchMessages,
-    { data: messagesData, loading: messagesLoading, refetch: refetchMessages }
+    { data: messagesData, loading: messagesLoading, refetch: refetchMessages },
   ] = useMyPrivateMessagesLazyQuery()
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function FriendsAndMessagesAccordion() {
                 {data.myFriends.map((user: Partial<User>) => (
                   <AccordionItem color="" key={`friends-list-${user.username}`}>
                     <AccordionButton
-                      _expanded={{ bg: "lightgrey", borderRadius: 5 }}
+                      _expanded={{ bg: 'lightgrey', borderRadius: 5 }}
                     >
                       <ListItem>
                         <Box flex="1" textAlign="left">

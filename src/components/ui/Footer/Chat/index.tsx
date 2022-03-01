@@ -6,16 +6,16 @@ import {
   PopoverFooter,
   PopoverHeader,
   PopoverTrigger,
-  useColorModeValue
-} from "@chakra-ui/react"
-import React from "react"
-import { FaUserFriends } from "react-icons/fa"
-import ChatDisplay from "./ChatDisplay"
-import ChatInput from "./ChatInput"
-import ChatSelection from "./ChatSelect"
+  useColorModeValue,
+} from '@chakra-ui/react'
+import React from 'react'
+import { FaUserFriends } from 'react-icons/fa'
+import ChatDisplay from './ChatDisplay'
+import ChatInput from './ChatInput'
+import ChatSelection from './ChatSelect'
 
 export default function ChatDrawerPopOver() {
-  const bg = useColorModeValue("whitesmoke", "gray.900")
+  const bg = useColorModeValue('whitesmoke', 'gray.900')
 
   return (
     <>

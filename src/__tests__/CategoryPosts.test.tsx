@@ -1,13 +1,14 @@
-import PostList from "@/components/pages/PostList"
-import { PostsDocument } from "@/generated/graphql"
-import { render, waitForElementToBeRemoved } from "@/utils/test-utils"
-import { MockedProvider } from "@apollo/client/testing"
-import "@testing-library/jest-dom"
-import { signedInCache } from "./Header.test"
+import PostList from '@/components/pages/PostList'
+import { PostsDocument } from '@/generated/graphql'
+import { render, waitForElementToBeRemoved } from '@/utils/test-utils'
+import { MockedProvider } from '@apollo/client/testing'
+import '@testing-library/jest-dom'
+import { screen } from '@testing-library/react'
+import { signedInCache } from './Header.test'
 
-jest.mock("next/dynamic", () => () => {
+jest.mock('next/dynamic', () => () => {
   const DynamicComponent = () => null
-  DynamicComponent.displayName = "LoadableComponent"
+  DynamicComponent.displayName = 'LoadableComponent'
   DynamicComponent.preload = jest.fn()
   return DynamicComponent
 })
@@ -15,78 +16,78 @@ const mocks = {
   request: {
     query: PostsDocument,
     variables: {
-      category: "react",
+      category: 'react',
       skip: 0,
-      first: 4
-    }
+      first: 4,
+    },
   },
   result: {
     data: {
       posts: [
         {
           author: {
-            id: "1",
-            username: "Bob"
+            id: '1',
+            username: 'Bob',
           },
           category: {
-            id: "1",
-            name: "react"
+            id: '1',
+            name: 'react',
           },
           comments: [],
-          createdAt: "1603212919000",
-          id: "1",
-          image: "",
-          link: "",
-          text: "you agree?",
-          title: "react rocks!",
+          createdAt: '1603212919000',
+          id: '1',
+          image: '',
+          link: '',
+          text: 'you agree?',
+          title: 'react rocks!',
           totalComments: {
-            count: 0
+            count: 0,
           },
           totalVotes: {
             count: 0,
-            score: null
+            score: null,
           },
-          updatedAt: "1603212919000",
-          video: ""
+          updatedAt: '1603212919000',
+          video: '',
         },
         {
           author: {
-            id: "1",
-            username: "Susan"
+            id: '1',
+            username: 'Susan',
           },
           category: {
-            id: "2",
-            name: "react"
+            id: '2',
+            name: 'react',
           },
           comments: [],
-          createdAt: "1603212919000",
-          id: "2",
-          image: "",
-          link: "",
-          text: "is the best movie!",
-          title: "the shining",
+          createdAt: '1603212919000',
+          id: '2',
+          image: '',
+          link: '',
+          text: 'is the best movie!',
+          title: 'the shining',
           totalComments: {
-            count: 0
+            count: 0,
           },
           totalVotes: {
             count: 0,
-            score: null
+            score: null,
           },
-          updatedAt: "1603212919000",
-          video: ""
-        }
-      ]
-    }
-  }
+          updatedAt: '1603212919000',
+          video: '',
+        },
+      ],
+    },
+  },
 }
 
-describe("PostList", () => {
+describe('PostList', () => {
   it("Renders 'loading' then 'no posts here'.' ", async () => {
     const { debug, getByText } = render(
       <MockedProvider
         defaultOptions={{
-          watchQuery: { fetchPolicy: "no-cache" },
-          query: { fetchPolicy: "no-cache" }
+          watchQuery: { fetchPolicy: 'no-cache' },
+          query: { fetchPolicy: 'no-cache' },
         }}
         mocks={[mocks]}
         cache={signedInCache}
@@ -95,14 +96,14 @@ describe("PostList", () => {
         <PostList />
       </MockedProvider>
     )
-    const loading = getByText("loading")
+    const loading = screen.getByText('loading')
     expect(loading).toBeInTheDocument()
 
     await waitForElementToBeRemoved(loading).then(() =>
-      console.log("element is no longer in DOM")
+      console.log('element is no longer in DOM')
     )
 
-    const post1 = getByText(/no posts here/i)
+    const post1 = screen.getByText(/no posts here/i)
     expect(post1).toBeInTheDocument()
   })
 })

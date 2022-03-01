@@ -1,1 +1,1 @@
-export { default } from "./Chakra"
+export { default } from './Chakra'

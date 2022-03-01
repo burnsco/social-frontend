@@ -1,5 +1,5 @@
-import { useMemo } from "react"
-import { useMeQuery } from "../generated/graphql"
+import { useMemo } from 'react'
+import { useMeQuery } from '../generated/graphql'
 
 export const useLoggedInUser = () => {
   const { data } = useMeQuery()
