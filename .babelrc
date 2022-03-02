@@ -6,6 +6,7 @@
     }
   },
   "plugins": [
+    "superjson-next",
     "babel-plugin-import-graphql",
     [
       "module-resolver",

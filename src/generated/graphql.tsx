@@ -432,8 +432,8 @@ export type _QueryMeta = {
 
 export type CategoryDetailsFragment = {
   __typename?: 'Category'
-  createdAt: string
   id: string
+  createdAt: string
   name: string
 }
 
@@ -484,8 +484,8 @@ export type CreateSubredditMutation = {
     __typename?: 'CategoryMutationResponse'
     category?: {
       __typename?: 'Category'
-      createdAt: string
       id: string
+      createdAt: string
       name: string
     } | null
     errors?: Array<{
@@ -599,8 +599,8 @@ export type CreatePostMutation = {
       }
       category: {
         __typename?: 'Category'
-        createdAt: string
         id: string
+        createdAt: string
         name: string
       }
       totalComments?: {
@@ -649,8 +649,8 @@ export type EditPostMutation = {
       link?: string | null
       category: {
         __typename?: 'Category'
-        createdAt: string
         id: string
+        createdAt: string
         name: string
       }
     } | null
@@ -805,8 +805,8 @@ export type CategoriesQuery = {
   __typename?: 'Query'
   categories?: Array<{
     __typename?: 'Category'
-    createdAt: string
     id: string
+    createdAt: string
     name: string
   }> | null
 }
@@ -936,8 +936,8 @@ export type PostQuery = {
     link?: string | null
     category: {
       __typename?: 'Category'
-      createdAt: string
       id: string
+      createdAt: string
       name: string
     }
     author: {
@@ -984,8 +984,8 @@ export type PostsQuery = {
     link?: string | null
     category: {
       __typename?: 'Category'
-      createdAt: string
       id: string
+      createdAt: string
       name: string
     }
     author: {
@@ -1132,8 +1132,8 @@ export type NewUserSubscription = {
 
 export const CategoryDetailsFragmentDoc = gql`
   fragment CategoryDetails on Category {
-    createdAt
     id
+    createdAt
     name
   }
 `

@@ -1,3 +1,4 @@
+import CategoryPostList from '@/components/pages/Category/Category'
 import {
   CategoriesDocument,
   Category,
@@ -6,13 +7,6 @@ import {
 } from '@/generated/graphql'
 import { initializeApollo } from '@/lib/apolloClient'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import dynamic from 'next/dynamic'
-
-const DynamicCategoryPage = dynamic(
-  () => import('@/components/pages/Category/Category')
-)
-
-const CategoryPage = () => <DynamicCategoryPage />
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const apolloClient = initializeApollo()
@@ -20,7 +14,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   await apolloClient.query<PostsQuery>({
     query: PostsDocument,
     variables: {
-      category: params?.category ?? null,
+      category: params?.category ?? 'react',
       skip: 0,
       first: 2,
     },
@@ -31,7 +25,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       initialApolloState: apolloClient.cache.extract(),
       category: params?.category ?? 'react',
     },
-    revalidate: 10,
+    revalidate: 60,
   }
 }
 
@@ -50,4 +44,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export default CategoryPage
+export default function CategoryPage() {
+  return <CategoryPostList />
+}

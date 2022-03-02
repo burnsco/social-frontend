@@ -11,6 +11,7 @@ export default function ChatDisplay() {
   const selectedCategoryId = useReactiveVar(selectedChatRoomId)
 
   const { subscribeToMore, ...result } = useChatRoomMessagesQuery({
+    fetchPolicy: 'network-only',
     variables: { categoryId: selectedCategoryId },
   })
 

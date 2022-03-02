@@ -1,3 +1,4 @@
+import SinglePostPage from '@/components/pages/SinglePost/SingePostPage'
 import {
   Post,
   PostDocument,
@@ -6,11 +7,6 @@ import {
 } from '@/generated/graphql'
 import { initializeApollo } from '@/lib/apolloClient'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import dynamic from 'next/dynamic'
-
-const DynamicSinglePostPage = dynamic(
-  () => import('@/components/pages/SinglePost/SingePostPage')
-)
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const apolloClient = initializeApollo()
@@ -27,7 +23,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       initialApolloState: apolloClient.cache.extract(),
       postId: Number(params?.id) ?? 1,
     },
-    revalidate: 10,
+    revalidate: 60,
   }
 }
 
@@ -50,5 +46,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export default function PostAndCommentsPage() {
-  return <DynamicSinglePostPage />
+  return <SinglePostPage />
 }

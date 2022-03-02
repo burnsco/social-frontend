@@ -3,10 +3,13 @@ import { useApollo } from '@/lib/apolloClient'
 import { ApolloProvider } from '@apollo/client'
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
+import type { FC } from 'react'
+
+const Noop: FC = ({ children }) => <>{children}</>
 
 export default function App({ Component, pageProps }: AppProps) {
-  const apolloClient = useApollo(pageProps)
-
+  const Layout = (Component as any).Layout || Noop
+  const apolloClient = useApollo(pageProps.initialApolloState)
   return (
     <>
       <Head>
@@ -16,7 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
       </Head>
       <ApolloProvider client={apolloClient}>
         <ChakraWrapper>
-          <Component {...pageProps} />
+          <Layout pageProps={pageProps}>
+            <Component {...pageProps} />
+          </Layout>
         </ChakraWrapper>
       </ApolloProvider>
     </>

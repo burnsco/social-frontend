@@ -26,6 +26,7 @@ function createApolloClient() {
     uri: process.env.NEXT_PUBLIC_API_URL as string,
     credentials: 'include',
   })
+
   if (ssrMode) {
     return new ApolloClient({
       ssrMode,
@@ -33,11 +34,13 @@ function createApolloClient() {
       cache: cacheOptions,
     })
   }
+
   const client = new SubscriptionClient(WS_URI, {
     reconnect: true,
   })
+
   const wsLink = new WebSocketLink(client)
-  const link = typeof window
+  const link = process.browser
     ? split(
         ({ query }) => {
           const operations = getMainDefinition(query)
@@ -50,6 +53,7 @@ function createApolloClient() {
         httpLink
       )
     : httpLink
+
   return new ApolloClient({
     ssrMode,
     link,
@@ -64,7 +68,9 @@ export function initializeApollo(initialState: any = null) {
     const existingCache = _apolloClient.extract()
     _apolloClient.cache.restore({ ...existingCache, ...initialState })
   }
+
   if (typeof window === 'undefined') return _apolloClient
+
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient

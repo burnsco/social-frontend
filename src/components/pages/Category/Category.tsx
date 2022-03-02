@@ -6,8 +6,9 @@ import { NetworkStatus } from '@apollo/client'
 import { Box, Text, VisuallyHidden, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
-const CategoryPosts = (): JSX.Element => {
+export default function CategoryPostList() {
   const router = useRouter()
+  console.log(router)
   const category = router.query.category as string
 
   const { loading, data, fetchMore, networkStatus } = usePostsQuery({
@@ -39,9 +40,11 @@ const CategoryPosts = (): JSX.Element => {
     if (postsBySubreddit?.length > 0) {
       return (
         <VStack spacing={4}>
-          {postsBySubreddit.map((post) => (
-            <NewPost key={`post-${post.id}-categoryPage`} post={post} />
-          ))}
+          {postsBySubreddit
+            .filter((post) => post.category.name === category)
+            .map((post) => (
+              <NewPost key={`post-${post.id}-categoryPage`} post={post} />
+            ))}
         </VStack>
       )
     }
@@ -65,5 +68,3 @@ const CategoryPosts = (): JSX.Element => {
     </Layout>
   )
 }
-
-export default CategoryPosts

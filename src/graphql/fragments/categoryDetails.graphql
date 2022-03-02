@@ -1,5 +1,5 @@
 fragment CategoryDetails on Category {
-  createdAt
   id
+  createdAt
   name
 }

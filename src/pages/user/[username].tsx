@@ -33,6 +33,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       userId: params?.username ?? null,
     },
   })
+
   return {
     props: {
       userId: params?.username,

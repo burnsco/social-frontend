@@ -1,9 +1,9 @@
+import SideMenuTest from '@/components/common/SideMenuTest'
 import { Header } from '@/components/ui/Header'
 import { Box, Stack } from '@chakra-ui/react'
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import Footer from '../Footer/Footer'
-import SideMenuContainer from '../SideMenu/SideMenuContainer'
 
 const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
   children,
@@ -56,10 +56,10 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
             <Box
               as="aside"
               minW="25%"
-              maxW="350px"
+              maxW="300px"
               display={['none', 'none', 'block', 'block']}
             >
-              <SideMenuContainer />
+              <SideMenuTest />
             </Box>
           </Stack>
         </Box>

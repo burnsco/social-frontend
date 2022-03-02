@@ -19,8 +19,5 @@ export const cacheOptions = new InMemoryCache({
         },
       },
     },
-    Post: {
-      merge: true,
-    },
   },
 })

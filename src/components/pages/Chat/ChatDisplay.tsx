@@ -5,7 +5,6 @@ import {
 import { selectedChatRoomId } from '@/lib/apolloClient'
 import { useReactiveVar } from '@apollo/client'
 import { Alert } from '@chakra-ui/react'
-import React from 'react'
 import ChatList from './ChatList'
 
 export default function ChatDisplay() {
