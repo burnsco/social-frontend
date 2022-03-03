@@ -1,22 +1,158 @@
+import AddFriendPopOver from '@/components/common/AddFriendPopOver'
+import Logo from '@/components/common/Logo'
+import NavigationMenu from '@/components/common/NavigationMenu'
 import { ThemedContainer } from '@/components/common/ThemedContainer'
+import { useLogoutMutation, useMeQuery } from '@/generated/graphql'
 import useNewUserNotification from '@/hooks/useNewUserNotify'
 import {
+  Avatar,
   Badge,
+  Box,
+  ButtonGroup,
   chakra,
   Flex,
+  HStack,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+  Stack,
   Text,
   useColorMode,
   useColorModeValue,
   useSafeLayoutEffect,
   useToast,
+  VisuallyHidden,
 } from '@chakra-ui/react'
-import { FaMoon, FaSun } from 'react-icons/fa'
-import NavSection from './Center'
-import LogoSection from './Left'
-import MenuIconsSection from './Right'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import { AiOutlineLogout } from 'react-icons/ai'
+import { FaMoon, FaSun, FaUserCircle } from 'react-icons/fa'
+import { MdSettings } from 'react-icons/md'
 
-const HeaderContent = () => {
+const DynamicChatRoomDrawer = dynamic(
+  () => import('@/components/common/Drawers/Chat')
+)
+
+const DynamicRegisterDrawer = dynamic(
+  () => import('@/components/common/Drawers/Register')
+)
+
+const DynamicLoginDrawer = dynamic(
+  () => import('@/components/common/Drawers/Login')
+)
+
+const DynamicCreateCategoryDrawer = dynamic(
+  () => import('@/components/common/Drawers/CreateSubreddit')
+)
+
+const DynamicCreatePostDrawer = dynamic(
+  () => import('@/components/common/Drawers/CreatePost')
+)
+
+function LogoSection() {
+  const router = useRouter()
+
+  return (
+    <Flex
+      aria-label="Home Header Link"
+      align="center"
+      h="full"
+      p="0.5"
+      flexGrow={1}
+      display={{ base: 'flex' }}
+    >
+      <Flex cursor="pointer" align="center" onClick={() => router.push('/')}>
+        <Logo />
+      </Flex>
+    </Flex>
+  )
+}
+
+function HeaderIconsSection() {
+  const router = useRouter()
+  const bg = useColorModeValue('white', '#202020')
+  const { data, loading } = useMeQuery({ ssr: false })
+  const [logout, { client }] = useLogoutMutation()
+
+  if (loading) return <VisuallyHidden>Loading Header</VisuallyHidden>
+
+  if (data && data?.me?.username && !loading) {
+    return (
+      <HStack>
+        <ButtonGroup spacing="4" mr="2">
+          <DynamicChatRoomDrawer />
+          <DynamicCreatePostDrawer />
+          <DynamicCreateCategoryDrawer />
+          <AddFriendPopOver />
+        </ButtonGroup>
+
+        <Menu isLazy>
+          <IconButton
+            as={MenuButton}
+            variant="ghost"
+            aria-label="Create a Subreddit"
+            icon={
+              <Avatar
+                size="xs"
+                name="Ryan Florence"
+                src={data?.me.avatar || 'https://bit.ly/ryan-florence'}
+              />
+            }
+            size="md"
+          />
+
+          <MenuList opacity="0.7" bg={bg}>
+            <MenuGroup title={data.me.username} color="lightsteelblue">
+              <MenuDivider />
+              <MenuItem onClick={() => router.push('/user')}>
+                <FaUserCircle />
+                <Box ml={3}>Profile</Box>
+              </MenuItem>
+              <MenuItem onClick={() => router.push('/user/account')}>
+                <MdSettings />
+                <Box ml={3}>Account</Box>
+              </MenuItem>
+              <MenuItem onClick={() => router.push('/user/account')}>
+                <MdSettings />
+                <Box ml={3}>Friends</Box>
+              </MenuItem>
+              <MenuItem onClick={() => router.push('/user/account')}>
+                <MdSettings />
+                <Box ml={3}>Messages</Box>
+              </MenuItem>
+            </MenuGroup>
+            <MenuDivider />
+            <MenuGroup>
+              <MenuItem
+                mr={2}
+                onClick={async () => {
+                  await logout()
+                  await client.resetStore()
+                  await router.push('/')
+                }}
+              >
+                <AiOutlineLogout />
+                <Box ml={3}>Logout</Box>
+              </MenuItem>
+            </MenuGroup>
+          </MenuList>
+        </Menu>
+      </HStack>
+    )
+  }
+  return (
+    <Stack spacing={4} mr={2} direction="row" align="center">
+      <DynamicRegisterDrawer />
+      <DynamicLoginDrawer />
+    </Stack>
+  )
+}
+
+function HeaderContent() {
   const { toggleColorMode: toggleMode } = useColorMode()
   const text = useColorModeValue('dark', 'light')
   const SwitchIcon = useColorModeValue(FaMoon, FaSun)
@@ -24,8 +160,8 @@ const HeaderContent = () => {
   return (
     <Flex w="100%" h="100%" px="4" align="center" justify="space-around">
       <LogoSection />
-      <NavSection />
-      <MenuIconsSection />
+      <NavigationMenu />
+      <HeaderIconsSection />
       <IconButton
         size="md"
         fontSize="lg"
@@ -39,7 +175,7 @@ const HeaderContent = () => {
   )
 }
 
-export default function Header() {
+function Header() {
   const headerBG = useColorModeValue('white', '#202020')
   const headerShadow = useColorModeValue('md', 'dark-lg')
   const colorScheme = useColorModeValue('green', 'orange')
@@ -78,3 +214,5 @@ export default function Header() {
     </chakra.nav>
   )
 }
+
+export default Header

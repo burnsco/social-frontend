@@ -70,7 +70,7 @@ export default function PostAndCommentsPage() {
   }
 
   return (
-    <Layout title="Post">
+    <Layout title={data?.post?.title || 'post'}>
       <Skeleton isLoaded={!loading}>
         <Stack spacing={4}>
           {data && data.post ? (

@@ -99,7 +99,7 @@ export default function PostBody({
       ) : null}
 
       {text ? (
-        <Text fontSize="sm" mt={2} noOfLines={4}>
+        <Text fontSize="md" p="2" noOfLines={6}>
           {text}
         </Text>
       ) : null}

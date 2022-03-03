@@ -46,7 +46,7 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
         />
       </Head>
 
-      <Box border="1px solid red">
+      <>
         <Header />
         <Box px={['0em', '1em', '3em', '4em']} py="6em">
           <Stack isInline spacing={14}>
@@ -64,7 +64,7 @@ const Layout: React.FC<{ children: React.ReactNode; title: string }> = ({
           </Stack>
         </Box>
         <Footer />
-      </Box>
+      </>
     </>
   )
 }
