@@ -67,7 +67,6 @@ export default function SubredditsAccordion() {
                       fontWeight={category === subreddit.name ? '500' : '400'}
                       color={category === subreddit.name ? hover : color}
                       _hover={{
-                        borderRadius: 5,
                         color: hover,
                         bg: linkbg,
                         marginLeft: 1,

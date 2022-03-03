@@ -8,7 +8,6 @@ import {
   VisuallyHidden,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { memo } from 'react'
 
 const SideMenu: React.FC = () => {
   const router = useRouter()
@@ -60,4 +59,4 @@ const SideMenu: React.FC = () => {
   )
 }
 
-export default memo(SideMenu)
+export default SideMenu

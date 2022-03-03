@@ -1,5 +1,5 @@
 import NewPost from '@/components/common/Post'
-import ShowMorePosts from '@/components/pages/PostList/showMore'
+import { ShowMorePosts } from '@/components/common/ShowMorePosts'
 import { Layout } from '@/components/ui'
 import { usePostsQuery } from '@/generated/graphql'
 import { NetworkStatus } from '@apollo/client'

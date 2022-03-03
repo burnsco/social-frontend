@@ -1,3 +1,4 @@
+import { ChakraField } from '@/components/common/index'
 import { useAddFriendMutation } from '@/generated/graphql'
 import { useLoggedInUser } from '@/hooks/useLoggedInUser'
 import convertToErrorMap from '@/utils/toErrorMap'
@@ -6,9 +7,7 @@ import {
   Box,
   Button,
   ButtonGroup,
-  FormControl,
   HStack,
-  Input,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -18,47 +17,42 @@ import {
   PopoverHeader,
   PopoverTrigger,
   useColorModeValue,
-  useDisclosure,
   useToast,
   VisuallyHidden,
 } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import React from 'react'
-import ReactFocusLock from 'react-focus-lock'
 import { FaUserFriends } from 'react-icons/fa'
 
 export default function AddFriendPopOver() {
   const [loggedInUser] = useLoggedInUser()
-  const { onOpen, onClose, isOpen } = useDisclosure()
+
   const bg = useColorModeValue('whitesmoke', 'gray.900')
   const toast = useToast()
   const buttonColor = useColorModeValue('purple', 'blue')
 
   const [addFriend, { loading }] = useAddFriendMutation()
 
-  const initialFocusRef = React.useRef<HTMLInputElement | null>(null)
+  const initialFocusRef = React.useRef<HTMLButtonElement | null>(null)
 
   if (loading) return <VisuallyHidden>loading/adding friend</VisuallyHidden>
 
   return (
     <>
       <Popover
-        isOpen={isOpen}
         initialFocusRef={initialFocusRef}
-        onOpen={onOpen}
-        onClose={onClose}
-        placement="right"
-        closeOnBlur={false}
+        placement="bottom"
+        closeOnBlur={true}
       >
-        {({ onClose }) => (
+        {({ isOpen, onClose }) => (
           <>
             <PopoverTrigger>
               <HStack>
                 <FaUserFriends size="1.5em" />
               </HStack>
             </PopoverTrigger>
-            <PopoverContent bg={bg} p="2">
-              <PopoverHeader pt={2} fontWeight="bold" fontSize="lg" border="0">
+            <PopoverContent bg={bg}>
+              <PopoverHeader pt={4} fontWeight="bold" border="0">
                 Add Friend
               </PopoverHeader>
               <PopoverArrow />
@@ -128,44 +122,41 @@ export default function AddFriendPopOver() {
                   }
                 }}
               >
-                {({ isSubmitting, errors }) => {
+                {({ isSubmitting }) => {
                   return (
                     <Form>
-                      <FormControl isInvalid={!!errors}>
-                        <PopoverBody my="4">
-                          <ReactFocusLock>
-                            <Input
-                              ref={initialFocusRef}
-                              id="username"
-                              name="username"
-                            />
-                          </ReactFocusLock>
-                        </PopoverBody>
+                      <PopoverBody>
+                        <ChakraField
+                          id="username"
+                          name="username"
+                          label="Username: "
+                        />
+                      </PopoverBody>
 
-                        <PopoverFooter
-                          border="0"
-                          d="flex"
-                          alignItems="center"
-                          justifyContent="space-between"
-                        >
-                          <Box fontSize="sm">
-                            {isSubmitting ? 'searching...' : null}
-                          </Box>
-                          <ButtonGroup size="sm">
-                            <Button onClick={onClose} colorScheme="red">
-                              Cancel
-                            </Button>
-                            <Button
-                              type="submit"
-                              isLoading={isSubmitting}
-                              isDisabled={!isSubmitting}
-                              colorScheme={buttonColor}
-                            >
-                              Confirm
-                            </Button>
-                          </ButtonGroup>
-                        </PopoverFooter>
-                      </FormControl>
+                      <PopoverFooter
+                        border="0"
+                        d="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                        pb={4}
+                      >
+                        <Box fontSize="sm">
+                          {isSubmitting ? 'searching...' : null}
+                        </Box>
+                        <ButtonGroup size="sm">
+                          <Button onClick={onClose} colorScheme="red">
+                            Cancel
+                          </Button>
+                          <Button
+                            type="submit"
+                            isLoading={isSubmitting}
+                            colorScheme={buttonColor}
+                            ref={initialFocusRef}
+                          >
+                            Confirm
+                          </Button>
+                        </ButtonGroup>
+                      </PopoverFooter>
                     </Form>
                   )
                 }}

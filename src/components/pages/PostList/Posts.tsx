@@ -1,9 +1,9 @@
 import NewPost from '@/components/common/Post'
+import { ShowMorePosts } from '@/components/common/ShowMorePosts'
 import { usePostsQuery } from '@/generated/graphql'
 import { allPostsQueryVars } from '@/types/pagination'
 import { NetworkStatus } from '@apollo/client'
 import { Box, Text, VisuallyHidden, VStack } from '@chakra-ui/react'
-import ShowMorePosts from './showMore'
 
 export default function Posts() {
   const { loading, data, fetchMore, networkStatus } = usePostsQuery({

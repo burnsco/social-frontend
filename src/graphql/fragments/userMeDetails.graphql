@@ -3,5 +3,6 @@ fragment UserMeDetails on User {
   username
   email
   about
+  online
   avatar
 }

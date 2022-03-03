@@ -17,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
+
       <ApolloProvider client={apolloClient}>
         <ChakraWrapper>
           <Layout pageProps={pageProps}>

@@ -19,7 +19,6 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React from 'react'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoAddCircle } from 'react-icons/io5'
 import { MdEmail, MdMessage } from 'react-icons/md'
@@ -46,6 +45,9 @@ export default function PostHeader({
   const router = useRouter()
   const toast = useToast()
   const [addFriend, { loading }] = useAddFriendMutation()
+
+  console.log('logged in user')
+  console.log(loggedInUser)
 
   const handleAddFriend = async (username: string | undefined) => {
     if (username) {

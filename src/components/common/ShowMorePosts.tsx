@@ -1,5 +1,4 @@
 import { Box, Button } from '@chakra-ui/react'
-import { memo } from 'react'
 
 type MorePostsProps = {
   loadMorePosts: () => void
@@ -7,7 +6,7 @@ type MorePostsProps = {
   loadingMorePosts: boolean
 }
 
-const ShowMorePosts = ({
+export const ShowMorePosts = ({
   loadMorePosts,
   areMorePosts,
   loadingMorePosts,
@@ -24,9 +23,6 @@ const ShowMorePosts = ({
         </Button>
       </Box>
     )
-  } else {
-    return null
   }
+  return null
 }
-
-export default memo(ShowMorePosts)

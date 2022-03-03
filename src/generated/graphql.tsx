@@ -471,6 +471,7 @@ export type UserMeDetailsFragment = {
   username: string
   email: any
   about?: string | null
+  online?: boolean | null
   avatar?: string | null
 }
 
@@ -1022,6 +1023,7 @@ export type MeQuery = {
     username: string
     email: any
     about?: string | null
+    online?: boolean | null
     avatar?: string | null
   } | null
 }
@@ -1171,6 +1173,7 @@ export const UserMeDetailsFragmentDoc = gql`
     username
     email
     about
+    online
     avatar
   }
 `
