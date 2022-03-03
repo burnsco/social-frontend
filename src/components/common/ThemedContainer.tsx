@@ -4,8 +4,8 @@ export const ThemedContainer = (props: FlexProps) => {
   const { colorMode } = useColorMode()
 
   const bgColor = {
-    light: `linear-gradient(to bottom right, #B0DB7D 40%, #99DBB4 100%)`,
-    dark: `linear-gradient(to bottom right, #EF8D9C 40%,  #FFC39E 100%)`,
+    light: `blue.500`,
+    dark: `blue.400`,
   }
   const bgShadow = { light: 'md', dark: 'dark-lg' }
 

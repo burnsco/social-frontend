@@ -1,7 +1,7 @@
 import { ChakraField } from '@/components/common/index'
 import { useAddFriendMutation } from '@/generated/graphql'
 import { useLoggedInUser } from '@/hooks/useLoggedInUser'
-import convertToErrorMap from '@/utils/toErrorMap'
+import { convertToErrorMap } from '@/utils/index'
 import { gql } from '@apollo/client'
 import {
   Button,
@@ -20,12 +20,14 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { FaUserFriends } from 'react-icons/fa'
 
 export default function AddFriendDrawer() {
+  const drawerBG = useColorModeValue('whitesmoke', 'gray.900')
+  const router = useRouter()
   const [loggedInUser] = useLoggedInUser()
-  const drawerBg = useColorModeValue('whitesmoke', 'gray.900')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
   const buttonColor = useColorModeValue('purple', 'blue')
@@ -59,9 +61,9 @@ export default function AddFriendDrawer() {
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent bg={drawerBg}>
+        <DrawerContent bg={drawerBG}>
           <DrawerCloseButton />
-          <DrawerHeader>Add Friend</DrawerHeader>
+          <DrawerHeader>Add a Friend</DrawerHeader>
           <Formik
             initialValues={{ username: '' }}
             onSubmit={async (values, actions) => {
@@ -98,7 +100,7 @@ export default function AddFriendDrawer() {
                     return null
                   },
                 })
-              } catch (ex) {
+              } catch (ex: any) {
                 console.log(ex)
               }
               if (response?.data?.addFriend.errors) {
@@ -116,12 +118,13 @@ export default function AddFriendDrawer() {
                 const { friend } = response.data.addFriend
                 toast({
                   id: `user-${friend.username}-added`,
-                  title: 'Sucess',
+                  title: 'Success',
                   description: `User '${friend.username}' is now your friend `,
                   status: 'success',
                   duration: 9000,
                   isClosable: true,
                 })
+                actions.resetForm()
                 onClose()
               }
             }}

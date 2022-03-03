@@ -2,6 +2,7 @@ import MessageUser from '@/components/common/MessageUser'
 import { OfflineCircle, OnlineCircle } from '@/components/common/OnlineOffline'
 import {
   useMyFriendsQuery,
+  useMyPrivateMessagesQuery,
   User,
   useSendPrivateMessageMutation,
 } from '@/generated/graphql'
@@ -44,6 +45,7 @@ export default function Footer() {
   const bg = useColorModeValue('white', '#202020')
 
   const { data, loading, error } = useMyFriendsQuery()
+  const { data: myMessages } = useMyPrivateMessagesQuery()
 
   const FriendsCount = () => {
     if (data && data.myFriends && data.myFriends.length > 0) {
@@ -59,6 +61,11 @@ export default function Footer() {
     }
     return null
   }
+
+  console.log('my friends query')
+  console.log(data)
+  console.log('my private messages query')
+  console.log(myMessages)
 
   const FriendsMenu = () => (
     <>
@@ -141,19 +148,19 @@ export default function Footer() {
               >
                 <PopoverArrow />
                 <PopoverCloseButton />
-                <PopoverHeader>Header</PopoverHeader>
-                {data &&
-                  data.myFriends &&
-                  data.myFriends.map((user: Partial<User>) => (
-                    <PopoverBody flexGrow={2} key={`friend-${user.id}`}>
+                <PopoverHeader>{user.username}</PopoverHeader>
+                {myMessages &&
+                  myMessages.myPrivateMessages &&
+                  myMessages.myPrivateMessages.map((message: any) => (
+                    <PopoverBody flexGrow={2} key={`friend-${message.id}`}>
                       <Avatar
                         size="xs"
                         name="Ryan Florence"
                         src="https://bit.ly/ryan-florence"
                         mr={3}
                       />
-                      {user.username} {user && <MessageUser {...user} />}
-                      {user.online ? <OnlineCircle /> : <OfflineCircle />}
+                      {message.body}
+                      {message.sentBy && <MessageUser {...message.sentBy} />}
                     </PopoverBody>
                   ))}
 
@@ -189,7 +196,7 @@ export default function Footer() {
   }
 
   return (
-    <chakra.header
+    <chakra.footer
       pos="fixed"
       bottom="0"
       zIndex="1"
@@ -201,6 +208,6 @@ export default function Footer() {
       <chakra.div height="2.5rem" mx="auto" maxW="1200px" px={1}>
         <FooterContent />
       </chakra.div>
-    </chakra.header>
+    </chakra.footer>
   )
 }

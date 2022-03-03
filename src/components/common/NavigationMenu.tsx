@@ -42,7 +42,7 @@ export default function NavigationMenu() {
 
         <IconButton
           variant="outline"
-          colorScheme="teal"
+          color="#5e45a5"
           aria-label="Search Site"
           fontSize="20px"
           icon={<FaSearch />}
@@ -89,7 +89,7 @@ export default function NavigationMenu() {
   )
 
   if (!loading) {
-    return <SearchNavigationTest />
+    return <NavigationDisplay />
   }
   return null
 }

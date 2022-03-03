@@ -3,6 +3,7 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
+    "plugin:testing-library/react",
     "prettier"
   ],
   "plugins": ["@typescript-eslint", "testing-library"],
@@ -17,6 +18,7 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
+
     "testing-library/no-debug": "off",
     "react/display-name": "off",
     "react-hooks/rules-of-hooks": "error",
