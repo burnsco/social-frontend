@@ -16,7 +16,7 @@ export default function ChatUsers() {
   const { data, loading } = useCategoryQuery({
     ssr: false,
     pollInterval: 500,
-    variables: { categoryId: Number(chatId) },
+    variables: { categoryId: chatId },
   })
 
   if (data && data.category && data.category.chatUsers) {

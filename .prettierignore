@@ -1,5 +1,14 @@
 dist
 node_modules
 coverage
+generated
 .next
+**/node_modules/*
+**/out/*
+**/.next/*
+**/generated/*
+src/generated
+src/generated/*
+.next
+
 build

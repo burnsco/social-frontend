@@ -3,12 +3,12 @@ import { Skeleton, Stack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import CommentPage from './index'
 
-const CommentsPageWithData = () => {
+export default function CommentsPageWithData() {
   const router = useRouter()
-  const postId = router.query.id
+  const postId = router.query.id as string
 
   const { data, loading } = useCommentsForPostQuery({
-    variables: { postId: Number(postId) },
+    variables: { postId },
   })
 
   if (data && data.post && data.post.comments) {
@@ -19,14 +19,12 @@ const CommentsPageWithData = () => {
       return (
         <Skeleton isLoaded={!loading}>
           <Stack>
-            {comments.map(
-              (comment, index): JSX.Element => (
-                <CommentPage
-                  key={`comment-${comment.id}-${index}`}
-                  comment={comment}
-                />
-              )
-            )}
+            {comments.map((comment, index) => (
+              <CommentPage
+                key={`comment-${comment.id}-${index}`}
+                comment={comment}
+              />
+            ))}
           </Stack>
         </Skeleton>
       )
@@ -39,5 +37,3 @@ const CommentsPageWithData = () => {
     </Stack>
   )
 }
-
-export default CommentsPageWithData

@@ -21,14 +21,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   await apolloClient.query<PostQuery>({
     query: PostDocument,
     variables: {
-      postId: Number(params?.id) ?? 1,
+      postId: params?.id,
     },
   })
 
   return {
     props: {
       initialApolloState: apolloClient.cache.extract(),
-      postId: Number(params?.id) ?? 1,
+      postId: params?.id,
     },
     revalidate: 60,
   }
@@ -55,10 +55,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export default function PostAndCommentsPage() {
   const router = useRouter()
 
-  const postId = router.query.id
+  const postId = router.query.id as string
 
   const { data, loading, error } = usePostQuery({
-    variables: { postId: Number(postId) },
+    variables: { postId },
   })
 
   const { data: userData } = useMeQuery({ ssr: false })

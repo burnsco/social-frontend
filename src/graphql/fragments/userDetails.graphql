@@ -1,5 +1,7 @@
 fragment UserDetails on User {
   id
+  createdAt
+  updatedAt
   username
   online
 }

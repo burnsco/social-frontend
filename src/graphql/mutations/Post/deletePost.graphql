@@ -1,4 +1,4 @@
-mutation DeletePost($postId: Int) {
+mutation DeletePost($postId: ID) {
   deletePost(postId: $postId) {
     post {
       id

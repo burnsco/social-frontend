@@ -74,7 +74,7 @@ export default function DeletePostDialog({ postId }: DeletePostProps) {
                     sleep(1000)
                     await deletePost({
                       variables: {
-                        postId: Number(postId),
+                        postId,
                       },
                       update(cache, { data }) {
                         if (data?.deletePost) {

@@ -1,6 +1,7 @@
 **/node_modules/*
 **/out/*
 **/.next/*
+**/generated/*
 src/generated
 src/generated/*
 .next

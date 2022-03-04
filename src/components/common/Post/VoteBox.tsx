@@ -31,7 +31,7 @@ export default function VoteBox({
           isDisabled={loading || !isLoggedIn}
           onClick={async () => {
             await vote({
-              variables: { data: { value: 1, postId: Number(postId) } },
+              variables: { data: { value: 1, postId } },
             })
           }}
           variant="ghost"
@@ -48,7 +48,7 @@ export default function VoteBox({
           isDisabled={loading || !isLoggedIn}
           onClick={async () => {
             await vote({
-              variables: { data: { value: -1, postId: Number(postId) } },
+              variables: { data: { value: -1, postId } },
             })
           }}
           variant="ghost"

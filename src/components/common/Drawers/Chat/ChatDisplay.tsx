@@ -12,7 +12,7 @@ export default function ChatDisplay() {
 
   const { subscribeToMore, ...result } = useChatRoomMessagesQuery({
     fetchPolicy: 'network-only',
-    variables: { categoryId: selectedCategoryId },
+    variables: { categoryId: 'sdf' },
   })
 
   if (subscribeToMore !== undefined) {

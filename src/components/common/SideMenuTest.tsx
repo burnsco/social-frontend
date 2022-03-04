@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 
-const SideMenu: React.FC = () => {
+export default function SideMenuTest() {
   const router = useRouter()
 
   const color = useColorModeValue('gray.700', 'gray.300')
@@ -58,5 +58,3 @@ const SideMenu: React.FC = () => {
     </Box>
   )
 }
-
-export default SideMenu

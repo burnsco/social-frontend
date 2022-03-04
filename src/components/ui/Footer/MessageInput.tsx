@@ -4,7 +4,6 @@ import { selectedChatRoomId } from '@/lib/apolloClient'
 import { useReactiveVar } from '@apollo/client'
 import { HStack } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
-import React from 'react'
 
 export default function PrivateMessageInput() {
   const selectedCategoryId = useReactiveVar(selectedChatRoomId)
@@ -15,7 +14,7 @@ export default function PrivateMessageInput() {
       variables: {
         data: {
           content: values.content,
-          categoryId: Number(selectedCategoryId),
+          categoryId: selectedCategoryId,
         },
       },
     })

@@ -55,7 +55,7 @@ export default function ChatSelection() {
                         key={`chat-selection-${item.id}}`}
                         onClick={() => {
                           if (item && item.name && item.id) {
-                            selectedChatRoomId(Number(item.id))
+                            selectedChatRoomId(item.id)
                             selectedChatRoomName(item.name)
                           }
                         }}

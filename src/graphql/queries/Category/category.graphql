@@ -1,4 +1,4 @@
-query Category($categoryId: Int!) {
+query Category($categoryId: ID!) {
   category(categoryId: $categoryId) {
     id
     name

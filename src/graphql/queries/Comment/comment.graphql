@@ -1,4 +1,4 @@
-query Comment($postId: Int) {
+query Comment($postId: ID) {
   comment(postId: $postId) {
     ...CommentDetails
     createdBy {

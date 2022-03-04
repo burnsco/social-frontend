@@ -14,7 +14,7 @@ import {
 export default function ChatUsers() {
   const chatId = useReactiveVar(selectedChatRoomId)
   const { data, loading, error } = useCategoryQuery({
-    variables: { categoryId: Number(chatId) },
+    variables: { categoryId: chatId },
   })
 
   if (data && data.category && data.category.chatUsers) {

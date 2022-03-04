@@ -14,7 +14,7 @@ const SubmitCommentForm = () => {
   const toast = useToast()
   const loggedInUser = useLoggedInUser()
   const router = useRouter()
-  const postId = router.query.id
+  const postId = router.query.id as string
 
   const [submitComment, { loading: mutationLoading, error: mutationError }] =
     useCreateCommentMutation()
@@ -40,7 +40,7 @@ const SubmitCommentForm = () => {
             variables: {
               data: {
                 body: values.body,
-                postId: Number(postId),
+                postId,
               },
             },
             update(cache, { data }) {

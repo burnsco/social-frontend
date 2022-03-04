@@ -1,3 +1,4 @@
+import { GraphQLWsLink } from '@/lib/subscriptions'
 import {
   ApolloClient,
   HttpLink,
@@ -6,26 +7,26 @@ import {
   ReactiveVar,
   split,
 } from '@apollo/client'
-import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
+import { createClient } from 'graphql-ws'
 import { useMemo } from 'react'
-import { SubscriptionClient } from 'subscriptions-transport-ws'
 import { cacheOptions } from './cache'
 
-export const selectedChatRoomId: ReactiveVar<number> = makeVar<number>(39)
+export const selectedChatRoomId: ReactiveVar<string> = makeVar<string>('react')
+export const loggedInUserId: ReactiveVar<string> = makeVar<string>('')
 export const selectedChatRoomName: ReactiveVar<string> =
   makeVar<string>('react-js')
 
 let apolloClient: ApolloClient<NormalizedCacheObject>
-
 const WS_URI = `ws://localhost:4000/subscriptions`
+const ssrMode = typeof window === 'undefined'
 
 function createApolloClient() {
-  const ssrMode = typeof window === 'undefined'
   const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_API_URL as string,
-    credentials: 'include',
+    credentials: 'omit',
   })
+
   if (ssrMode) {
     return new ApolloClient({
       ssrMode,
@@ -33,11 +34,14 @@ function createApolloClient() {
       cache: cacheOptions,
     })
   }
-  const client = new SubscriptionClient(WS_URI, {
-    reconnect: true,
-  })
-  const wsLink = new WebSocketLink(client)
-  const link = process.browser
+
+  const wsLink = new GraphQLWsLink(
+    createClient({
+      url: `${WS_URI}`,
+    })
+  )
+
+  const link = typeof window
     ? split(
         ({ query }) => {
           const operations = getMainDefinition(query)
@@ -50,6 +54,7 @@ function createApolloClient() {
         httpLink
       )
     : httpLink
+
   return new ApolloClient({
     ssrMode,
     link,
@@ -64,7 +69,9 @@ export function initializeApollo(initialState: any = null) {
     const existingCache = _apolloClient.extract()
     _apolloClient.cache.restore({ ...existingCache, ...initialState })
   }
-  if (typeof window === 'undefined') return _apolloClient
+
+  if (ssrMode) return _apolloClient
+
   if (!apolloClient) apolloClient = _apolloClient
 
   return _apolloClient

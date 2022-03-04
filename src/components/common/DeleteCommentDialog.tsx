@@ -64,7 +64,7 @@ export function DeletePostDialog({ postId, post }: DeletePostType) {
                       sleep(1000)
                       await deletePost({
                         variables: {
-                          postId: Number(postId),
+                          postId,
                         },
                         update(cache, { data }) {
                           if (data?.deletePost) {

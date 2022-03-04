@@ -72,7 +72,7 @@ export default function CreatePostDrawer() {
       const response = await submitPost({
         variables: {
           data: {
-            categoryId: Number(values.categoryId),
+            categoryId: values.categoryId,
             title: values.title,
             text: values.text,
             link: values.link,

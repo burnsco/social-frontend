@@ -19,8 +19,8 @@ type PostBodyType = {
   imageH?: number | null
   imageW?: number | null
   image?: string | null
-  postId?: string | null | undefined
-  categoryId?: string | null | undefined
+  postId?: string
+  categoryId?: string
 }
 
 export default function PostBody({
@@ -43,7 +43,7 @@ export default function PostBody({
     postId,
   }: Partial<PostBodyType>) {
     if (title || text || link) {
-      if (postId) {
+      if (postId && categoryId) {
         return (
           <Heading fontWeight="500" fontSize="xl" my={1} px={1}>
             <Editable
@@ -55,8 +55,8 @@ export default function PostBody({
                     variables: {
                       data: {
                         title: props,
-                        categoryId: Number(categoryId),
-                        postId: Number(postId),
+                        categoryId,
+                        postId,
                       },
                     },
                   })

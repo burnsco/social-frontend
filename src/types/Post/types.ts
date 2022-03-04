@@ -1,7 +1,7 @@
 import { CreatePostInput } from '@/generated/graphql'
 
 export const CreatePostInputType: CreatePostInput = {
-  categoryId: 0,
+  categoryId: '',
   title: '',
   text: '',
   link: '',

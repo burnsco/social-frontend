@@ -1,5 +1,6 @@
 fragment CategoryDetails on Category {
   id
   createdAt
+  updatedAt
   name
 }

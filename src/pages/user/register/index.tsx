@@ -40,15 +40,17 @@ export default function RegisterPage() {
                   },
                 },
                 update: (cache, { data }) => {
-                  cache.writeQuery<MeQuery>({
-                    query: MeDocument,
-                    data: {
-                      __typename: 'Query',
-                      me: data?.register.user,
-                    },
-                  })
+                  if (data?.register?.user)
+                    cache.writeQuery<MeQuery>({
+                      query: MeDocument,
+                      data: {
+                        __typename: 'Query',
+                        me: data.register.user,
+                      },
+                    })
                 },
               })
+              console.log(response)
               if (response.data?.register?.user) {
                 toast({
                   id: `${response.data.register.user.username}-toast`,

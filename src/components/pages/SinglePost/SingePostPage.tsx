@@ -9,10 +9,10 @@ import { useRouter } from 'next/router'
 export default function SinglePostPage() {
   const router = useRouter()
 
-  const postId = router.query.id
+  const postId = router.query.id as string
 
   const { data, loading, error } = usePostQuery({
-    variables: { postId: Number(postId) },
+    variables: { postId },
   })
 
   const { data: userData } = useMeQuery({ ssr: false })

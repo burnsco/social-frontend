@@ -14,7 +14,7 @@ export default function ChatInput() {
       variables: {
         data: {
           content: values.content,
-          categoryId: Number(selectedCategoryId),
+          categoryId: selectedCategoryId,
         },
       },
     })
