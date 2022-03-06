@@ -13,7 +13,7 @@ import { useMemo } from 'react'
 import { cacheOptions } from './cache'
 
 export const selectedChatRoomId: ReactiveVar<string> = makeVar<string>('react')
-export const loggedInUserId: ReactiveVar<string> = makeVar<string>('')
+export const loggedInUserId: ReactiveVar<string> = makeVar<string>('5')
 export const selectedChatRoomName: ReactiveVar<string> =
   makeVar<string>('react-js')
 
@@ -24,7 +24,7 @@ const ssrMode = typeof window === 'undefined'
 function createApolloClient() {
   const httpLink = new HttpLink({
     uri: process.env.NEXT_PUBLIC_API_URL as string,
-    credentials: 'omit',
+    credentials: 'include',
   })
 
   if (ssrMode) {
@@ -38,6 +38,9 @@ function createApolloClient() {
   const wsLink = new GraphQLWsLink(
     createClient({
       url: `${WS_URI}`,
+      connectionParams: {
+        Authorization: 'adsfsdf443',
+      },
     })
   )
 

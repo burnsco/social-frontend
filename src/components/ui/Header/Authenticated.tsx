@@ -67,7 +67,7 @@ function HeaderIconsSection() {
   const [logout, { client }] = useLogoutMutation()
   return (
     <HStack>
-      <ButtonGroup spacing="4" mr="2">
+      <ButtonGroup mr="2">
         <DynamicChatRoomDrawer />
         <DynamicCreatePostDrawer />
         <DynamicCreateCategoryDrawer />

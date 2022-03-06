@@ -16,6 +16,11 @@ export default function ChatList(props: any) {
   const { handleSubscription } = props
   const { data, loading } = props
 
+  console.log('handleSubscription')
+  console.log(handleSubscription)
+  console.log(`data loading`)
+  console.log(data)
+
   React.useEffect(() => {
     handleSubscription()
   })

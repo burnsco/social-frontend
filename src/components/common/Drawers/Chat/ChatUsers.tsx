@@ -14,7 +14,6 @@ import {
 export default function ChatUsers() {
   const chatId = useReactiveVar(selectedChatRoomId)
   const { data, loading } = useCategoryQuery({
-    ssr: false,
     pollInterval: 500,
     variables: { categoryId: chatId },
   })

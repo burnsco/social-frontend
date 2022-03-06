@@ -1,10 +1,11 @@
 import { ThemedContainer } from '@/components/common/ThemedContainer'
-import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import { useMeQuery } from '@/generated/graphql'
 import useNewUserNotification from '@/hooks/useNewUserNotify'
 import {
   Badge,
   chakra,
   Flex,
+  Skeleton,
   Text,
   useColorModeValue,
   useSafeLayoutEffect,
@@ -16,7 +17,7 @@ import UnAuthenticatedHeader from './UnAuthenticated'
 const AuthenticatedHeader = dynamic(() => import('./Authenticated'))
 
 export default function Header() {
-  const [loggedInUser] = useLoggedInUser()
+  const { data, loading } = useMeQuery()
 
   const toast = useToast()
   const newUser = useNewUserNotification()
@@ -44,18 +45,20 @@ export default function Header() {
   }, [newUser])
 
   return (
-    <chakra.nav
-      pos="fixed"
-      zIndex="1000"
-      height="3.5rem"
-      maxW="1400px"
-      bg={headerBG}
-      boxShadow={headerShadow}
-      width="full"
-    >
-      <Flex w="100%" h="100%" px="4" align="center" justify="space-around">
-        {loggedInUser ? <AuthenticatedHeader /> : <UnAuthenticatedHeader />}
-      </Flex>
-    </chakra.nav>
+    <Skeleton isLoaded={!loading}>
+      <chakra.nav
+        pos="fixed"
+        zIndex="1000"
+        height="3.5rem"
+        maxW="1400px"
+        bg={headerBG}
+        boxShadow={headerShadow}
+        width="full"
+      >
+        <Flex w="100%" h="100%" px="4" align="center" justify="space-around">
+          {data?.me ? <AuthenticatedHeader /> : <UnAuthenticatedHeader />}
+        </Flex>
+      </chakra.nav>
+    </Skeleton>
   )
 }

@@ -400,7 +400,7 @@ export type User = {
   email: Scalars['Email'];
   friends: Array<User>;
   id: Scalars['String'];
-  online?: Maybe<Scalars['Boolean']>;
+  online: Scalars['Boolean'];
   privateMessages: Array<PrivateMessage>;
   updatedAt: Scalars['String'];
   username: Scalars['String'];
@@ -459,9 +459,9 @@ export type CommentDetailsFragment = { __typename?: 'Comment', id: string, creat
 
 export type PostDetailsFragment = { __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null };
 
-export type UserDetailsFragment = { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null };
+export type UserDetailsFragment = { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean };
 
-export type UserMeDetailsFragment = { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online?: boolean | null, avatar?: string | null };
+export type UserMeDetailsFragment = { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online: boolean, avatar?: string | null };
 
 export type CreateSubredditMutationVariables = Exact<{
   data: CategoryInput;
@@ -496,7 +496,7 @@ export type CreatePostMutationVariables = Exact<{
 }>;
 
 
-export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'PostMutationResponse', post?: { __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null } }> | null, author: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null }, category: { __typename?: 'Category', id: string, createdAt: string, updatedAt: string, name: string }, totalComments?: { __typename?: '_QueryMeta', count?: number | null } | null, totalVotes?: { __typename?: '_QueryMeta', score?: number | null, count?: number | null } | null } | null } };
+export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'PostMutationResponse', post?: { __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean } }> | null, author: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean }, category: { __typename?: 'Category', id: string, createdAt: string, updatedAt: string, name: string }, totalComments?: { __typename?: '_QueryMeta', count?: number | null } | null, totalVotes?: { __typename?: '_QueryMeta', score?: number | null, count?: number | null } | null } | null } };
 
 export type DeletePostMutationVariables = Exact<{
   postId?: InputMaybe<Scalars['ID']>;
@@ -517,7 +517,7 @@ export type AddFriendMutationVariables = Exact<{
 }>;
 
 
-export type AddFriendMutation = { __typename?: 'Mutation', addFriend: { __typename?: 'AddUserMutationResponse', me?: { __typename?: 'User', id: string, username: string } | null, friend?: { __typename?: 'User', id: string, username: string, online?: boolean | null } | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
+export type AddFriendMutation = { __typename?: 'Mutation', addFriend: { __typename?: 'AddUserMutationResponse', me?: { __typename?: 'User', id: string, username: string } | null, friend?: { __typename?: 'User', id: string, username: string, online: boolean } | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
 
 export type EditUserMutationVariables = Exact<{
   data: EditUserInput;
@@ -531,7 +531,7 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserMutationResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: string, username: string, email: any } | null } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserMutationResponse', errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null, user?: { __typename?: 'User', id: string, username: string, online: boolean, email: any } | null } };
 
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -543,7 +543,7 @@ export type RegisterMutationVariables = Exact<{
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserMutationResponse', user?: { __typename?: 'User', id: string, username: string, email: any } | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserMutationResponse', user?: { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online: boolean, avatar?: string | null } | null, errors?: Array<{ __typename?: 'FieldError', field: string, message: string }> | null } };
 
 export type SendPrivateMessageMutationVariables = Exact<{
   data: PrivateMessageInput;
@@ -574,14 +574,14 @@ export type CategoryQueryVariables = Exact<{
 }>;
 
 
-export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', id: string, name: string, chatUsers?: Array<{ __typename?: 'User', id: string, username: string, online?: boolean | null }> | null } | null };
+export type CategoryQuery = { __typename?: 'Query', category?: { __typename?: 'Category', id: string, name: string, chatUsers?: Array<{ __typename?: 'User', id: string, username: string, online: boolean }> | null } | null };
 
 export type CommentQueryVariables = Exact<{
   postId?: InputMaybe<Scalars['ID']>;
 }>;
 
 
-export type CommentQuery = { __typename?: 'Query', comment: { __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null } } };
+export type CommentQuery = { __typename?: 'Query', comment: { __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean } } };
 
 export type CommentsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -591,7 +591,7 @@ export type CommentsQueryVariables = Exact<{
 }>;
 
 
-export type CommentsQuery = { __typename?: 'Query', comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null } }> | null };
+export type CommentsQuery = { __typename?: 'Query', comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean } }> | null };
 
 export type CommentsForPostQueryVariables = Exact<{
   postId: Scalars['ID'];
@@ -599,7 +599,7 @@ export type CommentsForPostQueryVariables = Exact<{
 }>;
 
 
-export type CommentsForPostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: string, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null } }> | null } | null };
+export type CommentsForPostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: string, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string, createdBy: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean } }> | null } | null };
 
 export type ChatRoomMessagesQueryVariables = Exact<{
   categoryId: Scalars['ID'];
@@ -613,7 +613,7 @@ export type PostQueryVariables = Exact<{
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null, category: { __typename?: 'Category', id: string, createdAt: string, updatedAt: string, name: string }, author: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null }, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string }> | null, totalComments?: { __typename?: '_QueryMeta', count?: number | null } | null, totalVotes?: { __typename?: '_QueryMeta', score?: number | null, count?: number | null } | null } | null };
+export type PostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null, category: { __typename?: 'Category', id: string, createdAt: string, updatedAt: string, name: string }, author: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean }, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string }> | null, totalComments?: { __typename?: '_QueryMeta', count?: number | null } | null, totalVotes?: { __typename?: '_QueryMeta', score?: number | null, count?: number | null } | null } | null };
 
 export type PostsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']>;
@@ -623,22 +623,22 @@ export type PostsQueryVariables = Exact<{
 }>;
 
 
-export type PostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null, category: { __typename?: 'Category', id: string, createdAt: string, updatedAt: string, name: string }, author: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online?: boolean | null }, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string }> | null, totalComments?: { __typename?: '_QueryMeta', count?: number | null } | null, totalVotes?: { __typename?: '_QueryMeta', score?: number | null, count?: number | null } | null }> | null, _allPostsMeta: { __typename?: '_QueryMeta', count?: number | null }, _categoryPostsMeta: { __typename?: '_QueryMeta', count?: number | null } };
+export type PostsQuery = { __typename?: 'Query', posts?: Array<{ __typename?: 'Post', id: string, createdAt: string, updatedAt: string, title: string, imageH?: number | null, imageW?: number | null, text?: string | null, image?: string | null, link?: string | null, category: { __typename?: 'Category', id: string, createdAt: string, updatedAt: string, name: string }, author: { __typename?: 'User', id: string, createdAt: string, updatedAt: string, username: string, online: boolean }, comments?: Array<{ __typename?: 'Comment', id: string, createdAt: string, updatedAt: string, body: string }> | null, totalComments?: { __typename?: '_QueryMeta', count?: number | null } | null, totalVotes?: { __typename?: '_QueryMeta', score?: number | null, count?: number | null } | null }> | null, _allPostsMeta: { __typename?: '_QueryMeta', count?: number | null }, _categoryPostsMeta: { __typename?: '_QueryMeta', count?: number | null } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online?: boolean | null, avatar?: string | null } | null };
+export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online: boolean, avatar?: string | null } | null };
 
 export type MyChatRoomsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyChatRoomsQuery = { __typename?: 'Query', myChatRooms?: Array<{ __typename?: 'Category', id: string, name: string, chatUsers?: Array<{ __typename?: 'User', id: string, username: string }> | null }> | null };
+export type MyChatRoomsQuery = { __typename?: 'Query', myChatRooms?: Array<{ __typename?: 'Category', id: string, name: string, chatUsers?: Array<{ __typename?: 'User', id: string, online: boolean, username: string }> | null }> | null };
 
 export type MyFriendsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MyFriendsQuery = { __typename?: 'Query', myFriends?: Array<{ __typename?: 'User', id: string, username: string, online?: boolean | null }> | null };
+export type MyFriendsQuery = { __typename?: 'Query', myFriends?: Array<{ __typename?: 'User', id: string, username: string, online: boolean }> | null };
 
 export type MyPrivateMessagesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -650,12 +650,12 @@ export type UserQueryVariables = Exact<{
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online?: boolean | null } | null };
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, username: string, email: any, about?: string | null, online: boolean } | null };
 
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: string, username: string, email: any, about?: string | null }> | null };
+export type UsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id: string, username: string, online: boolean, email: any, about?: string | null }> | null };
 
 export type UpdateMetaQueryVariables = Exact<{
   category?: InputMaybe<Scalars['String']>;
@@ -1126,6 +1126,7 @@ export const LoginDocument = gql`
     user {
       id
       username
+      online
       email
     }
   }
@@ -1197,6 +1198,9 @@ export const RegisterDocument = gql`
       id
       username
       email
+      about
+      online
+      avatar
     }
     errors {
       field
@@ -1737,6 +1741,7 @@ export const MyChatRoomsDocument = gql`
     name
     chatUsers {
       id
+      online
       username
     }
   }
@@ -1905,6 +1910,7 @@ export const UsersDocument = gql`
   users {
     id
     username
+    online
     email
     about
   }

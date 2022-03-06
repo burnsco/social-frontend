@@ -17,7 +17,7 @@ export default function ChatUsers() {
     variables: { categoryId: chatId },
   })
 
-  if (data && data.category && data.category.chatUsers) {
+  if (data?.category?.chatUsers) {
     return (
       <Box
         overflowY="auto"

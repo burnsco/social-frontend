@@ -4,6 +4,9 @@ mutation Register($data: RegisterInput!) {
       id
       username
       email
+      about
+      online
+      avatar
     }
     errors {
       field

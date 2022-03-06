@@ -13,8 +13,11 @@ export default function ChatDisplay() {
   const { subscribeToMore, ...result } = useChatRoomMessagesQuery({
     variables: { categoryId: selectedCategoryId },
   })
+  console.log('Chat Display')
+  console.log(subscribeToMore)
 
   if (subscribeToMore !== undefined) {
+    console.log('inside subscribetomore')
     return (
       <ChatList
         {...result}

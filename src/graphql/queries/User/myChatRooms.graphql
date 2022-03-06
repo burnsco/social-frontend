@@ -4,6 +4,7 @@ query MyChatRooms {
     name
     chatUsers {
       id
+      online
       username
     }
   }

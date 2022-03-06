@@ -31,6 +31,9 @@ export default function NewPost(props: PostQuery) {
     const isOwner = loggedInUser?.id === post?.author.id ?? false
     const isLoggedIn = loggedInUser !== null
 
+    console.log(postCreatedTime)
+    console.log(postUpdatedTime)
+
     return (
       <PostContainer bg={bg}>
         <VoteBox

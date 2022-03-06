@@ -21,7 +21,7 @@ export default function ChatList(props: any) {
     scrollToBottom()
   }, [data])
 
-  if (!loading && data && data.messages) {
+  if (data?.messages) {
     return (
       <Box overflowY="auto">
         <List mt={2} spacing={3}>

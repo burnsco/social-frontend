@@ -2,6 +2,7 @@ query Users {
   users {
     id
     username
+    online
     email
     about
   }

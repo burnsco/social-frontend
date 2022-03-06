@@ -11,9 +11,12 @@ export default function ChatDisplay() {
   const selectedCategoryId = useReactiveVar(selectedChatRoomId)
 
   const { subscribeToMore, ...result } = useChatRoomMessagesQuery({
+    variables: { categoryId: selectedCategoryId },
     fetchPolicy: 'network-only',
-    variables: { categoryId: 'sdf' },
   })
+
+  console.log('chat display - subscribeToMore')
+  console.log(subscribeToMore)
 
   if (subscribeToMore !== undefined) {
     return (
@@ -23,7 +26,7 @@ export default function ChatDisplay() {
           subscribeToMore({
             document: CategoryChatSubDocument,
             variables: { categoryId: selectedCategoryId },
-            updateQuery: (prev, { subscriptionData }: any) => {
+            updateQuery: (prev: any, { subscriptionData }: any) => {
               if (!subscriptionData.data) return prev
               const newFeedItem = subscriptionData.data.newMessage
 

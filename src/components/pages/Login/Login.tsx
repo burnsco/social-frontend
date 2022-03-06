@@ -42,7 +42,7 @@ export default function LoginPage() {
                     query: MeDocument,
                     data: {
                       __typename: 'Query',
-                      me: data?.login.user,
+                      me: data?.login?.user,
                     },
                   })
                 },
