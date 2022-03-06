@@ -27,8 +27,8 @@ import { OfflineCircle, OnlineCircle } from '../OnlineOffline'
 type PostHeaderType = {
   category?: string | null
   author?: Partial<User>
-  createdAt?: string | null
-  updatedAt?: string | null
+  createdAt?: number
+  updatedAt?: number
   postId?: string | null | undefined
 }
 

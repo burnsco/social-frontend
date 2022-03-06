@@ -18,14 +18,13 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React from 'react'
 import { BsLightning } from 'react-icons/bs'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoAddCircle } from 'react-icons/io5'
 import { MdEmail, MdMessage } from 'react-icons/md'
 import { OfflineCircle, OnlineCircle } from '../OnlineOffline'
 
-export default function CommentPage({ comment }: CommentQuery) {
+export default function CommentPage(props: CommentQuery) {
   const [loggedInUser] = useLoggedInUser()
   const [addFriend, { loading }] = useAddFriendMutation()
 
@@ -35,8 +34,12 @@ export default function CommentPage({ comment }: CommentQuery) {
   const huh = useColorModeValue('darkblue', 'lightblue')
   const votebg = useColorModeValue('gray.50', '#313131')
 
-  // #TODO fix voting, make it like or nothing
-  // click the lightening bolt on/off
+  const { comment } = props
+  const commentId = comment?.id
+  const createdBy = comment?.createdBy?.username
+  const isOnline = comment?.createdBy?.online
+  const updatedTime = Number(comment?.updatedAt)
+
   return (
     <Flex bg={bg} minH="80px" width="100%">
       {/* Vote Box Container (Left Aside) */}
@@ -72,12 +75,8 @@ export default function CommentPage({ comment }: CommentQuery) {
             Comment by
             <Menu>
               <Button ml={2} size="xs" variant="outline" as={MenuButton}>
-                {comment?.createdBy?.username}
-                {comment.createdBy?.online ? (
-                  <OnlineCircle />
-                ) : (
-                  <OfflineCircle />
-                )}
+                {createdBy}
+                {isOnline ? <OnlineCircle /> : <OfflineCircle />}
               </Button>
 
               <MenuList opacity="0.7" bg={bg}>
@@ -156,7 +155,7 @@ export default function CommentPage({ comment }: CommentQuery) {
               }}
             ></Box>
             <Box display="inline" ml="2">
-              {timeDifferenceForDate(comment?.createdAt)}
+              {timeDifferenceForDate(updatedTime)}
             </Box>
           </Box>
         </Stack>

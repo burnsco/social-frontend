@@ -19,8 +19,8 @@ export default function NewPost(props: PostQuery) {
     const postCategory = post?.category.name
     const categoryId = post?.category.id
     const postAuthor = post?.author
-    const postCreatedTime = post?.createdAt
-    const postUpdatedTime = post?.updatedAt
+    const postCreatedTime = Number(post?.createdAt)
+    const postUpdatedTime = Number(post?.updatedAt)
     const postTitle = post?.title
     const postText = post?.text
     const postImage = post?.image

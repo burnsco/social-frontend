@@ -42,11 +42,12 @@ function timeDifference(curr?: number, prev?: number) {
 
 // how to convert date.ISOSTRING ==> date.toString or date.toTimeString() then => getTime()
 
-export default function timeDifferenceForDate(date?: string | null | number) {
+export default function timeDifferenceForDate(date?: number) {
   if (date) {
-    const conv = date?.toLocaleString()
     const now = new Date().getTime()
-    const updated = new Date(conv).getTime()
+
+    const updated = new Date(date).getTime()
+
     return timeDifference(now, updated)
   }
 
