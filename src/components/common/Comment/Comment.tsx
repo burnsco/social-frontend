@@ -18,7 +18,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { BsLightning } from 'react-icons/bs'
+import { useState } from 'react'
+import { BsLightning, BsLightningFill } from 'react-icons/bs'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoAddCircle } from 'react-icons/io5'
 import { MdEmail, MdMessage } from 'react-icons/md'
@@ -33,6 +34,8 @@ export default function CommentPage(props: CommentQuery) {
   const router = useRouter()
   const huh = useColorModeValue('darkblue', 'lightblue')
   const votebg = useColorModeValue('gray.50', '#313131')
+
+  const [liked, setLiked] = useState(false)
 
   const { comment } = props
   const commentId = comment?.id
@@ -53,10 +56,17 @@ export default function CommentPage(props: CommentQuery) {
           height="100%"
         >
           <IconButton
+            onClick={() => setLiked(!liked)}
             variant="ghost"
             color="current"
             aria-label="UpVote"
-            icon={<BsLightning size="2em" />}
+            icon={
+              !liked ? (
+                <BsLightning size="2em" />
+              ) : (
+                <BsLightningFill size="2em" />
+              )
+            }
           />
         </Flex>
       </Box>

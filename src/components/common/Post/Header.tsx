@@ -1,9 +1,22 @@
 import DeletePostDialog from '@/components/common/DeletePostDialog'
-import { useAddFriendMutation, User } from '@/generated/graphql'
-import { useLoggedInUser } from '@/hooks/useLoggedInUser'
-import { timeDifferenceForDate } from '@/utils/index'
-import { gql } from '@apollo/client'
+import InputField from '@/components/common/Forms/InputField'
 import {
+  useAddFriendMutation,
+  User,
+  useSendPrivateMessageMutation,
+} from '@/generated/graphql'
+import { useLoggedInUser } from '@/hooks/useLoggedInUser'
+import { useMyFriends } from '@/hooks/useMyFriends'
+import { timeDifferenceForDate } from '@/utils/index'
+import { sleep } from '@/utils/sleepy'
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Badge,
   Box,
   Button,
   Flex,
@@ -18,10 +31,13 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
+import { useRef, useState } from 'react'
 import { FaUserCircle } from 'react-icons/fa'
 import { IoAddCircle } from 'react-icons/io5'
-import { MdEmail, MdMessage } from 'react-icons/md'
+import { MdMessage } from 'react-icons/md'
+import { RiMailSendLine } from 'react-icons/ri'
 import { OfflineCircle, OnlineCircle } from '../OnlineOffline'
 
 type PostHeaderType = {
@@ -40,16 +56,21 @@ export default function PostHeader({
   updatedAt,
 }: PostHeaderType) {
   const [loggedInUser] = useLoggedInUser()
+  const [myFriends] = useMyFriends()
+
   const fontColor = useColorModeValue('#1A1A1B', 'gray.200')
   const bg = useColorModeValue('white', '#202020')
   const router = useRouter()
   const toast = useToast()
+
   const [addFriend, { loading }] = useAddFriendMutation()
 
-  console.log('logged in user')
-  console.log(loggedInUser)
+  const isMyFriend = myFriends?.filter((friend) => friend.id === author?.id)
+
+  const isOwnerOfPost = loggedInUser?.username === author?.username
 
   const handleAddFriend = async (username: string | undefined) => {
+    console.log('inside handle add friend')
     if (username) {
       let response
       try {
@@ -61,24 +82,11 @@ export default function PostHeader({
           },
           update(cache, { data }) {
             if (loggedInUser && !data?.addFriend.errors) {
-              cache.modify({
-                id: cache.identify(loggedInUser),
-                fields: {
-                  friends(existingFriends = []) {
-                    const newFriendRef = cache.writeFragment({
-                      data: data?.addFriend.me,
-                      fragment: gql`
-                        fragment NewFriend on User {
-                          id
-                          username
-                          online
-                        }
-                      `,
-                    })
-                    return [newFriendRef, ...existingFriends]
-                  },
-                },
-              })
+              console.log('cache')
+              console.log(cache)
+
+              console.log('data')
+              console.log(data)
             }
             return null
           },
@@ -86,14 +94,10 @@ export default function PostHeader({
       } catch (ex) {
         return ex
       }
-      if (
-        response &&
-        response.data &&
-        response.data.addFriend &&
-        response.data.addFriend.me &&
-        response.data.addFriend.friend
-      ) {
-        const { friend } = response.data.addFriend
+      if (response?.data?.addFriend?.friend) {
+        console.log(response)
+        const { friend } = response?.data?.addFriend
+        console.log(friend)
         toast({
           id: `user-${friend.username}-added`,
           title: 'Success',
@@ -107,29 +111,128 @@ export default function PostHeader({
     return null
   }
 
-  const AuthorizedUserMenu = () => (
-    <MenuList opacity="0.7" bg={bg}>
-      <MenuGroup color="lightsteelblue">
-        <MenuItem onClick={() => router.push(`/user/${author?.username}`)}>
-          <FaUserCircle />
-          <Box ml={3}>Profile</Box>
-        </MenuItem>
-        <MenuDivider />
-      </MenuGroup>
+  const AuthorizedAndIsFriendMenu = () => {
+    const toast = useToast()
+    const [sendMessage, { loading }] = useSendPrivateMessageMutation()
+    const [isOpen, setIsOpen] = useState(false)
+    const onClose = () => setIsOpen(false)
+    const cancelRef = useRef<null | HTMLButtonElement>(null)
 
-      <MenuItem onClick={() => handleAddFriend(author?.username)}>
-        <IoAddCircle />
-        <Box ml={3}>Add to Friends</Box>
-      </MenuItem>
-      <MenuItem onClick={() => router.push('/user/account')}>
-        <MdEmail />
-        <Box ml={3}>Message</Box>
-      </MenuItem>
-      <MenuItem onClick={() => router.push('/user/account')}>
-        <MdMessage />
-        <Box ml={3}>Chat</Box>
-      </MenuItem>
-    </MenuList>
+    return (
+      <>
+        <MenuList opacity="0.7" bg={bg}>
+          <MenuGroup color="lightsteelblue">
+            <MenuItem onClick={() => router.push(`/user/${author?.username}`)}>
+              <FaUserCircle />
+              <Box ml={3}>Profile</Box>
+            </MenuItem>
+            <MenuDivider />
+          </MenuGroup>
+          <MenuItem onClick={() => setIsOpen(true)}>
+            <RiMailSendLine />
+            <Box ml={3}> Message </Box>
+          </MenuItem>
+          <MenuItem onClick={() => router.push('/user/account')}>
+            <MdMessage />
+            <Box ml={3}> Chat</Box>
+          </MenuItem>
+        </MenuList>
+        <AlertDialog
+          returnFocusOnClose={false}
+          isOpen={isOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader
+                color="red.400"
+                fontSize="lg"
+                fontWeight="bold"
+              >
+                To: <Badge colorScheme="purple">{author?.username}</Badge>
+              </AlertDialogHeader>
+
+              <Formik
+                initialValues={{ body: '' }}
+                onSubmit={async (values, actions) => {
+                  actions.setSubmitting(false)
+                  sleep(1000)
+                  const response = await sendMessage({
+                    variables: {
+                      data: {
+                        userId: author?.id as string,
+                        body: values.body,
+                      },
+                    },
+                  })
+                  if (!response.errors) {
+                    toast({
+                      position: 'bottom-left',
+                      render: () => (
+                        <Box color="white" p={3} bg="blue.500">
+                          Message Sent!
+                        </Box>
+                      ),
+                    })
+                    onClose()
+                  }
+                }}
+              >
+                <Form>
+                  <AlertDialogBody>
+                    <InputField id="body" name="body" label="Message" />
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelRef} onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button
+                      type="submit"
+                      isLoading={loading}
+                      colorScheme="red"
+                      ml={3}
+                    >
+                      Send
+                    </Button>
+                  </AlertDialogFooter>
+                </Form>
+              </Formik>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
+      </>
+    )
+  }
+
+  const AuthorizedAndIsNotAFriendMenu = () => {
+    return (
+      <MenuList opacity="0.7" bg={bg}>
+        <MenuGroup color="lightsteelblue">
+          <MenuItem onClick={() => router.push(`/user/${author?.username}`)}>
+            <FaUserCircle />
+            <Box ml={3}>Profile</Box>
+          </MenuItem>
+          <MenuDivider />
+        </MenuGroup>
+
+        <MenuItem onClick={() => handleAddFriend(author?.username)}>
+          <IoAddCircle />
+          <Box ml={3}>Add to Friends</Box>
+        </MenuItem>
+      </MenuList>
+    )
+  }
+
+  const AuthorizedUserMenu = () => (
+    <>
+      {isMyFriend ? (
+        <AuthorizedAndIsFriendMenu />
+      ) : (
+        <AuthorizedAndIsNotAFriendMenu />
+      )}
+    </>
   )
 
   const UnAuthorizedUserMenu = () => (
@@ -146,9 +249,15 @@ export default function PostHeader({
   const renderPostCreatedOrEdited = () => (
     <Box ml="3" textDecoration="none">
       {createdAt === updatedAt ? `Posted by` : `Edited by`}
-      <Menu>
-        <Button ml={2} size="xs" variant="outline" as={MenuButton}>
-          {loggedInUser?.username === author?.username ? (
+      <Menu isLazy>
+        <Button
+          ml={2}
+          size="xs"
+          variant="outline"
+          disabled={isOwnerOfPost}
+          as={MenuButton}
+        >
+          {isOwnerOfPost ? (
             `YOU`
           ) : (
             <>
@@ -158,18 +267,18 @@ export default function PostHeader({
           )}
         </Button>
 
-        {loggedInUser && loggedInUser.username ? (
+        {loggedInUser?.username ? (
           <AuthorizedUserMenu />
         ) : (
           <UnAuthorizedUserMenu />
         )}
       </Menu>
       {createdAt === updatedAt ? (
-        <Box display="inline" ml="2">
+        <Box display="inline" mx="3">
           {timeDifferenceForDate(createdAt)}
         </Box>
       ) : (
-        <Box display="inline" ml="2">
+        <Box display="inline" mx="3">
           {timeDifferenceForDate(updatedAt)}
         </Box>
       )}
@@ -179,6 +288,7 @@ export default function PostHeader({
   const renderPostCategoryLink = () => (
     <Box
       fontWeight="600"
+      mr="2"
       color="orange.500"
       _hover={{
         textDecoration: 'underline',

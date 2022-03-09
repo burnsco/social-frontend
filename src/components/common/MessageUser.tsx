@@ -11,7 +11,6 @@ import {
   Badge,
   Box,
   Button,
-  chakra,
   IconButton,
   Tooltip,
   useToast,
@@ -37,14 +36,13 @@ const MessageUser = (user: Partial<User>) => {
           bg="black"
           color="whitesmoke"
         >
-          <chakra.span>
+          <Box onClick={() => setIsOpen(true)}>
             <IconButton
-              onClick={() => setIsOpen(true)}
               size="xs"
               aria-label={`Message ${user.username}`}
               icon={<RiMailSendLine />}
             />
-          </chakra.span>
+          </Box>
         </Tooltip>
 
         <AlertDialog
