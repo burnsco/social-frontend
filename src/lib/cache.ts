@@ -4,6 +4,48 @@ import { selectedChatRoomId, selectedChatRoomName } from './apolloClient'
 
 export const cacheOptions = new InMemoryCache({
   typePolicies: {
+    Post: {
+      fields: {
+        createdAt: {
+          read(createdAt) {
+            return Number(createdAt)
+          },
+        },
+        updatedAt: {
+          read(updatedAt) {
+            return Number(updatedAt)
+          },
+        },
+      },
+    },
+    Message: {
+      fields: {
+        createdAt: {
+          read(createdAt) {
+            return Number(createdAt)
+          },
+        },
+        updatedAt: {
+          read(updatedAt) {
+            return Number(updatedAt)
+          },
+        },
+      },
+    },
+    Comment: {
+      fields: {
+        createdAt: {
+          read(createdAt) {
+            return Number(createdAt)
+          },
+        },
+        updatedAt: {
+          read(updatedAt) {
+            return Number(updatedAt)
+          },
+        },
+      },
+    },
     Query: {
       fields: {
         posts: concatPagination(),

@@ -34,7 +34,6 @@ export type Category = {
   chatUsers?: Maybe<Array<User>>;
   createdAt: Scalars['String'];
   id: Scalars['String'];
-  messages?: Maybe<Array<Message>>;
   name: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -281,7 +280,6 @@ export type Query = {
   comment: Comment;
   comments?: Maybe<Array<Comment>>;
   me?: Maybe<User>;
-  message?: Maybe<Message>;
   messages?: Maybe<Array<Message>>;
   myChatRooms?: Maybe<Array<Category>>;
   myFriends?: Maybe<Array<User>>;
@@ -606,7 +604,7 @@ export type ChatRoomMessagesQueryVariables = Exact<{
 }>;
 
 
-export type ChatRoomMessagesQuery = { __typename?: 'Query', messages?: Array<{ __typename?: 'Message', id: string, content: string, sentBy: { __typename?: 'User', id: string, username: string }, category: { __typename?: 'Category', id: string, name: string } }> | null };
+export type ChatRoomMessagesQuery = { __typename?: 'Query', messages?: Array<{ __typename?: 'Message', id: string, createdAt: string, content: string, sentBy: { __typename?: 'User', id: string, username: string }, category: { __typename?: 'Category', id: string, name: string } }> | null };
 
 export type PostQueryVariables = Exact<{
   postId: Scalars['ID'];
@@ -669,7 +667,7 @@ export type CategoryChatSubSubscriptionVariables = Exact<{
 }>;
 
 
-export type CategoryChatSubSubscription = { __typename?: 'Subscription', newMessage: { __typename?: 'Message', id: string, content: string, sentBy: { __typename?: 'User', id: string, username: string }, category: { __typename?: 'Category', id: string, name: string } } };
+export type CategoryChatSubSubscription = { __typename?: 'Subscription', newMessage: { __typename?: 'Message', id: string, createdAt: string, content: string, sentBy: { __typename?: 'User', id: string, username: string }, category: { __typename?: 'Category', id: string, name: string } } };
 
 export type NewUserSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -1531,6 +1529,7 @@ export const ChatRoomMessagesDocument = gql`
     query ChatRoomMessages($categoryId: ID!) {
   messages(categoryId: $categoryId) {
     id
+    createdAt
     content
     sentBy {
       id
@@ -1991,6 +1990,7 @@ export const CategoryChatSubDocument = gql`
     subscription CategoryChatSub($categoryId: ID!) {
   newMessage(categoryId: $categoryId) {
     id
+    createdAt
     content
     sentBy {
       id
